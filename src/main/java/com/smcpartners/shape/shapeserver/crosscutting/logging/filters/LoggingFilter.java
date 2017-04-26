@@ -40,6 +40,16 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
     @Inject
     private Logger log;
 
+    /**
+     * Should logging be done at all
+     */
+    @Inject
+    @ConfigurationValue("com.smc.server-core.logging.do_logging")
+    private boolean doLogging;
+
+    /**
+     * If logging should be done then should the process log entity contents and headers
+     */
     @Inject
     @ConfigurationValue("com.smc.server-core.logging.full_logging")
     private boolean fullLogging;
@@ -53,45 +63,49 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        String userId = getUserId(requestContext);
-        userId = userId == null ? "unknown" : userId;
-        String path = requestContext.getUriInfo().getPath();
+        if (doLogging) {
+            String userId = getUserId(requestContext);
+            userId = userId == null ? "unknown" : userId;
+            String path = requestContext.getUriInfo().getPath();
 
-        // Log everything
-        String headers = null;
-        String entity = null;
-        if (fullLogging) {
-            headers = requestContext.getHeaders().toString();
-            entity = getRequestEntityBody(requestContext);
-        }
-
-        // Create LogDTO and save in CDI request scope
-        logDTO.setUser(userId);
-        logDTO.setRequestDt(new Date());
-        logDTO.setRequestEntity(entity);
-        logDTO.setRequestHeader(headers);
-        logDTO.setRequestPath(path);
-    }
-
-    @Override
-    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-        try {
             // Log everything
             String headers = null;
             String entity = null;
             if (fullLogging) {
-                headers = responseContext.getHeaders().toString();
-                entity = getResponseEntityBody(responseContext);
+                headers = requestContext.getHeaders().toString();
+                entity = getRequestEntityBody(requestContext);
             }
-            logDTO.setResponseDt(new Date());
-            logDTO.setResponseEntity(entity);
-            logDTO.setResponseHeader(headers);
 
-            // Update database
-            logDAO.create(logDTO);
-        } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "filter", e.getMessage(), e);
-            throw new WebApplicationException(e.getMessage(), Response.Status.INTERNAL_SERVER_ERROR);
+            // Save in CDI request scope
+            logDTO.setUser(userId);
+            logDTO.setRequestDt(new Date());
+            logDTO.setRequestEntity(entity);
+            logDTO.setRequestHeader(headers);
+            logDTO.setRequestPath(path);
+        }
+    }
+
+    @Override
+    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
+        if (doLogging) {
+            try {
+                // Log everything
+                String headers = null;
+                String entity = null;
+                if (fullLogging) {
+                    headers = responseContext.getHeaders().toString();
+                    entity = getResponseEntityBody(responseContext);
+                }
+                logDTO.setResponseDt(new Date());
+                logDTO.setResponseEntity(entity);
+                logDTO.setResponseHeader(headers);
+
+                // Update database
+                logDAO.create(logDTO);
+            } catch (Exception e) {
+                log.logp(Level.SEVERE, this.getClass().getName(), "filter", e.getMessage(), e);
+                throw new WebApplicationException(e.getMessage(), Response.Status.INTERNAL_SERVER_ERROR);
+            }
         }
     }
 
