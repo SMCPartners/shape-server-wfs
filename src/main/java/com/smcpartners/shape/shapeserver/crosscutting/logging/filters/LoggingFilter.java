@@ -10,20 +10,27 @@ package com.smcpartners.shape.shapeserver.crosscutting.logging.filters;
 
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.logging.dto.LogDTO;
+import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.LogDAO;
 import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
 import org.apache.commons.io.IOUtils;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
+import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Logged
@@ -33,23 +40,59 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
     @Inject
     private Logger log;
 
+    @Inject
+    @ConfigurationValue("com.smc.server-core.logging.full_logging")
+    private boolean fullLogging;
+
+    @Inject
+    private LogDTO logDTO;
+
+    @EJB
+    private LogDAO logDAO;
+
+
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        LogDTO logDTO = new LogDTO();
         String userId = getUserId(requestContext);
-        logDTO.setUser(userId);
         userId = userId == null ? "unknown" : userId;
         String path = requestContext.getUriInfo().getPath();
-        String headers = requestContext.getHeaders().toString();
-        String entity = getRequestEntityBody(requestContext);
+
+        // Log everything
+        String headers = null;
+        String entity = null;
+        if (fullLogging) {
+            headers = requestContext.getHeaders().toString();
+            entity = getRequestEntityBody(requestContext);
+        }
+
+        // Create LogDTO and save in CDI request scope
+        logDTO.setUser(userId);
+        logDTO.setRequestDt(new Date());
+        logDTO.setRequestEntity(entity);
+        logDTO.setRequestHeader(headers);
+        logDTO.setRequestPath(path);
     }
 
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Header: ").append(responseContext.getHeaders());
-        sb.append(" - Entity: ").append(getResponseEntityBody(responseContext));
-        log.info("HTTP RESPONSE : " + sb.toString());
+        try {
+            // Log everything
+            String headers = null;
+            String entity = null;
+            if (fullLogging) {
+                headers = responseContext.getHeaders().toString();
+                entity = getResponseEntityBody(responseContext);
+            }
+            logDTO.setResponseDt(new Date());
+            logDTO.setResponseEntity(entity);
+            logDTO.setResponseHeader(headers);
+
+            // Update database
+            logDAO.create(logDTO);
+        } catch (Exception e) {
+            log.logp(Level.SEVERE, this.getClass().getName(), "filter", e.getMessage(), e);
+            throw new WebApplicationException(e.getMessage(), Response.Status.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -58,7 +101,7 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
      * @param requestContext
      * @return
      */
-    private String getRequestEntityBody(ContainerRequestContext requestContext) {
+    private String getRequestEntityBody(ContainerRequestContext requestContext) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         InputStream in = requestContext.getEntityStream();
 
@@ -78,7 +121,7 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
             requestContext.setEntityStream(new ByteArrayInputStream(requestEntity));
 
         } catch (IOException ex) {
-            //Handle logging error
+            throw new IOException(ex);
         }
         return b.toString();
     }

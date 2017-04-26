@@ -18,4 +18,8 @@ import java.io.Serializable;
 public class CreateUserResponseDTO implements Serializable {
     private String id;
     private String password;
+
+    public CreateUserResponseDTO(String id) {
+        this.id = id;
+    }
 }
