@@ -20,7 +20,8 @@
         <jjwtVersion>0.7.0</jjwtVersion>
         <resteasyVersion>3.0.19.Final</resteasyVersion>
         <apacheCommonsVersion>2.5</apacheCommonsVersion>
-        <poiVersion>3.15</poiVersion>
+        <poiVersion>3.16</poiVersion>
+        <esapiVersion>2.1.0.1</esapiVersion>
     </properties>
 
     <dependencyManagement>
@@ -144,6 +145,16 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>${poiVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poiVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.owasp.esapi</groupId>
+            <artifactId>esapi</artifactId>
+            <version>${esapiVersion}</version>
         </dependency>
 
     </dependencies>
