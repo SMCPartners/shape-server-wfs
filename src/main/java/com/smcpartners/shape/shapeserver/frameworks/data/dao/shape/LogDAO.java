@@ -1,6 +1,6 @@
 package com.smcpartners.shape.shapeserver.frameworks.data.dao.shape;
 
-import com.smcpartners.shape.shapeserver.crosscutting.logging.dto.LogDTO;
+import com.smcpartners.shape.shapeserver.shared.dto.common.LogDTO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.CrudDAO;
 
 /**

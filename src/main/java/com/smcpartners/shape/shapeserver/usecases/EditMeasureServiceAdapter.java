@@ -17,13 +17,14 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Responsible:<br/>
- * 1. The ADMIN can edit a measure.
+ * 1. The ADMIN can edit a measure.</br>
+ * 2. Can't add a measure if the name matches a currently active measure</br>
  * <p>
  * Created by johndestefano on 11/4/15.
  * <p>
@@ -38,7 +39,7 @@ public class EditMeasureServiceAdapter implements EditMeasureService {
     @EJB
     private MeasureDAO measureDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     public EditMeasureServiceAdapter() {
@@ -53,7 +54,16 @@ public class EditMeasureServiceAdapter implements EditMeasureService {
     @Logged
     public BooleanValueDTO editMeasure(MeasureDTO measure) throws UseCaseException {
         try {
-            measureDAO.update(measure, measure.getId());
+
+            // Check to see if an active Measure is in the db with the same name
+            List<MeasureDTO> activeMeasures = measureDAO.findActiveMeasuresByName(measure.getName());
+
+            if (activeMeasures.size() == 0) {
+                measureDAO.update(measure, measure.getId());
+            } else {
+                throw new Exception("Active measure with name already exists!");
+            }
+
             // Return value
             return new BooleanValueDTO(true);
         } catch (Exception e) {

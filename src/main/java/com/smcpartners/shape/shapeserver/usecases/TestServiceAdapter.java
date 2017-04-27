@@ -26,7 +26,7 @@ public class TestServiceAdapter implements TestService  {
     @ConfigurationValue("com.smc.server-core.mail.MAIL_SERVER_ADDRESS")
     private String mailAdd;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     public TestServiceAdapter() {

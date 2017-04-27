@@ -1,6 +1,9 @@
 package com.smcpartners.shape.shapeserver.gateway.rest.mappedexceptions;
 
+import com.smcpartners.shape.shapeserver.shared.dto.common.ErrorMsgResponse;
+
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -21,12 +24,15 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
             WebApplicationException wae = (WebApplicationException) throwable;
             return Response
                     .status(wae.getResponse().getStatus())
-                    .entity(wae.getMessage())
+                    .entity(new ErrorMsgResponse(wae.getResponse().getStatus(), wae.getMessage()))
+                    .type(MediaType.APPLICATION_JSON)
                     .build();
         } else {
             return Response
-                    .status(Response.Status.UNAUTHORIZED)
-                    .entity(throwable.getCause())
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(new ErrorMsgResponse(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+                            throwable.getMessage()))
+                    .type(MediaType.APPLICATION_JSON)
                     .build();
         }
     }

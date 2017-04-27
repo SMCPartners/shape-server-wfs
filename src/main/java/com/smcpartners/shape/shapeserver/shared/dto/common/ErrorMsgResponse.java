@@ -21,7 +21,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorMsgResponse implements Serializable {
-    private int errCode;
     private int httpResponseCode;
     private String errMsg;
 }

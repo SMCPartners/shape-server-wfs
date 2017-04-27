@@ -39,7 +39,7 @@ public class FindAllUsersServiceAdapter implements FindAllUsersService {
     @EJB
     private UserDAO userDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     /**

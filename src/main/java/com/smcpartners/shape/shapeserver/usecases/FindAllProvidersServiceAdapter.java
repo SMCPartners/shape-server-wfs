@@ -42,7 +42,7 @@ public class FindAllProvidersServiceAdapter implements FindAllProvidersService {
     @EJB
     private ProviderDAO providerDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     public FindAllProvidersServiceAdapter() {

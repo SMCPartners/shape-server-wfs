@@ -59,7 +59,7 @@ public class ShowAppHistDemographicServiceAdapter implements ShowAppHistDemograp
     @EJB
     private OrganizationDAO oDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     /**

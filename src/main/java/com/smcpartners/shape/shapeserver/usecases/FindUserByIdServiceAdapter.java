@@ -39,7 +39,7 @@ public class FindUserByIdServiceAdapter implements FindUserByIdService {
     @EJB
     private UserDAO userDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     /**

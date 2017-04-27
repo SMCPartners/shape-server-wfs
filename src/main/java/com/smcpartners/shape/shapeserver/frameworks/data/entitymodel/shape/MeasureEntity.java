@@ -22,7 +22,9 @@ import javax.persistence.*;
         @NamedQuery(name = "Measure.findAll",
                 query = "SELECT OBJECT(m) FROM MeasureEntity m"),
         @NamedQuery(name = "Measure.findAllById",
-                query = "SELECT OBJECT(m) FROM MeasureEntity m WHERE m.id = :id")
+                query = "SELECT OBJECT(m) FROM MeasureEntity m WHERE m.id = :id"),
+        @NamedQuery(name = "Measure.findAllByName",
+                query = "SELECT OBJECT(m) FROM MeasureEntity m WHERE m.name = :name and m.active = TRUE")
 })
 @Data
 @NoArgsConstructor

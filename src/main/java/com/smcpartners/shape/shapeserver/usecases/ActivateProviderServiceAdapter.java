@@ -32,7 +32,7 @@ public class ActivateProviderServiceAdapter implements ActivateProviderService {
     @Inject
     private Logger log;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     public ActivateProviderServiceAdapter() {

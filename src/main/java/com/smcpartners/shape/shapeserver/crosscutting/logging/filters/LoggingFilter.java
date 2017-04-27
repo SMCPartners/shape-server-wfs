@@ -1,28 +1,16 @@
 package com.smcpartners.shape.shapeserver.crosscutting.logging.filters;
 
-/**
- * Responsibility: </br>
- * 1. </br>
- * 2. </br>
- * Created By: johndestefano
- * Date: 4/22/17
- */
-
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
-import com.smcpartners.shape.shapeserver.crosscutting.logging.dto.LogDTO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.LogDAO;
+import com.smcpartners.shape.shapeserver.shared.dto.common.LogDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
 import org.apache.commons.io.IOUtils;
-import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.container.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.ByteArrayInputStream;
@@ -33,8 +21,17 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/**
+ * Responsibility: </br>
+ * 1. Run this filter PreMatch. This is important!</br>
+ * 2. Log request and response data.</br>
+ * Created By: johndestefano
+ * Date: 4/22/17
+ */
 @Logged
 @Provider
+@PreMatching
 public class LoggingFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
     @Inject
@@ -57,6 +54,12 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
     @Inject
     private LogDTO logDTO;
 
+    /**
+     * Will be populated on secure requests
+     */
+    @Inject
+    private UserExtras userExtras;
+
     @EJB
     private LogDAO logDAO;
 
@@ -64,8 +67,6 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         if (doLogging) {
-            String userId = getUserId(requestContext);
-            userId = userId == null ? "unknown" : userId;
             String path = requestContext.getUriInfo().getPath();
 
             // Log everything
@@ -77,7 +78,6 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
             }
 
             // Save in CDI request scope
-            logDTO.setUser(userId);
             logDTO.setRequestDt(new Date());
             logDTO.setRequestEntity(entity);
             logDTO.setRequestHeader(headers);
@@ -99,6 +99,11 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
                 logDTO.setResponseDt(new Date());
                 logDTO.setResponseEntity(entity);
                 logDTO.setResponseHeader(headers);
+
+                // If this is a request that was secured (@Secure) then
+                // get the user id. UserExtras will only be populated
+                // if secured.
+                logDTO.setUser(userExtras.getUserId());
 
                 // Update database
                 logDAO.create(logDTO);
@@ -148,22 +153,4 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
             return "";
         }
     }
-
-    /**
-     * Get the user id from the context
-     *
-     * @param requestContext
-     * @return - Requesting users id or null if not present
-     */
-    private String getUserId(ContainerRequestContext requestContext) {
-        String userId = null;
-        try {
-            UserExtras userExtras = (UserExtras) ResteasyProviderFactory.getContextDataMap().get(UserExtras.class);
-            userId = userExtras.getUserId();
-        } catch (Exception e) {
-            // Intentionally blank
-        }
-        return userId;
-    }
-
 }

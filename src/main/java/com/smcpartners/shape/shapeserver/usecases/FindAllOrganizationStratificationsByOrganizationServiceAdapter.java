@@ -39,7 +39,7 @@ public class FindAllOrganizationStratificationsByOrganizationServiceAdapter impl
     @EJB
     private OrganizationStratificationDAO organizationStratificationDAO;
 
-   @Context
+   @Inject
     private UserExtras userExtras;
 
     public FindAllOrganizationStratificationsByOrganizationServiceAdapter() {

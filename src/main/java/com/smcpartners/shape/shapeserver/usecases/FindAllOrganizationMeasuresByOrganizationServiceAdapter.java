@@ -40,7 +40,7 @@ public class FindAllOrganizationMeasuresByOrganizationServiceAdapter implements 
     @EJB
     private OrganizationMeasureDAO organizationMeasureDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     public FindAllOrganizationMeasuresByOrganizationServiceAdapter() {

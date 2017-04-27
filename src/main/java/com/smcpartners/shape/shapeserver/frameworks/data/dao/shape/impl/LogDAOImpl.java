@@ -1,6 +1,6 @@
 package com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.impl;
 
-import com.smcpartners.shape.shapeserver.crosscutting.logging.dto.LogDTO;
+import com.smcpartners.shape.shapeserver.shared.dto.common.LogDTO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.LogDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.entitymodel.shape.LogEntity;
 import com.smcpartners.shape.shapeserver.frameworks.producers.annotations.ShapeDatabase;
@@ -36,6 +36,7 @@ public class LogDAOImpl extends AbstractCrudDAO<LogDTO, LogEntity, Integer> impl
         et.setResponseDt(dto.getResponseDt());
         et.setResponseEntity(dto.getResponseEntity());
         et.setResponseHeader(dto.getResponseHeader());
+        et.setUser(dto.getUser());
         return et;
     }
 
@@ -55,6 +56,7 @@ public class LogDAOImpl extends AbstractCrudDAO<LogDTO, LogEntity, Integer> impl
         dto.setRequestEntity(entity.getRequestEntity());
         dto.setRequestDt(entity.getRequestDt());
         dto.setId(entity.getId());
+        dto.setUser(entity.getUser());
         return dto;
     }
 }

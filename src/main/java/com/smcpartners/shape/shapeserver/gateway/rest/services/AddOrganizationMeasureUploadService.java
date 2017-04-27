@@ -18,7 +18,7 @@ import javax.ws.rs.Produces;
  * Changes:<b/>
  */
 @Path("/admin")
-public interface AddMeasureUploadService {
+public interface AddOrganizationMeasureUploadService {
 
     @POST
     @Path("/measure/add/upload")

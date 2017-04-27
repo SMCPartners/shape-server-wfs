@@ -41,7 +41,7 @@ public class EditUserAccountServiceAdapter implements EditUserAccountService {
     @EJB
     private UserDAO userDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
 

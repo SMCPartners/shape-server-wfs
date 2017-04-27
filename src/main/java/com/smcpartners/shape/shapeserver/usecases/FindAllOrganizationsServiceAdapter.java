@@ -37,7 +37,7 @@ public class FindAllOrganizationsServiceAdapter implements FindAllOrganizationsS
     @EJB
     private OrganizationDAO organizationDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     public FindAllOrganizationsServiceAdapter() {

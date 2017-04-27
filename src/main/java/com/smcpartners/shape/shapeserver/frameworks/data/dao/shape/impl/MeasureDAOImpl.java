@@ -50,6 +50,24 @@ public class MeasureDAOImpl extends AbstractCrudDAO<MeasureDTO, MeasureEntity, I
     }
 
     @Override
+    public List<MeasureDTO> findActiveMeasuresByName(String measureName) throws DataAccessException {
+        try {
+            List<MeasureEntity> mLst = em.createNamedQuery("Measure.findAllByName")
+                    .setParameter("name", measureName)
+                    .getResultList();
+            List<MeasureDTO> retLst = new ArrayList<>();
+            mLst.forEach(Errors.rethrow().wrap(m -> {
+                MeasureDTO dto = this.mapEntityToDTO(m);
+                retLst.add(dto);
+            }));
+            return retLst;
+        } catch(Exception e) {
+            log.logp(Level.SEVERE, this.getClass().getName(), "findActiveMeasuresByName", e.getMessage(), e);
+            throw new DataAccessException(e);
+        }
+    }
+
+    @Override
     public List<MeasureDTO> findAllMeasures() throws DataAccessException {
         try {
             List<MeasureEntity> mLst = em.createNamedQuery("Measure.findAll").getResultList();

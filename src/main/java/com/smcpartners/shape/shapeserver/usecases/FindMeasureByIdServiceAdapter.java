@@ -43,7 +43,7 @@ public class FindMeasureByIdServiceAdapter implements FindMeasureByIdService {
     @EJB
     private UserDAO userDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     public FindMeasureByIdServiceAdapter() {

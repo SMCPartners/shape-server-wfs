@@ -46,7 +46,7 @@ public class UserRequestPasswordQuestionServiceAdapter implements UserRequestPas
     @Inject
     private MathUtils mathUtils;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     /**

@@ -22,12 +22,13 @@ public class FileUploadRequestDTO {
     private int fileUploadId;
     private String userId;
     private int measureEntityId;
+    private String measureEntityName;
     private Date uploadDt;
     private String uploadedB64File;
 
-    public FileUploadRequestDTO(String userId, int measureEntityId, Date uploadDt, String uploadedB64File) {
+    public FileUploadRequestDTO(String userId, String measureEntityName, Date uploadDt, String uploadedB64File) {
         this.userId = userId;
-        this.measureEntityId = measureEntityId;
+        this.measureEntityName = measureEntityName;
         this.uploadDt = uploadDt;
         this.uploadedB64File = uploadedB64File;
     }

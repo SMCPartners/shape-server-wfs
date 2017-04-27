@@ -43,7 +43,7 @@ public class ActivateOrganizationServiceAdapter implements ActivateOrganizationS
     @EJB
     private OrganizationDAO organizationDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     /**

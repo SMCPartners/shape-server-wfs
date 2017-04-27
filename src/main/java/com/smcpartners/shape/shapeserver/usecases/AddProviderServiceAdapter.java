@@ -38,7 +38,7 @@ public class AddProviderServiceAdapter implements AddProviderService {
     @EJB
     private ProviderDAO providerDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
 

@@ -39,10 +39,12 @@ public class InactivateProviderServiceAdapter implements InactivateProviderServi
     @EJB
     private ProviderDAO providerDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
-
+    /**
+     * Default Constructor
+     */
     public InactivateProviderServiceAdapter() {
     }
 

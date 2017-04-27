@@ -44,11 +44,11 @@ public class AuthCreateUserAccountServiceAdapter implements AuthCreateUserAccoun
     @EJB
     private UserDAO userDAO;
 
-    @Context
-    private UserExtras userExtras;
-
     @EJB
     private SendMailService sms;
+
+    @Inject
+    private UserExtras userExtras;
 
 
     public AuthCreateUserAccountServiceAdapter() {

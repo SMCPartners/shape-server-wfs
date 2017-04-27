@@ -40,7 +40,7 @@ public class AddOrganizationStratificationServiceAdapter implements AddOrganizat
     @EJB
     private OrganizationStratificationDAO organizationStratificationDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
 

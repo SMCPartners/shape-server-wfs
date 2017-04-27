@@ -46,7 +46,7 @@ public class FindMeasuresByIdServiceAdapter implements FindMeasuresByIdService {
     @EJB
     private UserDAO userDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     /**

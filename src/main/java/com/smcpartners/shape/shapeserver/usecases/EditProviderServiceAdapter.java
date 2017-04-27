@@ -39,7 +39,7 @@ public class EditProviderServiceAdapter implements EditProviderService {
     @EJB
     private ProviderDAO providerDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
 

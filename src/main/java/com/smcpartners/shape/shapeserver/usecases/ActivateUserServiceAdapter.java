@@ -42,7 +42,7 @@ public class ActivateUserServiceAdapter implements ActivateUserService {
     @EJB
     private UserDAO userDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     /**

@@ -41,7 +41,7 @@ public class AddOrganizationMeasureServiceAdapter implements AddOrganizationMeas
     @EJB
     private OrganizationMeasureDAO organizationMeasureDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
 

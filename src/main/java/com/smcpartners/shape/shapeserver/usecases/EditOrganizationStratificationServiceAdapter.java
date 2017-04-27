@@ -40,7 +40,7 @@ public class EditOrganizationStratificationServiceAdapter implements EditOrganiz
     @EJB
     private OrganizationStratificationDAO organizationStratificationDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
 

@@ -5,9 +5,9 @@ import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.UserDTO;
+import com.smcpartners.shape.shapeserver.shared.exceptions.NotAuthorizedToPerformActionException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UserNotActiveException;
 import com.smcpartners.shape.shapeserver.shared.utils.JWTUtils;
-import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.annotation.Priority;
@@ -40,8 +40,6 @@ import java.util.regex.Pattern;
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class BearerTokenSecurityFilter implements ContainerRequestFilter {
-
-    private static Pattern tokenPattern = Pattern.compile("^Bearer$", Pattern.CASE_INSENSITIVE);
 
     @Inject
     private Logger log;
@@ -121,6 +119,11 @@ public class BearerTokenSecurityFilter implements ContainerRequestFilter {
                 String role = tokenValues.get("role");
                 int orgId = Integer.parseInt(tokenValues.get("orgId"));
 
+                // Create UserExtras
+                userExtras.setOrgId(orgId);
+                userExtras.setRole(SecurityRoleEnum.valueOf(role));
+                userExtras.setUserId(userId);
+
                 // Check roles, method roles override class roles if both present
                 // Method first then class
                 // Has to be on method or class for this to be called
@@ -135,16 +138,6 @@ public class BearerTokenSecurityFilter implements ContainerRequestFilter {
                             userNotAuthorizedError,
                             Response.status(Response.Status.UNAUTHORIZED));
                 }
-
-                // Create UserExtras
-                UserExtras userExtras = new UserExtras();
-                userExtras.setOrgId(orgId);
-                userExtras.setRole(SecurityRoleEnum.valueOf(role));
-                userExtras.setUserId(userId);
-
-                // push to context
-                ResteasyProviderFactory.pushContext(UserExtras.class, userExtras);
-
             } else {
                 throw new NotAuthorizedException(
                         authHeaderError,
@@ -152,7 +145,12 @@ public class BearerTokenSecurityFilter implements ContainerRequestFilter {
             }
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "filter", e.getMessage(), e);
-            throw new WebApplicationException(e.getMessage(), Response.Status.INTERNAL_SERVER_ERROR);
+
+            if (e instanceof NotAuthorizedToPerformActionException) {
+                throw (NotAuthorizedToPerformActionException)e;
+            } else {
+                throw new WebApplicationException(e.getMessage(), Response.Status.INTERNAL_SERVER_ERROR);
+            }
         }
     }
 }

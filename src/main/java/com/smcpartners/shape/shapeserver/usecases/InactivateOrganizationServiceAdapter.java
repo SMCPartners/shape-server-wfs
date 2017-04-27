@@ -35,6 +35,9 @@ public class InactivateOrganizationServiceAdapter implements InactivateOrganizat
     @EJB
     private OrganizationDAO organizationDAO;
 
+    /**
+     * Default Constructor
+     */
     public InactivateOrganizationServiceAdapter() {
     }
 

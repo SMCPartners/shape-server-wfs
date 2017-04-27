@@ -41,7 +41,7 @@ public class EditOrganizationMeasureServiceAdapter implements EditOrganizationMe
     @EJB
     private OrganizationMeasureDAO organizationMeasureDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     /**

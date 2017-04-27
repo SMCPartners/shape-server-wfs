@@ -38,7 +38,7 @@ public class ChangePasswordServiceAdapter implements ChangePasswordService {
     @EJB
     private UserDAO dao;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     /**

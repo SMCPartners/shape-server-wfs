@@ -19,7 +19,7 @@ import java.util.Date;
 public class LogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
+    @Column(name = "id", nullable = false, insertable = false, updatable = false)
     private int id;
 
     @Basic
@@ -51,9 +51,9 @@ public class LogEntity {
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "requestDt", nullable = false, updatable = false)
+    @Column(name = "responseDt", nullable = false, updatable = false)
     private Date responseDt;
 
-    @Column(name = "id", updatable = false, length = 25)
+    @Column(name = "userId", updatable = false, length = 25)
     private String user;
 }

@@ -1,4 +1,4 @@
-package com.smcpartners.shape.shapeserver.crosscutting.logging.dto;
+package com.smcpartners.shape.shapeserver.shared.dto.common;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -43,7 +43,7 @@ public class AddOrganizationServiceAdapter implements AddOrganizationService {
     @EJB
     private OrganizationDAO organizationDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
 

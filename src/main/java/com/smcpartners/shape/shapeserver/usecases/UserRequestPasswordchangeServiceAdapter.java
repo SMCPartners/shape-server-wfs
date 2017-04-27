@@ -48,7 +48,7 @@ public class UserRequestPasswordchangeServiceAdapter implements UserRequestPassw
     @Inject
     private MathUtils mathUtils;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
     /**

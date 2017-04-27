@@ -57,9 +57,12 @@ public class ShowAggregateComparisonServiceAdapter implements ShowAggregateCompa
     @EJB
     private OrganizationMeasureDAO organizationMeasureDAO;
 
-    @Context
+    @Inject
     private UserExtras userExtras;
 
+    /**
+     * Default Constructor
+     */
     public ShowAggregateComparisonServiceAdapter() {
     }
 
