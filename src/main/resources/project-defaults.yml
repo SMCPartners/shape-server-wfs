@@ -49,15 +49,16 @@
 #          default:
 #            disallowed-methods: TRACE TRACK
 
-swarm:
-  debug:
-    port: 9000
+# swarm:
+#  debug:
+#    port: 9000
 
 com:
   smc:
     server-core:
       logging:
-        full_click_logging: false
+        do_logging: true
+        full_logging: false
       mail:
         MAIL_SERVER_ADDRESS: localhost
         MAIL_FROM_ADDRESS: info@ehealthconnecticut.org
@@ -67,11 +68,13 @@ com:
         MAIL_DEBUG: false
         MAIL_MESSAGE:
       security:
-        appKey: <Generate your own. See JWTUtils>
+        appKey: pVWWoXdNAJ14EP2/4Ow4XVENRJVTgO/wB/+AriuIcrLMhWTswGu2SCRtMLam3Zcm6giQvxZIVR3VKEflrREYSw==
         expireLength: 0
       errorMsgs:
         authHeaderError: Missing or invalid Authorization header.
         inactiveUserError: User does not have an active account.
         userNotFoundError: Unknow user.
         userNotAuthorizedError: The user is not authroized.
+      fileUpload:
+        measureFileUploadKey: measure_type_1.xlsx
 

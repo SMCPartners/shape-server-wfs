@@ -83,7 +83,7 @@ public class JWTUtils {
         return Jwts.builder()
                 .setSubject(userId)
                 .setHeaderParam(ROLE, role)
-                .setHeaderParam(ORGID, ""+orgId)
+                .setHeaderParam(ORGID, "" + orgId)
                 .setExpiration(neverExpire ? null : new Date(this.calcExpire()))
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
@@ -110,7 +110,7 @@ public class JWTUtils {
         try {
             Jwts.parser().setSigningKey(key).parseClaimsJws(token);
             return true;
-        } catch (SignatureException se ) {
+        } catch (SignatureException se) {
             return false;
         }
     }
@@ -179,6 +179,14 @@ public class JWTUtils {
         Date d = new Date();
         long expDate = d.getTime() + expireLength.longValue();
         return expDate;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Key key = MacProvider.generateKey();
+        String eKey = new String(Base64.getEncoder().encode(key.getEncoded()));
+        String alg = key.getAlgorithm();
+        System.out.println("eKey: " + eKey);
+        System.out.println("alg: " + alg);
     }
 
 }

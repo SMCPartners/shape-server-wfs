@@ -52,6 +52,7 @@ public class OrganizationMeasureDTO implements Serializable {
     private Integer raceOtherNum;
     private Integer raceOtherDen;
     private Integer reportPeriodYear;
+    private Integer reportPeriodQuarter;
     private int organizationId;
     private int measureId;
     private String userId;
