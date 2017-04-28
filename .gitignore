@@ -99,3 +99,4 @@ hs_err_pid*
 /save/
 /target/
 /save/key
+!/src/main/java/com/smcpartners/shape/shapeserver/usecases/AddOrganizationMeasureUploadServiceAdapter.java
