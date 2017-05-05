@@ -24,7 +24,7 @@ import javax.ws.rs.core.Response;
  * </p>
  */
 @Path("/common")
-public interface Auth_Logout_Service {
+public interface Logout_Service {
 
     @PUT
     @Path("/logout/{userid}")

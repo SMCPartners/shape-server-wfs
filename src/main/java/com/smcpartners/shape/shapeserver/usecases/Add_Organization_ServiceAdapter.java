@@ -37,9 +37,6 @@ public class Add_Organization_ServiceAdapter implements Add_Organization_Service
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
-
-    @EJB
     private OrganizationDAO organizationDAO;
 
     @Inject

@@ -23,7 +23,7 @@ import java.util.List;
  * </p>
  */
 @Path("/common")
-public interface Show_List_View_Service {
+public interface Get_List_View_Service {
 
     @GET
     @NoCache

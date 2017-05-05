@@ -37,9 +37,6 @@ public class Activate_Organization_ServiceAdapter implements Activate_Organizati
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
-
-    @EJB
     private OrganizationDAO organizationDAO;
 
     @Inject

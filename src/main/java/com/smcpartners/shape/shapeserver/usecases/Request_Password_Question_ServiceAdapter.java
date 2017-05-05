@@ -3,7 +3,7 @@ package com.smcpartners.shape.shapeserver.usecases;
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
-import com.smcpartners.shape.shapeserver.gateway.rest.services.User_Request_Password_Question_Service;
+import com.smcpartners.shape.shapeserver.gateway.rest.services.Request_Password_Question_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.UserDTO;
@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  * </p>
  */
 @Path("/common")
-public class User_Request_Password_Question_ServiceAdapter implements User_Request_Password_Question_Service {
+public class Request_Password_Question_ServiceAdapter implements Request_Password_Question_Service {
     @Inject
     private Logger log;
 
@@ -51,7 +51,7 @@ public class User_Request_Password_Question_ServiceAdapter implements User_Reque
     /**
      * Constructor
      */
-    public User_Request_Password_Question_ServiceAdapter() {
+    public Request_Password_Question_ServiceAdapter() {
     }
 
     //TODO: Is this safe? Anyone could change anyone else's password?

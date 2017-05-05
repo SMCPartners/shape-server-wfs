@@ -42,9 +42,6 @@ public class Find_Measures_By_Id_ServiceAdapter implements Find_Measures_By_Id_S
     @EJB
     private MeasureDAO measureDAO;
 
-    @EJB
-    private UserDAO userDAO;
-
     @Inject
     private UserExtras userExtras;
 

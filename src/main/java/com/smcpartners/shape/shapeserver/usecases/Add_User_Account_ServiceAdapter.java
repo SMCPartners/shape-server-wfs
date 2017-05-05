@@ -4,7 +4,7 @@ import com.smcpartners.shape.shapeserver.crosscutting.email.SendMailService;
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
-import com.smcpartners.shape.shapeserver.gateway.rest.services.Auth_Create_User_Account_Service;
+import com.smcpartners.shape.shapeserver.gateway.rest.services.Create_User_Account_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.BooleanValueDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.common.MailDTO;
@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  * Changes:<b/>
  */
 @Path("/admin")
-public class Auth_Create_User_Account_ServiceAdapter implements Auth_Create_User_Account_Service {
+public class Add_User_Account_ServiceAdapter implements Create_User_Account_Service {
 
     @Inject
     private Logger log;
@@ -50,7 +50,7 @@ public class Auth_Create_User_Account_ServiceAdapter implements Auth_Create_User
     private UserExtras userExtras;
 
 
-    public Auth_Create_User_Account_ServiceAdapter() {
+    public Add_User_Account_ServiceAdapter() {
     }
 
     @Override

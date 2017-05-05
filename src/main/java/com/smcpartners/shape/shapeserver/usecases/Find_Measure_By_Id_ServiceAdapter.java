@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,9 +40,6 @@ public class Find_Measure_By_Id_ServiceAdapter implements Find_Measure_By_Id_Ser
     @EJB
     private MeasureDAO measureDAO;
 
-    @EJB
-    private UserDAO userDAO;
-
     @Inject
     private UserExtras userExtras;
 
@@ -55,7 +53,7 @@ public class Find_Measure_By_Id_ServiceAdapter implements Find_Measure_By_Id_Ser
     @Produces("application/json")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.DPH_USER, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED})
     @Logged
-    public MeasureDTO findMeasureById(int measureId) throws UseCaseException {
+    public MeasureDTO findMeasureById(@PathParam("measureId") int measureId) throws UseCaseException {
         try {
             return measureDAO.findById(measureId);
         } catch (Exception e) {

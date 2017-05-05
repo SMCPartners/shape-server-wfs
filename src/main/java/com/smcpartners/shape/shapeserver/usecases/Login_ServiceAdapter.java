@@ -2,7 +2,7 @@ package com.smcpartners.shape.shapeserver.usecases;
 
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
-import com.smcpartners.shape.shapeserver.gateway.rest.services.Auth_Login_Service;
+import com.smcpartners.shape.shapeserver.gateway.rest.services.Login_Service;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.UserDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.request.LoginRequestDTO;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * </p>
  */
 @Path("/common")
-public class Auth_Login_ServiceAdapter implements Auth_Login_Service {
+public class Login_ServiceAdapter implements Login_Service {
 
     @Inject
     private Logger log;
@@ -46,7 +46,7 @@ public class Auth_Login_ServiceAdapter implements Auth_Login_Service {
     /**
      * Default Constructor
      */
-    public Auth_Login_ServiceAdapter(){
+    public Login_ServiceAdapter(){
     }
 
     @Override

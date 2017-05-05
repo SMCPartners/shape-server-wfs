@@ -1,0 +1,8 @@
+<div>
+    <div *ngIf="user | async as user; else loading;">
+        Hello {{user.last}}, {{user.first}}!
+    </div>
+
+    <template #loading>Loading...</template>
+    <p data-th-text="${measure.name}"></p>
+</div>

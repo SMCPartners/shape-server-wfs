@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
  * Created by bhokanson on 12/3/2015.
  */
 @Path("/common")
-public interface User_Request_Password_Change_Service {
+public interface Request_Password_Change_Service {
 
     @POST
     @Path("/password_change")

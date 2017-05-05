@@ -3,7 +3,7 @@ package com.smcpartners.shape.shapeserver.usecases;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.MeasureDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureDAO;
-import com.smcpartners.shape.shapeserver.gateway.rest.services.Show_List_View_Service;
+import com.smcpartners.shape.shapeserver.gateway.rest.services.Get_List_View_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.MeasureDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDTO;
@@ -36,13 +36,10 @@ import java.util.logging.Logger;
  * </p>
  */
 @Path("/common")
-public class Show_List_View_ServiceAdapter implements Show_List_View_Service {
+public class Get_List_View_ServiceAdapter implements Get_List_View_Service {
 
     @Inject
     private Logger log;
-
-    @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
 
     @EJB
     private MeasureDAO mDAO;
@@ -53,7 +50,7 @@ public class Show_List_View_ServiceAdapter implements Show_List_View_Service {
     /**
      * Default Constructor
      */
-    public Show_List_View_ServiceAdapter() {
+    public Get_List_View_ServiceAdapter() {
     }
 
     @Override

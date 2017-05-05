@@ -4,7 +4,7 @@ package com.smcpartners.shape.shapeserver.usecases;
 
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
-import com.smcpartners.shape.shapeserver.gateway.rest.services.Auth_Logout_Service;
+import com.smcpartners.shape.shapeserver.gateway.rest.services.Logout_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 
@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 //TODO: Seems like any user role should be able to call this?
 //TODO: The logout functionality is handled on the front end, not sure if we should delete this? BH 3/25
 @Path("/common")
-public class Auth_Logout_ServiceAdapter implements Auth_Logout_Service {
+public class Logout_ServiceAdapter implements Logout_Service {
 
     @Inject
     private Logger log;
@@ -41,7 +41,7 @@ public class Auth_Logout_ServiceAdapter implements Auth_Logout_Service {
     /**
      * Default Constructor
      */
-    public Auth_Logout_ServiceAdapter() {
+    public Logout_ServiceAdapter() {
     }
 
     @Override

@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  * </p>
  */
 @Path("/admin")
-public class Select_Measure_ServiceAdapter implements Select_Measure_Service {
+public class Find_Measure_ServiceAdapter implements Select_Measure_Service {
 
     @Inject
     private Logger log;
@@ -43,7 +43,7 @@ public class Select_Measure_ServiceAdapter implements Select_Measure_Service {
     /**
      * Default constructor
      */
-    public Select_Measure_ServiceAdapter() {
+    public Find_Measure_ServiceAdapter() {
     }
 
     @Override

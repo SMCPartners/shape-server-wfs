@@ -22,7 +22,7 @@ import java.util.List;
  * </p>
  */
 @Path("/common")
-public interface Show_App_Hist_Demographic_Service {
+public interface Find_App_Hist_Demographic_Service {
 
     @GET
     @NoCache

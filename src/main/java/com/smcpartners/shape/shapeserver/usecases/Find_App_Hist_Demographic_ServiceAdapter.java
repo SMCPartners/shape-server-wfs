@@ -5,8 +5,7 @@ import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.MeasureDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureDAO;
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
-import com.smcpartners.shape.shapeserver.gateway.rest.services.Show_App_Hist_Demographic_Service;
+import com.smcpartners.shape.shapeserver.gateway.rest.services.Find_App_Hist_Demographic_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.MeasureDTO;
@@ -38,16 +37,13 @@ import java.util.logging.Logger;
  * Changes:<b/>
  */
 @Path("/common")
-public class Show_App_Hist_Demographic_ServiceAdapter implements Show_App_Hist_Demographic_Service {
+public class Find_App_Hist_Demographic_ServiceAdapter implements Find_App_Hist_Demographic_Service {
 
     @Inject
     private Logger log;
 
     @EJB
     private OrganizationMeasureDAO organizationMeasureDAO;
-
-    @EJB
-    private UserDAO userDAO;
 
     @EJB
     private MeasureDAO mDAO;
@@ -64,7 +60,7 @@ public class Show_App_Hist_Demographic_ServiceAdapter implements Show_App_Hist_D
     /**
      * Default Constructor
      */
-    public Show_App_Hist_Demographic_ServiceAdapter() {
+    public Find_App_Hist_Demographic_ServiceAdapter() {
     }
 
     @Override

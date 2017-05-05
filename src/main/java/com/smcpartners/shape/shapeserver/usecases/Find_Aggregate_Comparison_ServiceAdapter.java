@@ -2,11 +2,10 @@ package com.smcpartners.shape.shapeserver.usecases;
 
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.MeasureDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
-import com.smcpartners.shape.shapeserver.gateway.rest.services.Show_Aggregate_Comparison_Service;
+import com.smcpartners.shape.shapeserver.gateway.rest.services.Find_Aggregate_Comparison_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationDTO;
@@ -39,16 +38,13 @@ import java.util.stream.Collectors;
  * </p>
  */
 @Path("/common")
-public class Show_Aggregate_Comparison_ServiceAdapter implements Show_Aggregate_Comparison_Service {
+public class Find_Aggregate_Comparison_ServiceAdapter implements Find_Aggregate_Comparison_Service {
 
     @Inject
     private Logger log;
 
     @EJB
     private UserDAO userDAO;
-
-    @EJB
-    private MeasureDAO mDAO;
 
     @EJB
     private OrganizationDAO oDAO;
@@ -62,7 +58,7 @@ public class Show_Aggregate_Comparison_ServiceAdapter implements Show_Aggregate_
     /**
      * Default Constructor
      */
-    public Show_Aggregate_Comparison_ServiceAdapter() {
+    public Find_Aggregate_Comparison_ServiceAdapter() {
     }
 
     @Override

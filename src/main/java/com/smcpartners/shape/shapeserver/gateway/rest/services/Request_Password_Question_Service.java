@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
  * Created by bhokanson on 12/3/2015.
  */
 @Path("/common")
-public interface User_Request_Password_Question_Service {
+public interface Request_Password_Question_Service {
 
     @GET
     @Path("/password_question/{userId}")

@@ -38,9 +38,6 @@ public class Add_Measure_ServiceAdapter implements Add_Measure_Service {
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
-
-    @EJB
     private MeasureDAO measureDAO;
 
     /**

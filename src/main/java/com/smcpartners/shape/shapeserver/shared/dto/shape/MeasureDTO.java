@@ -1,6 +1,5 @@
 package com.smcpartners.shape.shapeserver.shared.dto.shape;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

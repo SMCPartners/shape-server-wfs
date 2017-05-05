@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
  * </p>
  */
 @Path("/common")
-public interface Auth_Login_Service {
+public interface Login_Service {
 
     @POST
     @Path("/login")

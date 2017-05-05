@@ -21,7 +21,7 @@ import java.util.List;
  * </p>
  */
 @Path("/common")
-public interface Show_Aggregate_Comparison_Service {
+public interface Find_Aggregate_Comparison_Service {
 
     @GET
     @NoCache

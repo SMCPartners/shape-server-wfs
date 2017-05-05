@@ -18,7 +18,7 @@ import javax.ws.rs.Produces;
  * Changes:<b/>
  */
 @Path("/admin")
-public interface Auth_Create_User_Account_Service {
+public interface Create_User_Account_Service {
 
     @POST
     @Path("/create/user")
