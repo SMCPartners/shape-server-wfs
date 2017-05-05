@@ -1,4 +1,4 @@
-/.idea/**
+/.idea/
 /rest-tests/**
 /save/
-/target/**
+/target/
