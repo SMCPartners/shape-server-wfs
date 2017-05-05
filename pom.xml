@@ -22,7 +22,16 @@
         <apacheCommonsVersion>2.5</apacheCommonsVersion>
         <poiVersion>3.16</poiVersion>
         <esapiVersion>2.1.0.1</esapiVersion>
+        <thymeleaf.version>3.0.5.RELEASE</thymeleaf.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <name>jcenter</name>
+            <url>https://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -50,6 +59,26 @@
                     <execution>
                         <goals>
                             <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -156,6 +185,10 @@
             <artifactId>esapi</artifactId>
             <version>${esapiVersion}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
     </dependencies>
 </project>
