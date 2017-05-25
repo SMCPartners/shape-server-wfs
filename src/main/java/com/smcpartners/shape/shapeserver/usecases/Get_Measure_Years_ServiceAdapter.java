@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.*;
 import java.util.logging.Level;
@@ -53,7 +54,7 @@ public class Get_Measure_Years_ServiceAdapter implements Get_Measure_Years_Servi
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED,
             SecurityRoleEnum.DPH_USER})
     @Logged
-    public List<Integer> getMeasureYears(int orgId, int measureId) throws UseCaseException {
+    public List<Integer> getMeasureYears(@PathParam("orgId") int orgId, @PathParam("measureId") int measureId) throws UseCaseException {
         try {
 
             List<OrganizationMeasureDTO> measureList = organizationMeasureDAO.findAllOrganizationMeasureByOrgId(orgId);

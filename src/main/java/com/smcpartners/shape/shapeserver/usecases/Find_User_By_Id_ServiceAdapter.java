@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,7 +56,7 @@ public class Find_User_By_Id_ServiceAdapter implements Find_User_By_Id_Service {
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED,
                                         SecurityRoleEnum.DPH_USER})
     @Logged
-    public UserDTO findUser(String targetUserId) throws UseCaseException {
+    public UserDTO findUser(@PathParam("targetuserid") String targetUserId) throws UseCaseException {
         try {
             // The ADMIN can see anyone
             // ORG_ADMIN can only see users in their ORG

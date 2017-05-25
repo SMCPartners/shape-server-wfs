@@ -18,6 +18,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class Find_Aggregate_Comparison_ServiceAdapter implements Find_Aggregate_
     @Produces("application/json")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.DPH_USER, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED})
     @Logged
-    public List<List<Object>> showAggregateComparison(int measureId, int year) throws UseCaseException {
+    public List<List<Object>> showAggregateComparison(@PathParam("measureId") int measureId, @PathParam("year") int year) throws UseCaseException {
         try {
 
             // Get requesting users role

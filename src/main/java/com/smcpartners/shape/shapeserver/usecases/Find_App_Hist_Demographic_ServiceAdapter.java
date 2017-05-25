@@ -19,6 +19,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class Find_App_Hist_Demographic_ServiceAdapter implements Find_App_Hist_D
     @Produces("application/json")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.DPH_USER, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED})
     @Logged
-    public List<AppHistDemographicsDTO> showAppHistDemographic(int orgId, int measureId, int year) throws UseCaseException {
+    public List<AppHistDemographicsDTO> showAppHistDemographic(@PathParam("orgId") int orgId, @PathParam("measureId") int measureId, @PathParam("year") int year) throws UseCaseException {
         try{
 
             List<AppHistDemographicsDTO> retLst = new ArrayList<>();

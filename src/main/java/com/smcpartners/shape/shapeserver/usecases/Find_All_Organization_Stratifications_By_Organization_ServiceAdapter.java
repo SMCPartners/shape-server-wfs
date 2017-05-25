@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.List;
 import java.util.logging.Level;
@@ -51,7 +52,7 @@ public class Find_All_Organization_Stratifications_By_Organization_ServiceAdapte
     @Produces("application/json")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.DPH_USER, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED})
     @Logged
-    public List<OrganizationStratificationDTO> findAllOrganizationStratificationsByOrg(int orgId)throws UseCaseException {
+    public List<OrganizationStratificationDTO> findAllOrganizationStratificationsByOrg(@PathParam("orgId") int orgId)throws UseCaseException {
         try {
             // Admin can see all
             // Other only see their organization

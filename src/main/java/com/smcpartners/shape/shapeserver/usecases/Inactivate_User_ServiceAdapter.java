@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +57,7 @@ public class Inactivate_User_ServiceAdapter implements Inactivate_User_Service {
     @Produces("application/json")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.ORG_ADMIN})
     @Logged
-    public BooleanValueDTO inactivateUser(String targetUserId) throws UseCaseException {
+    public BooleanValueDTO inactivateUser(@PathParam("targetuserid") String targetUserId) throws UseCaseException {
         try {
             // The ADMIN can inactivate anyone
             // ORG_ADMIN can only inactivate users in their ORG

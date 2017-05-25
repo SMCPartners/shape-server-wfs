@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class Find_All_Organization_Measures_By_Organization_ServiceAdapter imple
     @Produces("application/json")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED, SecurityRoleEnum.DPH_USER})
     @Logged
-    public List<OrganizationMeasureDTO> findAllOrganizationMeasuresByOrg(int orgId) throws UseCaseException {
+    public List<OrganizationMeasureDTO> findAllOrganizationMeasuresByOrg(@PathParam("orgId") int orgId) throws UseCaseException {
         try {
             // Admin can see all
             // Other only see their organization

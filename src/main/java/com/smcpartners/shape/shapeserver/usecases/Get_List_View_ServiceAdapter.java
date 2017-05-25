@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class Get_List_View_ServiceAdapter implements Get_List_View_Service {
     @Path("/show/listView/{orgId}/{measureId}/{year}")
     @Produces("application/json")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.DPH_USER, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED})
-    public List<ListViewDTO> showListView(int orgId, int measureId, int year) throws UseCaseException {
+    public List<ListViewDTO> showListView(@PathParam("orgId") int orgId, @PathParam("measureId") int measureId, @PathParam("year") int year) throws UseCaseException {
         try {
 
             //set return list
