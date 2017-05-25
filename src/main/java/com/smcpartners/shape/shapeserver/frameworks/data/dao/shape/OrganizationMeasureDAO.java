@@ -50,6 +50,4 @@ public interface OrganizationMeasureDAO extends CrudDAO<OrganizationMeasureDTO, 
      * @throws DataAccessException
      */
     List<OrganizationMeasureDTO> findOrgMeasureByMeasureIdAndYearAndOrg(int measureId, int year, int orgId) throws DataAccessException;
-
-
 }
