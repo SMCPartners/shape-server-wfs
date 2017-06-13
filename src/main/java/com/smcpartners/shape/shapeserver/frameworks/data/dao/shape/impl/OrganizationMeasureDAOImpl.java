@@ -8,13 +8,17 @@ import com.smcpartners.shape.shapeserver.frameworks.data.entitymodel.shape.Organ
 import com.smcpartners.shape.shapeserver.frameworks.data.entitymodel.shape.UserEntity;
 import com.smcpartners.shape.shapeserver.frameworks.data.exceptions.DataAccessException;
 import com.smcpartners.shape.shapeserver.frameworks.producers.annotations.ShapeDatabase;
+import com.smcpartners.shape.shapeserver.shared.dto.common.NameDoubleValDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDTO;
+import com.smcpartners.shape.shapeserver.shared.dto.shape.response.OrgAvgAggregate;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 
 /**
@@ -128,6 +132,39 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
             return retLst;
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "findOrgMeasureByMeasureIdAndYearAndOrg", e.getMessage(), e);
+            throw new DataAccessException(e);
+        }
+    }
+
+    @Override
+    public Map<Integer, List<NameDoubleValDTO>> getAvgForAllByYearByMeasure(int measureId) throws DataAccessException {
+        try {
+            MeasureEntity me = em.find(MeasureEntity.class, measureId);
+            List<Object[]> omLst = em.createNamedQuery("OrganizationMeasure.avgByMeasureByYear", Object[].class)
+                    .setParameter("meas", me)
+                    .getResultList();
+
+            Map<Integer, List<NameDoubleValDTO>> retMap = new TreeMap<>();
+            if (omLst != null && omLst.size() > 0) {
+                omLst.forEach(Errors.rethrow().wrap(om -> {
+                    Integer year = (Integer) om[0];
+                    Integer orgId = (Integer) om[1];
+                    Double avg = (Double) om[2];
+
+                    List<NameDoubleValDTO> mapVal = retMap.get(orgId);
+                    if (mapVal == null) {
+                        mapVal = new ArrayList<NameDoubleValDTO>();
+                        retMap.put(orgId, mapVal);
+                    }
+
+                    NameDoubleValDTO nDDTO = new NameDoubleValDTO(year.toString(), avg);
+                    mapVal.add(nDDTO);
+                }));
+            }
+
+            return retMap;
+        } catch (Exception e) {
+            log.logp(Level.SEVERE, this.getClass().getName(), "getAvgForAllByYearByMeasure", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

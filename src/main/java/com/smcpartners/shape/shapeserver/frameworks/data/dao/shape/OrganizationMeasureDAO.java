@@ -2,9 +2,12 @@ package com.smcpartners.shape.shapeserver.frameworks.data.dao.shape;
 
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.CrudDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.exceptions.DataAccessException;
+import com.smcpartners.shape.shapeserver.shared.dto.common.NameDoubleValDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDTO;
+import com.smcpartners.shape.shapeserver.shared.dto.shape.response.OrgAvgAggregate;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Responsible:</br>
@@ -50,4 +53,14 @@ public interface OrganizationMeasureDAO extends CrudDAO<OrganizationMeasureDTO, 
      * @throws DataAccessException
      */
     List<OrganizationMeasureDTO> findOrgMeasureByMeasureIdAndYearAndOrg(int measureId, int year, int orgId) throws DataAccessException;
+
+    /**
+     * Returns a list for all years for avg (numerator/denominator) for a given measure.
+     * The return is ordered by the reporting period year
+     * @param measureId
+     * @return
+     * @throws DataAccessException
+     */
+    Map<Integer, List<NameDoubleValDTO>> getAvgForAllByYearByMeasure(int measureId) throws DataAccessException;
+
 }
