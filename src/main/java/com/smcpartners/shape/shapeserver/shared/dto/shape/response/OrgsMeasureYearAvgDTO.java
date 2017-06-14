@@ -18,5 +18,5 @@ public class OrgsMeasureYearAvgDTO {
     private int measureId;
     private List<String> yearsSpanLst;
     private List<Double> aggAvgDataByYear;
-    private List<OrgAvgAggregate> orgsMeasureYearAvgDTOS;
+    private List<OrgAvgAggregateDTO> orgsMeasureYearAvgDTOS;
 }

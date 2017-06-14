@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public class OrgAvgAggregate {
+public class OrgAvgAggregateDTO {
     private int orgId;
     private String orgName;
     private List<NameDoubleValDTO> measureYearAvgDTOS;

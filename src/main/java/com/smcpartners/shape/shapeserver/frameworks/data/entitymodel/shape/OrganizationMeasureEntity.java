@@ -33,11 +33,12 @@ import java.util.Date;
                         "WHERE o.reportPeriodYear = :year AND o.measureByMeasureId = :meas " +
                         "AND o.organizationByOrganizationId = :org"),
         @NamedQuery(name = "OrganizationMeasure.avgByMeasureByYear",
-                query = "SELECT om.reportPeriodYear, om.organizationByOrganizationId.id, AVG(om.numeratorValue/om.denominatorValue) AS mAvg " +
+                query = "SELECT om.reportPeriodYear, om.organizationByOrganizationId.id, om.organizationByOrganizationId.name, " +
+                        "AVG(om.numeratorValue/om.denominatorValue) AS mAvg " +
                         "FROM OrganizationMeasureEntity om " +
                         "WHERE om.measureByMeasureId = :meas " +
-                        "GROUP BY om.reportPeriodYear, om.organizationByOrganizationId.id " +
-                        "ORDER BY om.reportPeriodYear, om.organizationByOrganizationId.id")
+                        "GROUP BY om.reportPeriodYear, om.organizationByOrganizationId.id, om.organizationByOrganizationId.name " +
+                        "ORDER BY om.reportPeriodYear, om.organizationByOrganizationId.id, om.organizationByOrganizationId.name")
 })
 @Data
 @NoArgsConstructor

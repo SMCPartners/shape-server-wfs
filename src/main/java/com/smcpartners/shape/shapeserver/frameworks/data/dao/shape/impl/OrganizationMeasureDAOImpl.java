@@ -10,15 +10,12 @@ import com.smcpartners.shape.shapeserver.frameworks.data.exceptions.DataAccessEx
 import com.smcpartners.shape.shapeserver.frameworks.producers.annotations.ShapeDatabase;
 import com.smcpartners.shape.shapeserver.shared.dto.common.NameDoubleValDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDTO;
-import com.smcpartners.shape.shapeserver.shared.dto.shape.response.OrgAvgAggregate;
+import com.smcpartners.shape.shapeserver.shared.dto.shape.response.OrgAvgAggregateDTO;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.logging.Level;
 
 /**
@@ -137,31 +134,53 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
     }
 
     @Override
-    public Map<Integer, List<NameDoubleValDTO>> getAvgForAllByYearByMeasure(int measureId) throws DataAccessException {
+    public Map<String, Map> getAvgForAllByYearByMeasure(int measureId, int orgId) throws DataAccessException {
         try {
             MeasureEntity me = em.find(MeasureEntity.class, measureId);
             List<Object[]> omLst = em.createNamedQuery("OrganizationMeasure.avgByMeasureByYear", Object[].class)
                     .setParameter("meas", me)
                     .getResultList();
 
-            Map<Integer, List<NameDoubleValDTO>> retMap = new TreeMap<>();
+            Map<String, List<Double>> aggMap = new TreeMap<>();
+            Map<Integer, OrgAvgAggregateDTO> orgAggMap = new TreeMap<>();
             if (omLst != null && omLst.size() > 0) {
                 omLst.forEach(Errors.rethrow().wrap(om -> {
-                    Integer year = (Integer) om[0];
-                    Integer orgId = (Integer) om[1];
-                    Double avg = (Double) om[2];
+                    String year = ((Integer) om[0]).toString();
+                    Integer oId = (Integer) om[1];
+                    String orgName = (String) om[2];
+                    Double avg = (Double) om[3];
 
-                    List<NameDoubleValDTO> mapVal = retMap.get(orgId);
+                    // Create aggregate list
+                    List<Double> mapVal = aggMap.get(year);
                     if (mapVal == null) {
-                        mapVal = new ArrayList<NameDoubleValDTO>();
-                        retMap.put(orgId, mapVal);
+                        mapVal = new ArrayList<Double>();
+                        aggMap.put(year, mapVal);
                     }
+                    mapVal.add(avg);
 
-                    NameDoubleValDTO nDDTO = new NameDoubleValDTO(year.toString(), avg);
-                    mapVal.add(nDDTO);
+                    // Create org list
+                    // Id orgId is 0 then process everything
+                    // If not then only process if the orgId equals the
+                    // orgId of the current result
+                    boolean process = orgId == 0 ? true : oId == orgId ? true : false;
+                    if (process) {
+                        OrgAvgAggregateDTO orgAgg = orgAggMap.get(oId);
+                        if (orgAgg == null) {
+                            orgAgg = new OrgAvgAggregateDTO();
+                            orgAgg.setOrgId(oId);
+                            orgAgg.setOrgName(orgName);
+                            orgAgg.setMeasureYearAvgDTOS(new ArrayList<>());
+                            orgAggMap.put(oId, orgAgg);
+                        }
+                        orgAgg.getMeasureYearAvgDTOS().add(new NameDoubleValDTO(year, avg));
+                    }
                 }));
             }
 
+            // Return the map
+            Map<String, Map> retMap = new HashMap<>();
+            retMap.put("AGG", aggMap);
+            retMap.put("ORG", orgAggMap);
             return retMap;
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "getAvgForAllByYearByMeasure", e.getMessage(), e);

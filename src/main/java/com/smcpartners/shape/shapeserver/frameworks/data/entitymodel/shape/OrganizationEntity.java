@@ -33,7 +33,7 @@ public class OrganizationEntity {
     private int id;
 
     @Basic
-    @Column(name = "name", nullable = true, insertable = true, updatable = true, length = 255)
+    @Column(unique = true, name = "name", nullable = true, insertable = true, updatable = true, length = 255)
     private String name;
 
     @Basic
