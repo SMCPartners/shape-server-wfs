@@ -20,8 +20,10 @@ import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
- * 1. Take the user id and the email associated with the id. if they are
- * valid then return the user id and one of the user challenge questions.
+ * 1. Take the user id and the email associated with the id. If they are
+ * valid then return the user id and one of the user challenge questions. The
+ * user must be active. </br>
+ *
  * <p>
  * Created by johndestefano on 6/20/17.
  * </p>
