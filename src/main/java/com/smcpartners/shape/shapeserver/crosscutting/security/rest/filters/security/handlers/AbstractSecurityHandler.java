@@ -152,12 +152,12 @@ public abstract class AbstractSecurityHandler {
      * @param role
      * @throws NotAuthorizedException
      */
-    protected void checkRoleAgainstMehtodRoles(String role) throws NotAuthorizedException {
+    protected void checkRoleAgainstMehtodRoles(String role, ResourceInfo resourceInfo) throws NotAuthorizedException {
         // Get the allowed roles from the target method or class
         // Method first then class
-        Secure secure = getResourceInfo().getResourceMethod().getAnnotation(Secure.class);
+        Secure secure = resourceInfo.getResourceMethod().getAnnotation(Secure.class);
         if (secure == null) {
-            secure = getResourceInfo().getResourceClass().getAnnotation(Secure.class);
+            secure = resourceInfo.getResourceClass().getAnnotation(Secure.class);
         }
 
         // Match against user's role and only role
@@ -167,11 +167,4 @@ public abstract class AbstractSecurityHandler {
                     Response.status(Response.Status.UNAUTHORIZED));
         }
     }
-
-    /**
-     * Need acces to the resource handler
-     *
-     * @return
-     */
-    protected abstract ResourceInfo getResourceInfo();
 }

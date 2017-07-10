@@ -60,7 +60,7 @@ public class SecurityFilter extends AbstractSecurityHandler implements Container
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         try {
-            securityHandler.processRequest(requestContext);
+            securityHandler.processRequest(requestContext, resourceInfo);
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "filter", e.getMessage(), e);
 

@@ -6,6 +6,7 @@ import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Cookie;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class DoubleCookieSecurityHandlerImpl extends AbstractSecurityHandler imp
     }
 
     @Override
-    public void processRequest(ContainerRequestContext requestContext) throws Exception {
+    public void processRequest(ContainerRequestContext requestContext, ResourceInfo resourceInfo) throws Exception {
         // Get the token
         String token = getTokenFromCookie(requestContext);
 
@@ -44,7 +45,7 @@ public class DoubleCookieSecurityHandlerImpl extends AbstractSecurityHandler imp
         findUserFromToken(tokenValues);
 
         // Check the user's roles against the allowed roles of the target method or class
-        checkRoleAgainstMehtodRoles(tokenValues.get(JWTUtils.ROLE));
+        checkRoleAgainstMehtodRoles(tokenValues.get(JWTUtils.ROLE), resourceInfo);
 
         // Populate the request scoped object which will be used downstream
         // by the target class

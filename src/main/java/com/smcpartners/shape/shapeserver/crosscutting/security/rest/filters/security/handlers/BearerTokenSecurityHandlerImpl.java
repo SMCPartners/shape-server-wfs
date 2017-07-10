@@ -3,6 +3,7 @@ package com.smcpartners.shape.shapeserver.crosscutting.security.rest.filters.sec
 import com.smcpartners.shape.shapeserver.shared.utils.JWTUtils;
 
 import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ResourceInfo;
 import java.util.Map;
 
 /**
@@ -18,7 +19,7 @@ public class BearerTokenSecurityHandlerImpl extends AbstractSecurityHandler impl
     }
 
     @Override
-    public void processRequest(ContainerRequestContext requestContext) throws Exception {
+    public void processRequest(ContainerRequestContext requestContext, ResourceInfo resourceInfo) throws Exception {
         // Get the authorization header
         String authHeader = getAuthHeader(requestContext);
 
@@ -32,7 +33,7 @@ public class BearerTokenSecurityHandlerImpl extends AbstractSecurityHandler impl
         findUserFromToken(tokenValues);
 
         // Check the user's roles against the allowed roles of the target method or class
-        checkRoleAgainstMehtodRoles(tokenValues.get(JWTUtils.ROLE));
+        checkRoleAgainstMehtodRoles(tokenValues.get(JWTUtils.ROLE), resourceInfo);
 
         // Populate the request scoped object which will be used downstream
         // by the target class
