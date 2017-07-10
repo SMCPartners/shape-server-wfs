@@ -24,7 +24,7 @@ import javax.ws.rs.core.Response;
 public interface Login_Service {
 
     @POST
-    @Path("/login")
+    @Path("/authentication")
     @Produces("application/json")
     @Consumes("application/json")
     Response login(LoginRequestDTO loginRequest) throws UseCaseException;

@@ -19,13 +19,17 @@ import java.util.Date;
  * </p>
  */
 @Entity
-@Table(name = "user", schema = "", catalog = "shape")
+@Table(name = "user", schema = "", catalog = "shape",
+    indexes = @Index(name = "user_email_idx", columnList = "email", unique = true))
 @NamedQueries({
         @NamedQuery(name = "User.findAll",
                 query = "SELECT OBJECT(u) FROM UserEntity u"),
         @NamedQuery(name = "User.findByOrg",
                 query = "SELECT OBJECT(u) FROM UserEntity u " +
-                        "where u.organizationById = :org")
+                        "where u.organizationById = :org"),
+        @NamedQuery(name = "User.findByEmail",
+                query = "SELECT OBJECT(u) FROM UserEntity u " +
+                        "where u.email = :emailAddress"),
 })
 @Data
 @NoArgsConstructor

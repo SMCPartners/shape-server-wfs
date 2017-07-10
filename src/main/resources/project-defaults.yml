@@ -1,4 +1,4 @@
-#swarm:
+# swarm:
 #  datasources:
 #    data-sources:
 #      shapeDS:
@@ -30,7 +30,7 @@
 #            roles: [admin, authUser]
 
 
-#swarm:
+# swarm:
 #  deployment:
 #    shape-server.war:
 #      web:
@@ -41,7 +41,7 @@
 #            methods: [GET, POST, PUT, DELETE]
 #            roles: [admin]
 
-#swarm:
+# swarm:
 #  undertow:
 #    servers:
 #      default:

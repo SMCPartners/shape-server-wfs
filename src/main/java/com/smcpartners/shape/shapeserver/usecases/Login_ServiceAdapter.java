@@ -6,7 +6,8 @@ import com.smcpartners.shape.shapeserver.gateway.rest.services.Login_Service;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.UserDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.request.LoginRequestDTO;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
-import com.smcpartners.shape.shapeserver.shared.utils.JWTUtils;
+import com.smcpartners.shape.shapeserver.usecases.helpers.authentication.login.LoginHelper;
+import com.smcpartners.shape.shapeserver.usecases.helpers.authentication.LoginHelperQualifier;
 import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.ejb.EJB;
@@ -18,13 +19,16 @@ import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
- * 1. Framework support for use case</br
+ * 1. Login service support</br>
+ * 2. Support for bear token JWT</br>
+ * 3. Support for double cookie authentication -
+ * https://stackoverflow.com/questions/27067251/where-to-store-jwt-in-browser-how-to-protect-against-csrf </br>
  * <p>
  * Created by johndestefano on 9/14/15.
  * </p>
  * <p>
  * Changes:<br>
- * 1.
+ * 1. Added changes for allowing bearer or session cookie authentication - 6/23/2017 - johndestefano</br>
  * </p>
  */
 @Path("/common")
@@ -37,11 +41,12 @@ public class Login_ServiceAdapter implements Login_Service {
     private UserDAO userDAO;
 
     @Inject
-    private JWTUtils jwtUtils;
-
-    @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.userNotAuthorizedError")
     private String userNotAuthorizedError;
+
+    @Inject
+    @LoginHelperQualifier
+    private LoginHelper loginHelper;
 
     /**
      * Default Constructor
@@ -51,7 +56,7 @@ public class Login_ServiceAdapter implements Login_Service {
 
     @Override
     @POST
-    @Path("/login")
+    @Path("/authentication")
     @Produces("application/json")
     @Consumes("application/json")
     @Logged
@@ -67,11 +72,8 @@ public class Login_ServiceAdapter implements Login_Service {
                     if (isGenPwd && isExpired) {
                         throw new Exception ("Password has expired, please use Forgot Password to generate a new one");
                     }
-                    String var = ue.isResetPwd() ? "true" : "false";
-                    String token = jwtUtils.generateToken(ue.getId().toUpperCase(), ue.getRole(), ue.getOrganizationId(), true);
-                    return Response.status(Response.Status.OK).entity("{\"token\":\"" + token + "\", \"resetRequired\":"
-                            + var + "}").header("Authorization", "Bearer " + token).build();
-                }else{
+                    return loginHelper.loginResponse(ue, false);
+                } else{
                     return Response.status(Response.Status.UNAUTHORIZED).entity("Inactive").build();
                 }
             } else {
@@ -80,7 +82,7 @@ public class Login_ServiceAdapter implements Login_Service {
                         Response.status(Response.Status.UNAUTHORIZED));
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "login", e.getMessage(), e);
+            log.logp(Level.SEVERE, this.getClass().getName(), "authentication", e.getMessage(), e);
             if (e instanceof NotAuthorizedException) {
                 throw (NotAuthorizedException)e;
             } else {

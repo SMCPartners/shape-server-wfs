@@ -1,6 +1,7 @@
 package com.smcpartners.shape.shapeserver.usecases;
 
 
+import com.smcpartners.shape.shapeserver.crosscutting.email.SendMailService;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
 import com.smcpartners.shape.shapeserver.gateway.rest.services.Forgot_Password_Service;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.UserDTO;
@@ -20,8 +21,10 @@ import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
- * 1. Take the user id and the email associated with the id. if they are
- * valid then return the user id and one of the user challenge questions.
+ * 1. Take the user id and the email associated with the id. If they are
+ * valid then return the user id and one of the user challenge questions. The
+ * user must be active. </br>
+ *
  * <p>
  * Created by johndestefano on 6/20/17.
  * </p>
@@ -74,7 +77,15 @@ public class Forgot_Password_ServiceAdapter implements Forgot_Password_Service {
             }
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "forgotUserPassword", e.getMessage(), e);
-            throw new UseCaseException(e.getMessage());
+
+            // Account for not finding the user
+            // TODO: This is brittle, do we need a specific exception from the data layer?
+            if (e instanceof NullPointerException) {
+                throw new UseCaseException("There is no user with that ID.");
+            } else {
+                throw new UseCaseException(e.getMessage());
+            }
+
         }
     }
 }

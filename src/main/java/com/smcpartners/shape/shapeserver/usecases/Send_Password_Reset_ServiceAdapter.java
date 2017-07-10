@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  * Responsible:</br>
  * 1. Take the user id, challenge question and responds and validate them against the user account.</br>
  * 2. If valid send an email with a temp password to the users email address. </br>
- * 3. Force a password reset on the next login. </br>
+ * 3. Force a password reset on the next authentication. </br>
  * <p>
  * Created by johndestefano on 6/20/17.
  * </p>
@@ -88,7 +88,7 @@ public class Send_Password_Reset_ServiceAdapter implements Send_Password_Reset_S
                 mail.setSubject("Your password has been reset");
                 mail.setMessage("Your password has been reset and changed to the temporary password: " + newPassword + ".\n"
                         + "Please log in using your temporary password. You will be prompted to change this " +
-                        "password after a successful login.");
+                        "password after a successful authentication.");
                 sendEmailMsg.sendEmailMsg(mail);
                 userDAO.forcePasswordChange(userId, newPassword);
 

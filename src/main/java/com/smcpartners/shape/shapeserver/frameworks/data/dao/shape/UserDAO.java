@@ -143,6 +143,15 @@ public interface UserDAO extends CrudDAO<UserDTO, String> {
     List<UserDTO> findByOrg(int orgId) throws DataAccessException;
 
     /**
+     * Find users by email
+     *
+     * @param emailAddress
+     * @return
+     * @throws DataAccessException
+     */
+    UserDTO findByEmail(String emailAddress) throws DataAccessException;
+
+    /**
      *
      * @param userId
      * @param b
