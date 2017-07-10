@@ -27,7 +27,12 @@ com:
         do_logging: true
         full_logging: false
       mail:
-        MAIL_FROM_ADDRESS: info@ehealthconnecticut.org
+        MAIL_SERVER_ADDRESS: smtp.gmail.com
+        MAIL_FROM_ADDRESS: smctestemails@gmail.com
+        MAIL_FROM_PWD: q1w2e3r4!
+        MAIL_SMTP_PORT: 25
+        MAIL_TLS_ENABLED: false
+        MAIL_DEBUG: false
         MAIL_MESSAGE:
       security:
         appKey: pVWWoXdNAJ14EP2/4Ow4XVENRJVTgO/wB/+AriuIcrLMhWTswGu2SCRtMLam3Zcm6giQvxZIVR3VKEflrREYSw==
