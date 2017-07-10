@@ -275,6 +275,19 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
     }
 
     @Override
+    public UserDTO findByEmail(String emailAddress) throws DataAccessException {
+        try {
+            UserEntity ue = em.createNamedQuery("User.findByEmail", UserEntity.class)
+                    .setParameter("emailAddress", emailAddress).getSingleResult();
+            UserDTO dto = this.mapEntityToDTO(ue);
+            return dto;
+        } catch (Exception e) {
+            log.logp(Level.SEVERE, this.getClass().getName(), "findAll", e.getMessage(), e);
+            throw new DataAccessException(e);
+        }
+    }
+
+    @Override
     public UserDTO create(UserDTO dto) throws DataAccessException {
         try {
             UserEntity ue = this.addUser(dto.getId(), dto.getPassword(), dto.getCreatedBy(), dto.getRole(), dto.isActive(),

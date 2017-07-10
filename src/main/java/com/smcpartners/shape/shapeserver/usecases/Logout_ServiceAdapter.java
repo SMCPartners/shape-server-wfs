@@ -1,12 +1,12 @@
 package com.smcpartners.shape.shapeserver.usecases;
 
-
-
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
 import com.smcpartners.shape.shapeserver.gateway.rest.services.Logout_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
+import com.smcpartners.shape.shapeserver.usecases.helpers.authentication.LogoutHelperQualifier;
+import com.smcpartners.shape.shapeserver.usecases.helpers.authentication.logout.LogoutHelper;
 
 import javax.inject.Inject;
 import javax.ws.rs.PUT;
@@ -19,24 +19,28 @@ import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
- * 1.Application logout </br>
+ * 1. Application logout </br>
  * <p>
  * <p>
  * Created by johndestefano on 9/30/15.
  * </p>
  * <p>
- * <p>
  * Changes:</br>
- * 1. </br>
+ * 1. Added support for logout response login to be injected - 6/25/17 - johndestefano</br>
  * </p>
  */
-//TODO: Seems like any user role should be able to call this?
-//TODO: The logout functionality is handled on the front end, not sure if we should delete this? BH 3/25
 @Path("/common")
 public class Logout_ServiceAdapter implements Logout_Service {
 
     @Inject
     private Logger log;
+
+    /**
+     * Provides logic to create logout response
+     */
+    @Inject
+    @LogoutHelperQualifier
+    private LogoutHelper logoutHelper;
 
     /**
      * Default Constructor
@@ -52,7 +56,7 @@ public class Logout_ServiceAdapter implements Logout_Service {
     @Logged
     public Response logout(@PathParam("userid") String userId) throws UseCaseException {
         try {
-            return Response.status(Response.Status.OK).build();
+            return logoutHelper.logoutResponse();
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "logout", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());

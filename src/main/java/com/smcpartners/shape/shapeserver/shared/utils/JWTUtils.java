@@ -9,7 +9,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.math.BigInteger;
 import java.security.Key;
+import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,8 +36,10 @@ public class JWTUtils {
     @Inject
     private Logger log;
 
-    private static final String ROLE = "role";
-    private static final String ORGID = "orgId";
+    public static final String USERID = "userId";
+    public static final String ROLE = "role";
+    public static final String ORGID = "orgId";
+    public static final String X_XSRF_TOKEN = "xxToken";
 
     @Inject
     @ConfigurationValue("com.smc.server-core.security.appKey")
@@ -47,6 +51,8 @@ public class JWTUtils {
 
     private SecretKey key;
 
+    private SecureRandom secureRandom;
+
 
     public JWTUtils() {
     }
@@ -55,6 +61,7 @@ public class JWTUtils {
     protected void postConstruct() {
         byte[] encodedKey = Base64.getDecoder().decode((this.appKey).getBytes());
         this.key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "HS512");
+        secureRandom = new SecureRandom();
     }
 
     /**
@@ -79,7 +86,7 @@ public class JWTUtils {
      * @return
      * @throws Exception
      */
-    public String generateToken(String userId, String role, int orgId, boolean neverExpire) throws Exception {
+    public String generateForBearerToken(String userId, String role, int orgId, boolean neverExpire) throws Exception {
         return Jwts.builder()
                 .setSubject(userId)
                 .setHeaderParam(ROLE, role)
@@ -87,6 +94,19 @@ public class JWTUtils {
                 .setExpiration(neverExpire ? null : new Date(this.calcExpire()))
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
+    }
+
+    public DoubleCookieTokenPair generateForDoubleCookieToken(String userId, String role, int orgId, boolean neverExpire) throws Exception {
+        String xxToken = new BigInteger(130, secureRandom).toString(32);
+        String jwtToken = Jwts.builder()
+                .setSubject(userId)
+                .setHeaderParam(ROLE, role)
+                .setHeaderParam(ORGID, "" + orgId)
+                .setHeaderParam(X_XSRF_TOKEN, xxToken)
+                .setExpiration(neverExpire ? null : new Date(this.calcExpire()))
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
+        return new DoubleCookieTokenPair(xxToken, jwtToken);
     }
 
     /**
@@ -164,9 +184,13 @@ public class JWTUtils {
         String role = (String) claims.getHeader().get(ROLE);
         String orgId = (String) claims.getHeader().get(ORGID);
         String user = claims.getBody().getSubject();
-        retMap.put("userId", user);
-        retMap.put("role", role);
-        retMap.put("orgId", orgId);
+        String xxToken = (String)claims.getHeader().get(X_XSRF_TOKEN);
+        retMap.put(USERID, user);
+        retMap.put(ROLE, role);
+        retMap.put(ORGID, orgId);
+        if (xxToken != null && xxToken.length() > 0) {
+            retMap.put(X_XSRF_TOKEN, xxToken);
+        }
         return retMap;
     }
 
@@ -181,6 +205,12 @@ public class JWTUtils {
         return expDate;
     }
 
+    /**
+     * Used for testing
+     *
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         Key key = MacProvider.generateKey();
         String eKey = new String(Base64.getEncoder().encode(key.getEncoded()));
@@ -188,5 +218,4 @@ public class JWTUtils {
         System.out.println("eKey: " + eKey);
         System.out.println("alg: " + alg);
     }
-
 }

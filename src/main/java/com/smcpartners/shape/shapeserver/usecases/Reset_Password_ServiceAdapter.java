@@ -114,7 +114,7 @@ public class Reset_Password_ServiceAdapter implements Reset_Password_Service {
             mail.setSubject("Your password has been reset");
             mail.setMessage("Your password has been reset and changed to the temporary password: " + newPassword + "\n"
                     + "Please log in using your temporary password. You will be prompted to change this " +
-                    "password after a successful login");
+                    "password after a successful authentication");
             sms.sendEmailMsg(mail);
             userDAO.forcePasswordChange(userId, newPassword);
         } catch (Exception e) {
