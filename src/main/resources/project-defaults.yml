@@ -1,57 +1,24 @@
-# swarm:
-#  datasources:
-#    data-sources:
-#      shapeDS:
-#        driver-name: myh2
-#        connection-url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-#        user-name: sa
-#        password: sa
-#    jdbc-drivers:
-#      myh2:
-#        driver-class-name: org.h2.Driver
-#        xa-datasource-name: org.h2.jdbcx.JdbcDataSource
-#        driver-module-name: com.h2database.h2
-
-# swarm:
-#  ds:
-#    name: shapeDS
-#    username: shape
-#    password: shape
-#    connection:
-#      url: jdbc:mysql://localhost:3306/shape
-##  deployment:
-#    shape-server.war:
-#      web:
-#        login-config:
-#          auth-method: KEYCLOAK
-#        security-constraints:
-#          - url-pattern: /shape-service/shape
-#            methods: [GET, POST, PUT, DELETE]
-#            roles: [admin, authUser]
-
-
-# swarm:
-#  deployment:
-#    shape-server.war:
-#      web:
-#        login-config:
-#          auth-method: KEYCLOAK
-#        security-constraints:
-#          - url-pattern: /*
-#            methods: [GET, POST, PUT, DELETE]
-#            roles: [admin]
-
-# swarm:
-#  undertow:
-#    servers:
-#      default:
-#        https-listeners:
-#          default:
-#            disallowed-methods: TRACE TRACK
-
-# swarm:
-#  debug:
-#    port: 9000
+swarm:
+  datasources:
+    data-sources:
+      shapeDS:
+        driver-name: mysql
+        connection-url: jdbc:mysql://localhost:3306/shape
+        user-name: shape
+        password: shape
+  messaging-activemq:
+    servers:
+      default:
+        jms-queues:
+          ShapeActivityQueue: {}
+  mail:
+    smtp-servers:
+      ShapeMail:
+        host: localhost
+        port: 10110
+        tls: true
+        username: user1@localhost
+        password: password
 
 com:
   smc:
@@ -70,11 +37,18 @@ com:
       security:
         appKey: pVWWoXdNAJ14EP2/4Ow4XVENRJVTgO/wB/+AriuIcrLMhWTswGu2SCRtMLam3Zcm6giQvxZIVR3VKEflrREYSw==
         expireLength: 0
+        jwtEmbededCookies:
+          useCookies: false
+          useRefreshToken: false
+          refreshTokenExpireTime:
+          sessionCookieName: SESSIONID
+          xxsrfCookieName: XSRF
+          xXsrfTokenJwtAssertionName: X-XSRF-TOKEN
       errorMsgs:
         authHeaderError: Missing or invalid Authorization header.
         inactiveUserError: User does not have an active account.
         userNotFoundError: Unknow user.
-        userNotAuthorizedError: The user is not authroized.
+        userNotAuthorizedError: The user is not authorized.
       fileUpload:
         measureFileUploadKey: measure_type_1.xlsx
 
