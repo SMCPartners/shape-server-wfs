@@ -38,9 +38,6 @@ public abstract class AbstractSecurityHandler {
     @Inject
     private UserDAO userDAO;
 
-    @Context
-    private ResourceInfo resourceInfo;
-
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.authHeaderError")
     private String authHeaderError;
@@ -158,9 +155,9 @@ public abstract class AbstractSecurityHandler {
     protected void checkRoleAgainstMehtodRoles(String role) throws NotAuthorizedException {
         // Get the allowed roles from the target method or class
         // Method first then class
-        Secure secure = resourceInfo.getResourceMethod().getAnnotation(Secure.class);
+        Secure secure = getResourceInfo().getResourceMethod().getAnnotation(Secure.class);
         if (secure == null) {
-            secure = resourceInfo.getResourceClass().getAnnotation(Secure.class);
+            secure = getResourceInfo().getResourceClass().getAnnotation(Secure.class);
         }
 
         // Match against user's role and only role
@@ -170,4 +167,11 @@ public abstract class AbstractSecurityHandler {
                     Response.status(Response.Status.UNAUTHORIZED));
         }
     }
+
+    /**
+     * Need acces to the resource handler
+     *
+     * @return
+     */
+    protected abstract ResourceInfo getResourceInfo();
 }
