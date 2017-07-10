@@ -71,10 +71,5 @@ public class SecurityFilter extends AbstractSecurityHandler implements Container
             }
         }
     }
-
-    @Override
-    protected ResourceInfo getResourceInfo() {
-        return resourceInfo;
-    }
 }
 
