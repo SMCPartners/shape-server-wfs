@@ -11,14 +11,6 @@ swarm:
       default:
         jms-queues:
           ShapeActivityQueue: {}
-#  mail:  --- This doesn't seem to work properly - Need to figure out appropriate configuration
-#    smtp-servers:
-#      ShapeMail:
-#        host: smtp.gmail.com
-#        port: 587
-#        username:
-#        password:
-#        tls: true
 
 com:
   smc:
