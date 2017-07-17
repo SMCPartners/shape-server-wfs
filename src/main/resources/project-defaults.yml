@@ -12,11 +12,10 @@ swarm:
         jms-queues:
           ShapeActivityQueue: {}
   mail:
-    smtp:
-      host: smtp.gmail.com
-      post: 587
     mail-sessions:
-      default:
+      ShapeMail:
+        host: smtp.gmail.com
+        port: 587
         smtp-server:
           username:
           password:

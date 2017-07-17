@@ -27,7 +27,7 @@ import java.util.Date;
 @Stateless
 public class SendMailService {
 
-    @Resource(mappedName = "java:jboss/mail/default")
+    @Resource(mappedName = "java:jboss/mail/ShapeMail")
     private Session session;
 
     /**
