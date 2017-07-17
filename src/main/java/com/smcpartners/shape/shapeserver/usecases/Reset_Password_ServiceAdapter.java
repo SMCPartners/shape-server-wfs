@@ -72,13 +72,13 @@ public class Reset_Password_ServiceAdapter implements Reset_Password_Service {
             // Find matching question and check answer
             if (question.equalsIgnoreCase(user.getQuestionOne())) {
                 if (!answer.equalsIgnoreCase(user.getAnswerOne())) {
-                    new PasswordResetException("Response does not match.");
+                    throw new PasswordResetException("Response does not match.");
                 }
             }
 
             if (question.equalsIgnoreCase(user.getQuestionTwo())) {
                 if (!answer.equalsIgnoreCase(user.getAnswerTwo())) {
-                    new PasswordResetException("Response does not match.");
+                    throw new PasswordResetException("Response does not match.");
                 }
             }
 
