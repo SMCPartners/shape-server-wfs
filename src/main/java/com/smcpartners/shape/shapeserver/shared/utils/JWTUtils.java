@@ -47,7 +47,7 @@ public class JWTUtils {
 
     @Inject
     @ConfigurationValue("com.smc.server-core.security.expireLength")
-    private Integer expireLength;
+    private Long expireLength;
 
     private SecretKey key;
 
@@ -77,7 +77,8 @@ public class JWTUtils {
     }
 
     /**
-     * Generate a token
+     * Generate a token. Setting neverExpire to false but providing 0 as the expire length
+     * will result in a never expire token.
      *
      * @param userId
      * @param role
@@ -91,11 +92,22 @@ public class JWTUtils {
                 .setSubject(userId)
                 .setHeaderParam(ROLE, role)
                 .setHeaderParam(ORGID, "" + orgId)
-                .setExpiration(neverExpire ? null : new Date(this.calcExpire()))
+                .setExpiration(neverExpire || expireLength.longValue() == 0 ? null : new Date(this.calcExpire()))
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
     }
 
+    /**
+     * Generate a token. Setting neverExpire to false but providing 0 as the expire length
+     * will result in a never expire token.
+     *
+     * @param userId
+     * @param role
+     * @param orgId
+     * @param neverExpire
+     * @return
+     * @throws Exception
+     */
     public DoubleCookieTokenPair generateForDoubleCookieToken(String userId, String role, int orgId, boolean neverExpire) throws Exception {
         String xxToken = new BigInteger(130, secureRandom).toString(32);
         String jwtToken = Jwts.builder()
@@ -103,7 +115,7 @@ public class JWTUtils {
                 .setHeaderParam(ROLE, role)
                 .setHeaderParam(ORGID, "" + orgId)
                 .setHeaderParam(X_XSRF_TOKEN, xxToken)
-                .setExpiration(neverExpire ? null : new Date(this.calcExpire()))
+                .setExpiration(neverExpire || expireLength.longValue() == 0 ? null : new Date(this.calcExpire()))
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
         return new DoubleCookieTokenPair(xxToken, jwtToken);

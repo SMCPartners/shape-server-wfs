@@ -1,6 +1,7 @@
 package com.smcpartners.shape.shapeserver;
 
 import org.wildfly.swarm.Swarm;
+import org.wildfly.swarm.mail.MailFraction;
 
 /**
  * Responsibility: </br>
@@ -26,6 +27,16 @@ public class Main {
 
         // Create the Swarm
         Swarm swarm = new Swarm();
+
+        // Mail
+        // Need this until setting up mail with config file is clear
+        swarm.fraction(new MailFraction().smtpServer("ShapeMail",
+                s -> s.host("localhost")
+                        .port(24)
+                        .tls(true)
+                        .password("somepassword")
+                        .username("someusername")
+        ));
 
         // Start and deploy WAR
         swarm.start().deploy();
