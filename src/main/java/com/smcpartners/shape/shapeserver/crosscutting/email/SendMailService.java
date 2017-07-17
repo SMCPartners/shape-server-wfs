@@ -12,7 +12,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
-import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
@@ -28,10 +27,7 @@ import java.util.logging.Logger;
 @Stateless
 public class SendMailService {
 
-    @Inject
-    private Logger log;
-
-    @Resource(mappedName = "java:jboss/mail/ShapeMail")
+    @Resource(mappedName = "java:jboss/mail/default")
     private Session session;
 
     /**
@@ -54,7 +50,6 @@ public class SendMailService {
      * @throws Exception
      */
     public void sendEmailMsg(MailDTO mailDTO) throws Exception {
-
         Message message = new MimeMessage(session);
         message.setFrom();
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailDTO.getToEmail(), false));

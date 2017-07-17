@@ -1,7 +1,6 @@
 package com.smcpartners.shape.shapeserver.usecases;
 
 
-import com.smcpartners.shape.shapeserver.crosscutting.email.SendMailService;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.exceptions.DataAccessException;
 import com.smcpartners.shape.shapeserver.gateway.rest.services.Forgot_Password_Service;
