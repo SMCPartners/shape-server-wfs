@@ -13,6 +13,7 @@ import com.smcpartners.shape.shapeserver.shared.exceptions.NotAuthorizedToPerfor
 import com.smcpartners.shape.shapeserver.shared.exceptions.PasswordResetException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 import com.smcpartners.shape.shapeserver.shared.utils.MathUtils;
+import org.apache.xpath.operations.Bool;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -75,27 +76,17 @@ public class Request_Passwordchange_ServiceAdapter implements Request_Password_C
                 }
 
                 // Compare the answer returned to the question sent
-                String answer = null;
-                if (userDTO.getUserResetPwdChallenge() == 1) {
-                    answer = userDTO.getAnswerOne();
-                } else if (userDTO.getUserResetPwdChallenge() == 2) {
-                    answer = userDTO.getAnswerTwo();
+                if (userDTO.getAnswerOne().equalsIgnoreCase(pwdResetReq.getQuestionAnswer()) ||
+                        userDTO.getAnswerTwo().equalsIgnoreCase(pwdResetReq.getQuestionAnswer())) {
+                    // Set the new password for the user
+                    // This will also set the user request password change flag to 0
+                    userDAO.forcePasswordChange(userId, pwdResetReq.getNewPassword());
+
+                    // Return value
+                    return BooleanValueDTO.get(true);
                 } else {
-                    // Can't send back anything else
-                    throw new PasswordResetException("Answers don't match.");
+                    throw new PasswordResetException("Answer doesn't match");
                 }
-
-                // If answer doesn't match throw exception
-                if (!pwdResetReq.getQuestionAnswer().equals(answer)) {
-                    throw new PasswordResetException("Answer doesn't match question.");
-                }
-
-                // Set the new password for the user
-                // This will also set the user request password change flag to 0
-                userDAO.forcePasswordChange(userId, pwdResetReq.getNewPassword());
-
-                // Return value
-                return BooleanValueDTO.get(true);
             } else {
                 throw new IllegalAccessException("Your account is not allowed to reset this user's password");
             }

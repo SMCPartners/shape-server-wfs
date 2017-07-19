@@ -325,10 +325,13 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
                 ue.setModifiedBy(dto.getModifiedBy());
                 ue.setModifiedDt(new Date());
                 ue.setEmail(dto.getEmail());
-                ue.setQuestionOne(dto.getQuestionOne());
-                ue.setQuestionTwo(dto.getQuestionTwo());
-                ue.setAnswerOne(dto.getAnswerOne());
-                ue.setAnswerTwo(dto.getAnswerTwo());
+                if (dto.getQuestionOne() != null && dto.getQuestionOne() != null && dto.getAnswerTwo() != null &&
+                        dto.getAnswerTwo() != null) {
+                    ue.setQuestionOne(dto.getQuestionOne());
+                    ue.setQuestionTwo(dto.getQuestionTwo());
+                    ue.setAnswerOne(dto.getAnswerOne());
+                    ue.setAnswerTwo(dto.getAnswerTwo());
+                }
                 ue.setUserResetPwdChallenge(dto.getUserResetPwdChallenge());
                 ue = em.merge(ue);
                 return this.mapEntityToDTO(ue);
