@@ -11,6 +11,21 @@ swarm:
       default:
         jms-queues:
           ShapeActivityQueue: {}
+#  network:
+#      socket-binding-groups:
+#        standard-sockets:
+#          outbound-socket-bindings:
+#            shape-mail-smtp:
+#              remote-host: smtp.google.com
+#              remote-port: 587
+#  mail:
+#    mail-sessions:
+#      ShapeMail:
+#        smtp-server:
+#          username:
+#          password:
+#          tls: true
+#          outbound-socket-binding-ref: shape-mail-smtp
 
 com:
   smc:
