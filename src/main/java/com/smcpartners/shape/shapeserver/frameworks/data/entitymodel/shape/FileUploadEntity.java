@@ -44,4 +44,8 @@ public class FileUploadEntity {
     @ManyToOne
     @JoinColumn(name = "measure_id", referencedColumnName = "id", nullable = false)
     private MeasureEntity measureEntityByMeasureEntityId;
+
+    @ManyToOne
+    @JoinColumn(name = "org_id", referencedColumnName = "id", nullable = false)
+    private OrganizationEntity organizationEntity;
 }
