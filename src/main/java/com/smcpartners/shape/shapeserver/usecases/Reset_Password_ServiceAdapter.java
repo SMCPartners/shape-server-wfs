@@ -60,8 +60,8 @@ public class Reset_Password_ServiceAdapter implements Reset_Password_Service {
             String userId = userReq.getUserId();
             String question = userReq.getQuestion();
             String answer = userReq.getAnswer();
-            UserDTO user = new UserDTO();
 
+            UserDTO user;
             if (!userId.equals("")) {
                 user = userDAO.findById(userId);
             } else {
