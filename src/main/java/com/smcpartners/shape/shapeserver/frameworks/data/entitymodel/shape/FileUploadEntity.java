@@ -33,6 +33,10 @@ public class FileUploadEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date uploadDt;
 
+    @Basic
+    @Column(name = "fileName", nullable = false, insertable = true, updatable = true)
+    private String fileName;
+
     @Lob
     @Column(name = "uploadedB64File", nullable = true, insertable = true, updatable = true)
     private String uploadedB64File;
