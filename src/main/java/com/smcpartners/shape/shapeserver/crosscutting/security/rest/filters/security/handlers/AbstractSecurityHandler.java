@@ -6,6 +6,7 @@ import com.smcpartners.shape.shapeserver.frameworks.data.exceptions.DataAccessEx
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.UserDTO;
+import com.smcpartners.shape.shapeserver.shared.exceptions.UserNeedsPwdResetException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UserNotActiveException;
 import com.smcpartners.shape.shapeserver.shared.utils.JWTUtils;
 import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
@@ -14,7 +15,6 @@ import javax.inject.Inject;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
@@ -26,6 +26,10 @@ import java.util.Map;
  * 2. </br>
  * Created By: johndestefano
  * Date: 6/24/17
+ * <p>
+ * Changes:</br>
+ * 1. Added check for reset password flag - johndesetfano - 07/20/2017 </br>
+ * </p>
  */
 public abstract class AbstractSecurityHandler {
 
@@ -54,7 +58,11 @@ public abstract class AbstractSecurityHandler {
     @ConfigurationValue("com.smc.server-core.errorMsgs.userNotAuthorizedError")
     private String userNotAuthorizedError;
 
-    public AbstractSecurityHandler(){
+    @Inject
+    @ConfigurationValue("com.smc.server-core.errorMsgs.userNeedsPwdResetError")
+    private String userNeedsPwdResetError;
+
+    public AbstractSecurityHandler() {
     }
 
     /**
@@ -104,7 +112,8 @@ public abstract class AbstractSecurityHandler {
     }
 
     /**
-     * Looks up the user record in the database
+     * Looks up the user record in the database and makes sure the user is
+     * active and doesn't need a password reset.
      *
      * @param tokenValues
      * @return
@@ -117,15 +126,19 @@ public abstract class AbstractSecurityHandler {
         // Get the user id in the token
         String userId = tokenValues.get("userId");
 
-        // Check user still active
+        // Check user still active and password reset flag is false
         UserDTO userDTO = userDAO.findById(userId);
         if (userDTO == null) {
             throw new NotAuthorizedException(
-                    inactiveUserError,
+                    userNotFoundError,
                     Response.Status.UNAUTHORIZED);
-        } else if (userDTO.isActive() == false) {
+        } else if (!userDTO.isActive()) {
             throw new UserNotActiveException(
                     inactiveUserError,
+                    Response.Status.UNAUTHORIZED);
+        } else if (userDTO.isResetPwd()) {
+            throw new UserNeedsPwdResetException(
+                    userNeedsPwdResetError,
                     Response.Status.UNAUTHORIZED);
         }
 

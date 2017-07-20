@@ -51,6 +51,7 @@ com:
         inactiveUserError: User does not have an active account.
         userNotFoundError: Unknow user.
         userNotAuthorizedError: The user is not authorized.
+        userNeedsPwdResetError: The user must reset their password.
       fileUpload:
         measureFileUploadKey: measure_type_1.xlsx
 
