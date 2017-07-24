@@ -11,6 +11,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDTO;
 import com.smcpartners.shape.shapeserver.shared.exceptions.NotAuthorizedToPerformActionException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
+import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -24,7 +25,8 @@ import java.util.logging.Logger;
 /**
  * Responsible:<br/>
  * 1. Only ADMIN or ORG_ADMIN can edit organization measures. ORG_ADMIN and REGISTERED user
- * can only edit their organization.
+ * can only edit their organization.</br>
+ * 2. Can only have one measure type per organization per year so when editing org, measure, and year must be the same.</br>
  * <p>
  * Created by johndestefano on 11/4/15.
  * <p>
@@ -43,6 +45,10 @@ public class Edit_Organization_Measure_ServiceAdapter implements Edit_Organizati
     @Inject
     private UserExtras userExtras;
 
+    @Inject
+    @ConfigurationValue("com.smc.server-core.errorMsgs.orgMeasureEditMustMatchError")
+    private String orgMeasureEditMustMatchError;
+
     /**
      * Default Constructor
      */
@@ -58,6 +64,21 @@ public class Edit_Organization_Measure_ServiceAdapter implements Edit_Organizati
     @Logged
     public BooleanValueDTO editOrganizationMeasure(OrganizationMeasureDTO org) throws UseCaseException {
         try {
+            // Data needed for check
+            // Look up the old one and make sure that
+            // orgid, measureid and year are the same
+            // If there's already one there then throw an error
+            OrganizationMeasureDTO currentOMDTO = organizationMeasureDAO.findById(org.getId());
+            if (currentOMDTO.getOrganizationId() != org.getOrganizationId() ||
+                    currentOMDTO.getMeasureId() != org.getMeasureId() ||
+                    currentOMDTO.getReportPeriodYear() != org.getReportPeriodYear()) {
+                throw new Exception(orgMeasureEditMustMatchError);
+            }
+
+            // This is not a file upload but the initial record may have
+            // been created by an upload.
+            org.setFileUploadDate(currentOMDTO.getFileUploadDate());
+
             // Only ADMIN or ORG_ADMIN can edit organization measures
             // ORG_ADMIN can only edit there organization
             if (SecurityRoleEnum.ADMIN == userExtras.getRole()) {

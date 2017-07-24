@@ -1,14 +1,15 @@
 package com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.impl;
 
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.FileUploadDAO;
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.FileUploadProcessorDAO;
+import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureFileUploadDAO;
+import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureFileUploadProcessorDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.MeasureDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureDAO;
+import com.smcpartners.shape.shapeserver.frameworks.data.entitymodel.shape.OrganizationMeasureEntity;
 import com.smcpartners.shape.shapeserver.frameworks.data.exceptions.DataAccessException;
 import com.smcpartners.shape.shapeserver.shared.dto.common.BooleanValueDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.MeasureDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDTO;
-import com.smcpartners.shape.shapeserver.shared.dto.shape.request.FileUploadRequestDTO;
+import com.smcpartners.shape.shapeserver.shared.dto.shape.request.OrganizationMeasureFileUploadRequestDTO;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -25,13 +26,13 @@ import java.util.logging.Logger;
  * Date: 4/26/17
  */
 @Stateless
-public class FileUploadProcessorDAOImpl implements FileUploadProcessorDAO {
+public class OrganizationMeasureFileUploadProcessorDAOImpl implements OrganizationMeasureFileUploadProcessorDAO {
 
     @Inject
     private Logger log;
 
     @EJB
-    private FileUploadDAO fileUploadDAO;
+    private OrganizationMeasureFileUploadDAO fileUploadDAO;
 
     @EJB
     private OrganizationMeasureDAO organizationMeasureDAO;
@@ -42,7 +43,7 @@ public class FileUploadProcessorDAOImpl implements FileUploadProcessorDAO {
     /**
      * Default Constructor
      */
-    public FileUploadProcessorDAOImpl() {
+    public OrganizationMeasureFileUploadProcessorDAOImpl() {
     }
 
     /**
@@ -54,19 +55,24 @@ public class FileUploadProcessorDAOImpl implements FileUploadProcessorDAO {
      * @throws DataAccessException
      */
     @Override
-    public BooleanValueDTO createAndLogFileMeasureUpload(OrganizationMeasureDTO orgMeasureDTO, FileUploadRequestDTO fileUpload) throws DataAccessException {
+    public BooleanValueDTO createAndLogFileMeasureUpload(OrganizationMeasureDTO orgMeasureDTO, OrganizationMeasureFileUploadRequestDTO fileUpload) throws DataAccessException {
         try {
-            // Find measure id based on name, should only be one!
-            List<MeasureDTO> mDTOLst = measureDAO.findActiveMeasuresByName(fileUpload.getMeasureEntityName());
-            int measureId = mDTOLst.get(0).getId();
+            // Get the measure id
+            int measureId = fileUpload.getMeasureEntityId();
+            if (measureId == 0) {
+                List<MeasureDTO> mDTOLst = measureDAO.findActiveMeasuresByName(fileUpload.getMeasureEntityName());
+                measureId = mDTOLst.get(0).getId();
+            }
 
-            // File
-            fileUpload.setMeasureEntityId(measureId);
-            FileUploadRequestDTO fDTO = fileUploadDAO.create(fileUpload);
-
-            // Organization measure
+            // Save organization measure and get the id
             orgMeasureDTO.setMeasureId(measureId);
-            OrganizationMeasureDTO omDTO = organizationMeasureDAO.create(orgMeasureDTO);
+            int orgMeasureId = organizationMeasureDAO.create(orgMeasureDTO).getId();
+
+            // Save file upload data
+            fileUpload.setMeasureEntityId(measureId);
+            fileUpload.setOrgMeasureId(orgMeasureId);
+            fileUploadDAO.create(fileUpload);
+
 
             return BooleanValueDTO.get(true);
         } catch (Exception e) {

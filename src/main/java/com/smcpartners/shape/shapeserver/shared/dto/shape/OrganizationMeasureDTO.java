@@ -25,6 +25,7 @@ public class OrganizationMeasureDTO implements Serializable {
     private Integer numeratorValue;
     private Integer denominatorValue;
     private Date rpDate;
+    private Date fileUploadDate;
     private Integer genderMaleNum;
     private Integer genderMaleDen;
     private Integer genderFemaleNum;

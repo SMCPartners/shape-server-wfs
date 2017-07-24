@@ -62,6 +62,14 @@ public class OrganizationMeasureEntity {
     @Column(name = "rpDate", nullable = false, insertable = true, updatable = true)
     private Date rpDate;
 
+    /**
+     * If this is set then a file was uploaded on this date with initial data
+     */
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "file_upload_Date", nullable = true, insertable = true, updatable = true)
+    private Date fileUploadDate;
+
     @Basic
     @Column(name = "gender_male_num", nullable = true, insertable = true, updatable = true)
     private Integer genderMaleNum;

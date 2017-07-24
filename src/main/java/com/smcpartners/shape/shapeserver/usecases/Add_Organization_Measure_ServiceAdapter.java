@@ -11,6 +11,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDTO
 import com.smcpartners.shape.shapeserver.shared.dto.shape.response.IntEntityResponseDTO;
 import com.smcpartners.shape.shapeserver.shared.exceptions.NotAuthorizedToPerformActionException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
+import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -26,10 +27,12 @@ import java.util.logging.Logger;
  * Responsible:<br/>
  * 1. ADMIN can add for any organization measure.
  * ORG_ADMIN and REGISTERED can only add for their organizations<br/>
+ * 2. Can only have 1 measure type per organization per year.</br>
  * <p>
  * Created by johndestefano on 11/4/15.
  * <p>
  * Changes:<b/>
+ * 1. Add rule for one measure type per organization per year.</br>
  */
 @Path("/common")
 public class Add_Organization_Measure_ServiceAdapter implements Add_Organization_Measure_Service {
@@ -43,7 +46,14 @@ public class Add_Organization_Measure_ServiceAdapter implements Add_Organization
     @Inject
     private UserExtras userExtras;
 
+    @Inject
+    @ConfigurationValue("com.smc.server-core.errorMsgs.onlyOneMeasureTypePerOrgPerYearError")
+    private String onlyOneMeasureTypePerOrgPerYearError;
 
+
+    /**
+     * Default Constructor
+     */
     public Add_Organization_Measure_ServiceAdapter() {
     }
 
@@ -62,8 +72,15 @@ public class Add_Organization_Measure_ServiceAdapter implements Add_Organization
 
             // Users role
             Date now = new Date();
-            OrganizationMeasureDTO orgDTO = null;
 
+            // Data needed for check
+            // If there's already one there then throw an error
+            if (organizationMeasureDAO.checkMeasureForYearForOrgAlreadyEntered(org.getMeasureId(),
+                    org.getOrganizationId(), org.getReportPeriodYear())) {
+                throw new Exception(onlyOneMeasureTypePerOrgPerYearError);
+            }
+
+            OrganizationMeasureDTO orgDTO = null;
             // ADMIN role
             if (userExtras.getRole() == SecurityRoleEnum.ADMIN) {
                 org.setRpDate(now);

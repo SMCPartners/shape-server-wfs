@@ -10,6 +10,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.common.NameStringValDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.UserDTO;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 import com.smcpartners.shape.shapeserver.shared.utils.RandomPasswordGenerator;
+import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -43,6 +44,15 @@ public class Forgot_Username_ServiceAdapter implements Forgot_Username_Service {
     @EJB
     private SendMailService sendEmailMsg;
 
+    @Inject
+    @ConfigurationValue("com.smc.server-core.errorMsgs.noActiveUserAccountError")
+    private String noActiveUserAccountError;
+
+    @Inject
+    @ConfigurationValue("com.smc.server-core.errorMsgs.noUserWithEmailExistsError")
+    private String noUserWithEmailExistsError;
+
+
     /**
      * Constructor
      */
@@ -57,7 +67,12 @@ public class Forgot_Username_ServiceAdapter implements Forgot_Username_Service {
     public BooleanValueDTO forgotUsername(NameStringValDTO emailAddress) throws UseCaseException {
         try {
             // Find the account by email address. The email address is unique
-            UserDTO user = userDAO.findByEmail(emailAddress.getVal());
+            UserDTO user;
+            try {
+                user = userDAO.findByEmail(emailAddress.getVal());
+            } catch (Exception ne) {
+                throw new Exception(noUserWithEmailExistsError);
+            }
 
             // Check the account status
             // Send an email to the user with their username
@@ -67,6 +82,8 @@ public class Forgot_Username_ServiceAdapter implements Forgot_Username_Service {
                 mail.setSubject("User name");
                 mail.setMessage("Your user name is " + user.getId() + ".");
                 sendEmailMsg.sendEmailMsg(mail);
+            } else {
+                throw new Exception(noActiveUserAccountError);
             }
 
             // Return

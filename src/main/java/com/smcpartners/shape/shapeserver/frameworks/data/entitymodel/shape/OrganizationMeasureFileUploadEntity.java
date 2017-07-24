@@ -18,10 +18,16 @@ import java.util.Date;
  * </p>
  */
 @Entity
-@Table(name = "file_upload", schema = "", catalog = "shape")
+@Table(name = "organization_measure_file_upload", schema = "", catalog = "shape")
+@NamedQueries({
+        @NamedQuery(name = "OrganizationMeasureFileUpload.findByOrgMeasureIdAndUploadDt",
+                query = "SELECT OBJECT(om) FROM OrganizationMeasureFileUploadEntity om " +
+                        "WHERE om.organizationMeasureEntity.id = :omId AND " +
+                        "om.uploadDt = :fileUploadDt")
+})
 @Data
 @NoArgsConstructor
-public class FileUploadEntity {
+public class OrganizationMeasureFileUploadEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,13 +43,13 @@ public class FileUploadEntity {
     @Column(name = "fileName", nullable = false, insertable = true, updatable = true)
     private String fileName;
 
+//    @Basic
+//    @Column(name = "user_id", columnDefinition = "VARCHAR(25)", nullable = false, insertable = true, updatable = true)
+//    private String userId;
+
     @Lob
     @Column(name = "uploadedB64File", nullable = true, insertable = true, updatable = true)
     private String uploadedB64File;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true)
-    private UserEntity userByUserId;
 
     @ManyToOne
     @JoinColumn(name = "measure_id", referencedColumnName = "id", nullable = false)
@@ -52,4 +58,12 @@ public class FileUploadEntity {
     @ManyToOne
     @JoinColumn(name = "org_id", referencedColumnName = "id", nullable = false)
     private OrganizationEntity organizationEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "org_measure_id", referencedColumnName = "id", nullable = false)
+    private OrganizationMeasureEntity organizationMeasureEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private UserEntity userByUserId;
 }

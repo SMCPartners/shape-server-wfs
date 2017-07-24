@@ -3,16 +3,21 @@ package com.smcpartners.shape.shapeserver.usecases;
 
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.FileUploadProcessorDAO;
+import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.MeasureDAO;
+import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureFileUploadProcessorDAO;
+import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureDAO;
 import com.smcpartners.shape.shapeserver.gateway.rest.services.Add_Organization_Measure_Upload_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.BooleanValueDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
+import com.smcpartners.shape.shapeserver.shared.dto.shape.MeasureDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDTO;
-import com.smcpartners.shape.shapeserver.shared.dto.shape.request.FileUploadRequestDTO;
+import com.smcpartners.shape.shapeserver.shared.dto.shape.request.OrganizationMeasureFileUploadRequestDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.response.FileUploadResponseDTO;
+import com.smcpartners.shape.shapeserver.shared.exceptions.MaxFileSizeExceededException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.NotAuthorizedToPerformActionException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
+import com.smcpartners.shape.shapeserver.shared.utils.ExcelUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -25,10 +30,7 @@ import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -40,14 +42,17 @@ import java.util.logging.Logger;
 
 /**
  * Responsible:<br/>
- * 1. Upload a file that contains a measure. All files will be in a consistent excel format.
- * 2. A record of the file processing, including the file contents must be saved.
- * 3. The data in the file will create an organizational measure
- * 4. Only user role ADMIN or ORG_ADMIN can perform this task
+ * 1. Upload a file that contains a measure. All files will be in a consistent excel format.</br>
+ * 2. A record of the file processing, including the file contents must be saved.</br>
+ * 3. The data in the file will create an organizational measure</br>
+ * 4. Only user role ADMIN or ORG_ADMIN can perform this task</br>
+ * 5. Assumes only single file upload</br>
+ * 6. can only have one measure type per organization per year.</br>
  * <p>
  * Created by johndestefano on 05/09/2016.
  * <p>
  * Changes:<b/>
+ * 1. Additional data for file upload table and measure/year/org check - johndestefano - 07/20/2017</br>
  */
 @Path("/admin")
 public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organization_Measure_Upload_Service {
@@ -56,7 +61,13 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
     private Logger log;
 
     @EJB
-    private FileUploadProcessorDAO fileUploadProcessorDAO;
+    private OrganizationMeasureFileUploadProcessorDAO fileUploadProcessorDAO;
+
+    @EJB
+    private OrganizationMeasureDAO organizationMeasureDAO;
+
+    @EJB
+    private MeasureDAO measureDAO;
 
     @Inject
     private UserExtras userExtras;
@@ -64,6 +75,18 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
     @Inject
     @ConfigurationValue("com.smc.server-core.fileUpload.measureFileUploadKey")
     private String formFileUploadKey;
+
+    @Inject
+    @ConfigurationValue("com.smc.server-core.fileUpload.maxUploadSize")
+    private long maxUploadSize;
+
+    @Inject
+    @ConfigurationValue("com.smc.server-core.errorMsgs.onlyOneMeasureTypePerOrgPerYearError")
+    private String onlyOneMeasureTypePerOrgPerYearError;
+
+    @Inject
+    @ConfigurationValue("com.smc.server-core.errorMsgs.canOnlyHaveOneActiveMeasureWithAGivenNameError")
+    private String canOnlyHaveOneActiveMeasureWithAGivenNameError;
 
 
     /**
@@ -79,8 +102,14 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
     @Consumes("multipart/form-data")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.ORG_ADMIN})
     @Logged
-    public FileUploadResponseDTO addMeasureUpload(MultipartFormDataInput input) throws UseCaseException {
+    public FileUploadResponseDTO addMeasureUpload(MultipartFormDataInput input,
+                                                  @HeaderParam("content-length") long contentLength) throws UseCaseException {
         try {
+            // Check maximum content length
+            if (contentLength > maxUploadSize) {
+                throw new MaxFileSizeExceededException();
+            }
+
             // Create the return object
             final FileUploadResponseDTO retDTO = new FileUploadResponseDTO();
 
@@ -91,13 +120,13 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
             // Establish organization id
             // Only roles that have access to this
             // resource are ADMIN and ORG_ADMIN
-            int orgId = 1;
-//            if (userExtras.getRole() == SecurityRoleEnum.ADMIN) {
-//                String orgIdStr = input.getFormDataPart("orgId", String.class, null);
-//                orgId = Integer.parseInt(orgIdStr);
-//            } else {
-//                orgId = userExtras.getOrgId();
-//            }
+            int orgId;
+            if (userExtras.getRole() == SecurityRoleEnum.ADMIN) {
+                String orgIdStr = input.getFormDataPart("orgId", String.class, null);
+                orgId = Integer.parseInt(orgIdStr);
+            } else {
+                orgId = userExtras.getOrgId();
+            }
 
             // The current file name being processed
             String fileName = null;
@@ -118,70 +147,86 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
                     // Save b64 version of later use
                     String base64FileContents = Base64.encodeBase64String(bytes);
 
-                    // Convert file to excel
-//                        POIFSFileSystem fs = new POIFSFileSystem(new ByteArrayInputStream(bytes));
-//                        HSSFWorkbook wb = new HSSFWorkbook(fs);
-//                        HSSFSheet sheet = wb.getSheetAt(0);
-
                     // Read sheet data into memory
                     in = new ByteArrayInputStream(bytes);
                     wb = new XSSFWorkbook(in);
                     Sheet sheet = wb.getSheetAt(0);
-                    Row row1 = sheet.getRow(0);
 
                     // Get the measure name string
+                    // This will be used by the data layer to look up the
+                    // measure and get its id. This is needed for the creation
+                    // of a new organization measure.
+                    Row row1 = sheet.getRow(0);
                     Cell measureIdCell = row1.getCell(1);
                     String measureName = measureIdCell.getRichStringCellValue().getString();
 
-                    // Extract the data and load into a
+                    // Enforce rule of only one measure id/organization/year
+                    int measureId;
+                    int rptYear = ExcelUtils.convertToInt(sheet, 4, 1);
+                    List<MeasureDTO> measures = measureDAO.findActiveMeasuresByName(measureName);
+                    if (measures.size() > 1) {
+                        // Don't see how this could happen other than direct manipulation
+                        // of the database as its checked when a new measure is created.
+                        throw new Exception(canOnlyHaveOneActiveMeasureWithAGivenNameError);
+                    } else {
+                        measureId = measures.get(0).getId();
+                    }
 
+                    if (organizationMeasureDAO.checkMeasureForYearForOrgAlreadyEntered(measureId, orgId, rptYear)) {
+                        throw new Exception(onlyOneMeasureTypePerOrgPerYearError);
+                    }
+
+                    // Extract the data and submit for database load
                     // Create a measure entry using the users org id and save the
                     // entry in the file upload table
                     Date now = new Date();
                     OrganizationMeasureDTO organizationMeasureDTO = new OrganizationMeasureDTO();
-                    FileUploadRequestDTO fileUploadRequestDTO = new FileUploadRequestDTO();
+                    OrganizationMeasureFileUploadRequestDTO fileUploadRequestDTO = new OrganizationMeasureFileUploadRequestDTO();
 
                     // File Upload Data
                     fileUploadRequestDTO.setUploadDt(now);
                     fileUploadRequestDTO.setUploadedB64File(base64FileContents);
                     fileUploadRequestDTO.setUserId(userExtras.getUserId());
                     fileUploadRequestDTO.setMeasureEntityName(measureName);
+                    fileUploadRequestDTO.setMeasureEntityId(measureId);
                     fileUploadRequestDTO.setOrgId(orgId);
+                    fileUploadRequestDTO.setFileName(formFileUploadKey);
 
                     // Organization measure data
                     organizationMeasureDTO.setRpDate(now);
+                    organizationMeasureDTO.setFileUploadDate(now);
                     organizationMeasureDTO.setUserId(userExtras.getUserId());
                     organizationMeasureDTO.setOrganizationId(orgId);
-                    organizationMeasureDTO.setNumeratorValue(this.convertToInt(sheet, 1, 1));
-                    organizationMeasureDTO.setDenominatorValue(this.convertToInt(sheet, 2, 1));
-                    organizationMeasureDTO.setReportPeriodQuarter(this.convertToInt(sheet, 3, 1));
-                    organizationMeasureDTO.setReportPeriodYear(this.convertToInt(sheet, 4, 1));
-                    organizationMeasureDTO.setGenderMaleNum(this.convertToInt(sheet, 5, 1));
-                    organizationMeasureDTO.setGenderMaleDen(this.convertToInt(sheet, 6, 1));
-                    organizationMeasureDTO.setGenderFemaleNum(this.convertToInt(sheet, 7, 1));
-                    organizationMeasureDTO.setGenderFemaleDen(this.convertToInt(sheet, 8, 1));
-                    organizationMeasureDTO.setAge1844Num(this.convertToInt(sheet, 9, 1));
-                    organizationMeasureDTO.setAge1844Den(this.convertToInt(sheet, 10, 1));
-                    organizationMeasureDTO.setAge4564Num(this.convertToInt(sheet, 11, 1));
-                    organizationMeasureDTO.setAge4564Den(this.convertToInt(sheet, 12, 1));
-                    organizationMeasureDTO.setAgeOver65Num(this.convertToInt(sheet, 13, 1));
-                    organizationMeasureDTO.setAgeOver65Den(this.convertToInt(sheet, 14, 1));
-                    organizationMeasureDTO.setEthnicityHispanicLatinoNum(this.convertToInt(sheet, 15, 1));
-                    organizationMeasureDTO.setEthnicityHispanicLatinoDen(this.convertToInt(sheet, 16, 1));
-                    organizationMeasureDTO.setEthnicityNotHispanicLatinoNum(this.convertToInt(sheet, 17, 1));
-                    organizationMeasureDTO.setEthnicityNotHispanicLatinoDen(this.convertToInt(sheet, 18, 1));
-                    organizationMeasureDTO.setRaceAfricanAmericanNum(this.convertToInt(sheet, 19, 1));
-                    organizationMeasureDTO.setRaceAfricanAmericanDen(this.convertToInt(sheet, 20, 1));
-                    organizationMeasureDTO.setRaceAmericanIndianNum(this.convertToInt(sheet, 21, 1));
-                    organizationMeasureDTO.setRaceAmericanIndianDen(this.convertToInt(sheet, 22, 1));
-                    organizationMeasureDTO.setRaceAsianNum(this.convertToInt(sheet, 23, 1));
-                    organizationMeasureDTO.setRaceAsianDen(this.convertToInt(sheet, 24, 1));
-                    organizationMeasureDTO.setRaceNativeHawaiianNum(this.convertToInt(sheet, 25, 1));
-                    organizationMeasureDTO.setRaceNativeHawaiianDen(this.convertToInt(sheet, 26, 1));
-                    organizationMeasureDTO.setRaceWhiteNum(this.convertToInt(sheet, 27, 1));
-                    organizationMeasureDTO.setRaceWhiteDen(this.convertToInt(sheet, 28, 1));
-                    organizationMeasureDTO.setRaceOtherNum(this.convertToInt(sheet, 29, 1));
-                    organizationMeasureDTO.setRaceOtherDen(this.convertToInt(sheet, 30, 1));
+                    organizationMeasureDTO.setNumeratorValue(ExcelUtils.convertToInt(sheet, 1, 1));
+                    organizationMeasureDTO.setDenominatorValue(ExcelUtils.convertToInt(sheet, 2, 1));
+                    organizationMeasureDTO.setReportPeriodQuarter(ExcelUtils.convertToInt(sheet, 3, 1));
+                    organizationMeasureDTO.setReportPeriodYear(rptYear);
+                    organizationMeasureDTO.setGenderMaleNum(ExcelUtils.convertToInt(sheet, 5, 1));
+                    organizationMeasureDTO.setGenderMaleDen(ExcelUtils.convertToInt(sheet, 6, 1));
+                    organizationMeasureDTO.setGenderFemaleNum(ExcelUtils.convertToInt(sheet, 7, 1));
+                    organizationMeasureDTO.setGenderFemaleDen(ExcelUtils.convertToInt(sheet, 8, 1));
+                    organizationMeasureDTO.setAge1844Num(ExcelUtils.convertToInt(sheet, 9, 1));
+                    organizationMeasureDTO.setAge1844Den(ExcelUtils.convertToInt(sheet, 10, 1));
+                    organizationMeasureDTO.setAge4564Num(ExcelUtils.convertToInt(sheet, 11, 1));
+                    organizationMeasureDTO.setAge4564Den(ExcelUtils.convertToInt(sheet, 12, 1));
+                    organizationMeasureDTO.setAgeOver65Num(ExcelUtils.convertToInt(sheet, 13, 1));
+                    organizationMeasureDTO.setAgeOver65Den(ExcelUtils.convertToInt(sheet, 14, 1));
+                    organizationMeasureDTO.setEthnicityHispanicLatinoNum(ExcelUtils.convertToInt(sheet, 15, 1));
+                    organizationMeasureDTO.setEthnicityHispanicLatinoDen(ExcelUtils.convertToInt(sheet, 16, 1));
+                    organizationMeasureDTO.setEthnicityNotHispanicLatinoNum(ExcelUtils.convertToInt(sheet, 17, 1));
+                    organizationMeasureDTO.setEthnicityNotHispanicLatinoDen(ExcelUtils.convertToInt(sheet, 18, 1));
+                    organizationMeasureDTO.setRaceAfricanAmericanNum(ExcelUtils.convertToInt(sheet, 19, 1));
+                    organizationMeasureDTO.setRaceAfricanAmericanDen(ExcelUtils.convertToInt(sheet, 20, 1));
+                    organizationMeasureDTO.setRaceAmericanIndianNum(ExcelUtils.convertToInt(sheet, 21, 1));
+                    organizationMeasureDTO.setRaceAmericanIndianDen(ExcelUtils.convertToInt(sheet, 22, 1));
+                    organizationMeasureDTO.setRaceAsianNum(ExcelUtils.convertToInt(sheet, 23, 1));
+                    organizationMeasureDTO.setRaceAsianDen(ExcelUtils.convertToInt(sheet, 24, 1));
+                    organizationMeasureDTO.setRaceNativeHawaiianNum(ExcelUtils.convertToInt(sheet, 25, 1));
+                    organizationMeasureDTO.setRaceNativeHawaiianDen(ExcelUtils.convertToInt(sheet, 26, 1));
+                    organizationMeasureDTO.setRaceWhiteNum(ExcelUtils.convertToInt(sheet, 27, 1));
+                    organizationMeasureDTO.setRaceWhiteDen(ExcelUtils.convertToInt(sheet, 28, 1));
+                    organizationMeasureDTO.setRaceOtherNum(ExcelUtils.convertToInt(sheet, 29, 1));
+                    organizationMeasureDTO.setRaceOtherDen(ExcelUtils.convertToInt(sheet, 30, 1));
 
                     // Save the results of the above processing
                     BooleanValueDTO dto = fileUploadProcessorDAO.createAndLogFileMeasureUpload(organizationMeasureDTO,
@@ -211,6 +256,8 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
             log.logp(Level.SEVERE, this.getClass().getName(), "addMeasureUpload", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
+            } else if (e instanceof MaxFileSizeExceededException) {
+                throw (MaxFileSizeExceededException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }
@@ -218,7 +265,7 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
     }
 
     /**
-     * Extract the file name from the Content-dispoition of the request
+     * Extract the file name from the Content-disposition of the request
      *
      * @param header
      * @return
@@ -237,18 +284,5 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
             }
         }
         return "unknown";
-    }
-
-    /**
-     * Convert the double value in a cell to an int
-     *
-     * @param row
-     * @param cell
-     * @return
-     * @throws Exception - If the given cell can't be converted to an int
-     */
-    private int convertToInt(Sheet sheet, int row, int cell) throws Exception {
-        double doubleValue = sheet.getRow(row).getCell(cell).getNumericCellValue();
-        return (new Double(doubleValue)).intValue();
     }
 }

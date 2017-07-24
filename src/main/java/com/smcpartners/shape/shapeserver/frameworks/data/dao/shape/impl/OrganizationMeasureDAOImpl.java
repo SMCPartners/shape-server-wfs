@@ -189,6 +189,29 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
     }
 
     @Override
+    public boolean checkMeasureForYearForOrgAlreadyEntered(int measureId, int orgId, int year) throws DataAccessException {
+        try {
+            MeasureEntity me = em.find(MeasureEntity.class, measureId);
+            OrganizationEntity org = em.find(OrganizationEntity.class, orgId);
+            List<OrganizationMeasureEntity> omLst = em.createNamedQuery("OrganizationMeasure.findByMeasYearOrg")
+                    .setParameter("meas", me)
+                    .setParameter("year", year)
+                    .setParameter("org", org)
+                    .getResultList();
+
+            // Check to see if there is an entry
+            if (omLst.size() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            log.logp(Level.SEVERE, this.getClass().getName(), "checkMeasureForYearForOrgAlreadyEntered", e.getMessage(), e);
+            throw new DataAccessException(e);
+        }
+    }
+
+    @Override
     protected OrganizationMeasureEntity mapDtoToEntity(OrganizationMeasureEntity et, OrganizationMeasureDTO dto) {
         et.setAge1844Num(dto.getAge1844Num());
         et.setAge1844Den(dto.getAge1844Den());
@@ -221,6 +244,7 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
         et.setRaceWhiteDen(dto.getRaceWhiteDen());
         et.setReportPeriodYear(dto.getReportPeriodYear());
         et.setRpDate(dto.getRpDate());
+        et.setFileUploadDate(dto.getFileUploadDate());
 
         // Organization
         OrganizationEntity org = em.find(OrganizationEntity.class, dto.getOrganizationId());
@@ -281,6 +305,7 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
         d.setUserId(e.getUserByUserId().getId());
         d.setReportPeriodYear(e.getReportPeriodYear());
         d.setRpDate(e.getRpDate());
+        d.setFileUploadDate(e.getFileUploadDate());
         return d;
     }
 }

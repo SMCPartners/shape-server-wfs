@@ -164,7 +164,7 @@ public class SecurityUtils {
      * @param args
      */
     public static void main(String[] args) {
-        String pwd = "Password!";
+        String pwd = "Q1w2e3r4!";
         try {
             // Generate digest
             SaltedPassword sPwd = genSaltedPasswordAndSalt(pwd);

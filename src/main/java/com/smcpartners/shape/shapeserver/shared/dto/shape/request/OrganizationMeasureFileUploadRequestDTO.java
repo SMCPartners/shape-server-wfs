@@ -18,20 +18,25 @@ import java.util.Date;
  */
 @Data
 @NoArgsConstructor
-public class FileUploadRequestDTO {
+public class OrganizationMeasureFileUploadRequestDTO {
     private int fileUploadId;
     private String userId;
     private int orgId;
+    private int orgMeasureId;
     private int measureEntityId;
     private String measureEntityName;
     private Date uploadDt;
     private String uploadedB64File;
+    private String fileName;
 
-    public FileUploadRequestDTO(String userId, String measureEntityName, Date uploadDt, String uploadedB64File, int orgId) {
+    public OrganizationMeasureFileUploadRequestDTO(String userId, String measureEntityName, Date uploadDt, String uploadedB64File,
+                                                   int orgId, int orgMeasureId, String fileName) {
         this.userId = userId;
         this.measureEntityName = measureEntityName;
         this.uploadDt = uploadDt;
         this.uploadedB64File = uploadedB64File;
         this.orgId = orgId;
+        this.orgMeasureId = orgMeasureId;
+        this.fileName = fileName;
     }
 }

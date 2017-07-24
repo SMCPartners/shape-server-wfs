@@ -62,4 +62,16 @@ public interface OrganizationMeasureDAO extends CrudDAO<OrganizationMeasureDTO, 
      */
     Map<String, Map> getAvgForAllByYearByMeasure(int measureId, int orgId) throws DataAccessException;
 
+    /**
+     * Checks to see if a specific measure (by measure id) has been entered for an organization
+     * in the year supplied.
+     *
+     * @param measureId
+     * @param orgId
+     * @param year
+     * @return
+     * @throws DataAccessException
+     */
+    boolean checkMeasureForYearForOrgAlreadyEntered(int measureId, int orgId, int year) throws DataAccessException;
+
 }
