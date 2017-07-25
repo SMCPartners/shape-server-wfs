@@ -92,9 +92,6 @@ public class Add_User_Account_ServiceAdapter implements Create_User_Account_Serv
                     }
                 }
 
-                // First add the database
-                UserDTO respDTO = userDAO.create(nDTO);
-
                 // Next send a confirmation email with the random password and account set to change password.
                 // This will result in the user having to change their password.
                 MailDTO mail = new MailDTO();
@@ -116,6 +113,9 @@ public class Add_User_Account_ServiceAdapter implements Create_User_Account_Serv
                 } catch (Exception e) {
                     throw new SendEmailException();
                 }
+
+                // Add to database if user email is sent successfully
+                UserDTO respDTO = userDAO.create(nDTO);
 
                 // Generate return
                 return new CreateUserResponseDTO(respDTO.getId());
