@@ -13,15 +13,12 @@ import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:</br>
+ * Responsible: Delete an Organizational Measure</br>
  * 1. ADMIN can delete a measure for any organization. ORG_ADMIN and REGISTERD USER can
  * only delete for their organization</br>
  * <p>
@@ -39,10 +36,10 @@ public class Delete_Organization_Measure_ServiceAdapter implements Delete_Organi
     private Logger log;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default Constructor
@@ -51,7 +48,7 @@ public class Delete_Organization_Measure_ServiceAdapter implements Delete_Organi
     }
 
     @Override
-    @POST
+    @DELETE
     @Path("/organization_measure/delete")
     @Produces("application/json")
     @Consumes("application/json")
@@ -64,7 +61,7 @@ public class Delete_Organization_Measure_ServiceAdapter implements Delete_Organi
             } else {
                 // Not the ADMIN
                 // Look up measure first to get organization its for
-                OrganizationMeasureDTO dto =  organizationMeasureDAO.findById(org.getId());
+                OrganizationMeasureDTO dto = organizationMeasureDAO.findById(org.getId());
 
                 // Users organization must match the organization of the measure
                 if (userExtras.getOrgId() == dto.getOrganizationId()) {
@@ -78,7 +75,7 @@ public class Delete_Organization_Measure_ServiceAdapter implements Delete_Organi
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "deleteOrganizationMeasure", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

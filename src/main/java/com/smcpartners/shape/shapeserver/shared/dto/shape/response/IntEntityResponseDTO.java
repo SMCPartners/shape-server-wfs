@@ -4,8 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Responsible:<br/>
- * 1. DTO
+ * Responsible: DTO<br/>
+ * 1.
  * <p>
  * Created by johndestefano on 11/5/15.
  * <p>

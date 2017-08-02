@@ -22,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Edit a Measure<br/>
  * 1. The ADMIN can edit a measure.</br>
  * 2. Can't add a measure if the name matches a currently active measure</br>
  * <p>
@@ -37,10 +37,10 @@ public class Edit_Measure_ServiceAdapter implements Edit_Measure_Service {
     private Logger log;
 
     @EJB
-    private MeasureDAO measureDAO;
+    MeasureDAO measureDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default Constructor

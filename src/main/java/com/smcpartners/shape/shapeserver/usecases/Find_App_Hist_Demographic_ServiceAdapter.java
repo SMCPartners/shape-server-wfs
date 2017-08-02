@@ -44,19 +44,19 @@ public class Find_App_Hist_Demographic_ServiceAdapter implements Find_App_Hist_D
     private Logger log;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     @EJB
-    private MeasureDAO mDAO;
+    MeasureDAO mDAO;
 
     @EJB
-    private OrganizationMeasureDAO orgMDAO;
+    OrganizationMeasureDAO orgMDAO;
 
     @EJB
-    private OrganizationDAO oDAO;
+    OrganizationDAO oDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default Constructor
@@ -72,7 +72,7 @@ public class Find_App_Hist_Demographic_ServiceAdapter implements Find_App_Hist_D
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.DPH_USER, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED})
     @Logged
     public List<AppHistDemographicsDTO> showAppHistDemographic(@PathParam("orgId") int orgId, @PathParam("measureId") int measureId, @PathParam("year") int year) throws UseCaseException {
-        try{
+        try {
 
             List<AppHistDemographicsDTO> retLst = new ArrayList<>();
 
@@ -80,7 +80,7 @@ public class Find_App_Hist_Demographic_ServiceAdapter implements Find_App_Hist_D
 
             List<OrganizationMeasureDTO> orgMList = orgMDAO.findOrgMeasureByMeasureIdAndYear(measureId, year);
 
-            if ( orgMList.size() > 0) {
+            if (orgMList.size() > 0) {
                 for (OrganizationMeasureDTO om : orgMList) {
                     OrganizationDTO org = oDAO.findById(orgId);
 
@@ -241,17 +241,16 @@ public class Find_App_Hist_Demographic_ServiceAdapter implements Find_App_Hist_D
     }
 
     public double convertToDoubles(int numVal, int denVal) {
-        double num = (double)numVal;
-        double den = (double)denVal;
-        double sum = num/den;
-        if (Double.isNaN(sum)){
+        double num = (double) numVal;
+        double den = (double) denVal;
+        double sum = num / den;
+        if (Double.isNaN(sum)) {
             sum = 0.00;
         }
         String df = new DecimalFormat("#.##").format(sum);
         sum = Double.parseDouble(df);
         return sum;
     }
-
 
 
 }

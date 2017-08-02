@@ -39,18 +39,18 @@ public class Forgot_Username_ServiceAdapter implements Forgot_Username_Service {
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @EJB
-    private SendMailService sendEmailMsg;
+    SendMailService sendEmailMsg;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.noActiveUserAccountError")
-    private String noActiveUserAccountError;
+    String noActiveUserAccountError;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.noUserWithEmailExistsError")
-    private String noUserWithEmailExistsError;
+    String noUserWithEmailExistsError;
 
 
     /**

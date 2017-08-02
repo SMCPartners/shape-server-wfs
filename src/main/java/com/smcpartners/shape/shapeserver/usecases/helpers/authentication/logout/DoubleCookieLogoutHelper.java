@@ -7,9 +7,8 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 /**
- * Responsibility: </br>
- * 1. Implements logout when using double cookie security</br>
- * 2. </br>
+ * Responsibility: Implements logout when using double cookie security</br>
+ * 1. </br>
  * Created By: johndestefano
  * Date: 6/25/17
  */
@@ -17,12 +16,15 @@ public class DoubleCookieLogoutHelper implements LogoutHelper {
 
     @Inject
     @ConfigurationValue("com.smc.server-core.security.jwtEmbededCookies.sessionCookieName")
-    private String sessionCookieName;
+    String sessionCookieName;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.security.jwtEmbededCookies.xxsrfCookieName")
-    private String xxsrfCookieName;
+    String xxsrfCookieName;
 
+    /**
+     * Default constructor
+     */
     public DoubleCookieLogoutHelper() {
     }
 
@@ -35,7 +37,7 @@ public class DoubleCookieLogoutHelper implements LogoutHelper {
     @Override
     public Response logoutResponse() throws Exception {
         // Create two Cookies
-        // Session cookie holds JWT token, expires when to browser closes, is httpOnly, and can not be read by browser javascript (secure)
+        // Session cookie holds JWT token, expires when the browser closes, is httpOnly, and can not be read by browser javascript (secure)
         NewCookie sessionCookie = new NewCookie(sessionCookieName, null, null, null, null,0, false, true);
 
         // XSRF cookie hold the XSRF token, and expires when the browser closes

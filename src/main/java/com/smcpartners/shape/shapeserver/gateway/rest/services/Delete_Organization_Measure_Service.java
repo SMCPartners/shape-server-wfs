@@ -4,10 +4,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.common.BooleanValueDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDTO;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 /**
  * Responsible:</br>
@@ -23,7 +20,7 @@ import javax.ws.rs.Produces;
 @Path("/admin")
 public interface Delete_Organization_Measure_Service {
 
-    @POST
+    @DELETE
     @Path("/organization_measure/delete")
     @Produces("application/json")
     @Consumes("application/json")

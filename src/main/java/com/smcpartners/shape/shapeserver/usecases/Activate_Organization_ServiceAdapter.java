@@ -23,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Activate an Organization<br/>
  * 1.
  * <p>
  * Created by johndestefano on 11/4/15.
@@ -37,10 +37,10 @@ public class Activate_Organization_ServiceAdapter implements Activate_Organizati
     private Logger log;
 
     @EJB
-    private OrganizationDAO organizationDAO;
+    OrganizationDAO organizationDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Constructor

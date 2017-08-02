@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Request/Response logging</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

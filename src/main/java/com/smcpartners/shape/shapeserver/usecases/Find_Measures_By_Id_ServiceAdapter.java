@@ -40,10 +40,10 @@ public class Find_Measures_By_Id_ServiceAdapter implements Find_Measures_By_Id_S
     private Logger log;
 
     @EJB
-    private MeasureDAO measureDAO;
+    MeasureDAO measureDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default Constructor

@@ -6,6 +6,9 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDTO
 import com.smcpartners.shape.shapeserver.shared.dto.shape.request.OrganizationMeasureFileUploadRequestDTO;
 
 /**
+ * Responsible: Contract for creating an Organization Measure and corresponding Organization Measure
+ * File Upload</br>
+ *
  * Created by johndestefano on 4/26/17.
  */
 public interface OrganizationMeasureFileUploadProcessorDAO {

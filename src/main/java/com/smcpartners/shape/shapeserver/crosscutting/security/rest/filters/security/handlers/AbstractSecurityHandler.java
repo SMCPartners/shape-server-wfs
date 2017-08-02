@@ -21,7 +21,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Provide base functionality for the multiple security handling approaches
+ * such as Bearer Token security and Double Cookie security.</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano
@@ -34,34 +35,37 @@ import java.util.Map;
 public abstract class AbstractSecurityHandler {
 
     @Inject
-    protected JWTUtils jwtUtils;
+    JWTUtils jwtUtils;
 
     @Inject
-    protected UserExtras userExtras;
+    UserExtras userExtras;
 
     @Inject
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.authHeaderError")
-    private String authHeaderError;
+    String authHeaderError;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.inactiveUserError")
-    private String inactiveUserError;
+    String inactiveUserError;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.userNotFoundError")
-    private String userNotFoundError;
+    String userNotFoundError;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.userNotAuthorizedError")
-    private String userNotAuthorizedError;
+    String userNotAuthorizedError;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.userNeedsPwdResetError")
-    private String userNeedsPwdResetError;
+    String userNeedsPwdResetError;
 
+    /**
+     * Default constructor
+     */
     public AbstractSecurityHandler() {
     }
 

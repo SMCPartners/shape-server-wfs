@@ -3,7 +3,7 @@ swarm:
     data-sources:
       shapeDS:
         driver-name: mysql
-        connection-url: jdbc:mysql://localhost:3306/shape
+        connection-url: jdbc:mysql://localhost:3306/shape_wfs
         user-name: shape
         password: shape
   messaging-activemq:
@@ -52,6 +52,13 @@ com:
         userNotFoundError: Unknow user.
         userNotAuthorizedError: The user is not authorized.
         userNeedsPwdResetError: The user must reset their password.
+        onlyOneMeasureTypePerOrgPerYearError: Only one measure type per organization per year
+        canOnlyHaveOneActiveMeasureWithAGivenNameError: Can only have one active measure with a given name
+        orgMeasureEditMustMatchError: When editing an organization measure the organization, measure and year must match.
+        noActiveUserAccountError: Please contact your administrator. The requested account is not active.
+        noUserWithEmailExistsError: No user with that email exists.
+        changePasswordError: Please make sure you entered the correct password and your new password meets the required format.
       fileUpload:
-        measureFileUploadKey: measure_type_1.xlsx
+        measureFileUploadKey: measure_data.xlsx
+        maxUploadSize: 100000
 

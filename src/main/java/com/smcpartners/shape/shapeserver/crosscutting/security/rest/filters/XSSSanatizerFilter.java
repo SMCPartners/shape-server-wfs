@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
- * Responsibility: </br>
- * 1. </br>
+ * Responsibility: XSS Sanitizer for responses</br>
+ * 1. Removes various suspicious response content.</br>
  * 2. </br>
  * Created By: johndestefano
  * Date: 4/26/17
@@ -61,6 +61,12 @@ public class XSSSanatizerFilter implements ContainerResponseFilter {
         }
     }
 
+    /**
+     * Strips out suspicious content
+     *
+     * @param value
+     * @return
+     */
     private String stripXSS(String value) {
         if (value != null) {
             value = ESAPI.encoder().canonicalize(value);

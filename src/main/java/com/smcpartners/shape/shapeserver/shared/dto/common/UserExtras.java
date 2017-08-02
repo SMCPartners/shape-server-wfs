@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.enterprise.context.RequestScoped;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Request scoped user information data holder</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

@@ -13,7 +13,7 @@ package com.smcpartners.shape.shapeserver.shared.utils;
 import java.io.Serializable;
 
 /**
- * Salted Password
+ * Responsible: Create digets and salt for Passwords</br>
  *
  * @author John DeStefano
  * @version 1.0

@@ -4,7 +4,8 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Indicated the user attempting to perform an action could not be validated as
+ * as a system user</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

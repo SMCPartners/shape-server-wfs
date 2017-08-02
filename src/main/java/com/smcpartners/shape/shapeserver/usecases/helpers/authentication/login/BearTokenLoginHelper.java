@@ -16,12 +16,19 @@ import javax.ws.rs.core.Response;
 public class BearTokenLoginHelper implements LoginHelper {
 
     @Inject
-    private JWTUtils jwtUtils;
+    JWTUtils jwtUtils;
 
+    /**
+     * Default constructor
+     *
+     */
     public BearTokenLoginHelper() {
     }
 
     @Override
+    /**
+     * Return a response for the BearToken login policy
+     */
     public Response loginResponse(UserDTO user, boolean neverExpires) throws Exception {
         String token = jwtUtils.generateForBearerToken(user.getId().toUpperCase(), user.getRole(), user.getOrganizationId(), neverExpires);
         return Response.status(Response.Status.OK)

@@ -23,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Add a new Organization Stratification<br/>
  * 1. ADMIN can add for any organizations. ORG_ADMIN and REGISTERED can only add for their organizations
  * <p>
  * Created by johndestefano on 11/4/15.
@@ -37,10 +37,10 @@ public class Add_Organization_Stratification_ServiceAdapter implements Add_Organ
     private Logger log;
 
     @EJB
-    private OrganizationStratificationDAO organizationStratificationDAO;
+    OrganizationStratificationDAO organizationStratificationDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
 
     public Add_Organization_Stratification_ServiceAdapter() {

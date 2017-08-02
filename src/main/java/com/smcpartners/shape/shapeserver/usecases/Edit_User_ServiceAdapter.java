@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Edit ser account.<br/>
  * 1. Admin level users can edit users. The ORG_ADMIN can only edit users for their
  * organization and only if they are not ADMINs. No one can edit a users organization and ORG_ADMIN can't make a user
  * an ADMIN<p>
@@ -39,10 +39,10 @@ public class Edit_User_ServiceAdapter implements Edit_User_Service {
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default Constructor
@@ -77,7 +77,7 @@ public class Edit_User_ServiceAdapter implements Edit_User_Service {
                         // No funny business with the incoming data
                         && user.getOrganizationId() == targetUser.getOrganizationId()
                         // ORG_ADMIN can't make the role ADMIN
-                        && !user.getRole().equalsIgnoreCase("ADMIN")){
+                        && !user.getRole().equalsIgnoreCase("ADMIN")) {
                     userDAO.update(user, user.getId());
                 } else {
                     throw new NotAuthorizedToPerformActionException();
@@ -89,7 +89,7 @@ public class Edit_User_ServiceAdapter implements Edit_User_Service {
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "editUser", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

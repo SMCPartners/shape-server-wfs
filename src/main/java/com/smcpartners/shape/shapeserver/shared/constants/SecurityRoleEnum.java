@@ -1,8 +1,7 @@
 package com.smcpartners.shape.shapeserver.shared.constants;
 
 /**
- * SecurityRoleEnum.java<br/>
- * Responsibilities:<br/>
+ * Responsibilities: Defines security roles fo rthe application<br/>
  * 1. Used to handle security roles<br/>
  *
  * @author John DeStefano

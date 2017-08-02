@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Responsible:</br>
+ * Responsible: Contract for managing Organization Measure data</br>
  * 1. Handle CRUD and other data related activities for the OrganizationMeasure</br>
  * <p>
  * Created by johndestefano on 10/29/15.

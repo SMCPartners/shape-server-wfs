@@ -3,8 +3,7 @@ package com.smcpartners.shape.shapeserver.shared.utils;
 import java.util.Map;
 
 /**
- * Responsible:<br/>
- * 1. Helper class to support DTO usage
+ * Responsible: Helper class to support DTO usage</br>
  * <p>
  * Created by johndestefano on 10/7/15.
  * <p>

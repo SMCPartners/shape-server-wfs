@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
- * Responsible:</br>
+ * Responsible: Manage Provider Entity data</br>
  * 1.  Implements ProviderDAO</br>
  * <p>
  * Created by johndestefano on 10/29/15.

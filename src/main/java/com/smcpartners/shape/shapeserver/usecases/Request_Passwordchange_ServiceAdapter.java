@@ -43,13 +43,13 @@ public class Request_Passwordchange_ServiceAdapter implements Request_Password_C
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Inject
-    private MathUtils mathUtils;
+    MathUtils mathUtils;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Constructor
@@ -93,7 +93,7 @@ public class Request_Passwordchange_ServiceAdapter implements Request_Password_C
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "requestPasswordChange", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (PasswordResetException)e;
+                throw (PasswordResetException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

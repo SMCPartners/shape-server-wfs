@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Responsible:</br>
+ * Responsible: Organization attributes</br>
  * 1.  Entity </br>
  * <p>
  * Created by johndestefano on 10/28/15.

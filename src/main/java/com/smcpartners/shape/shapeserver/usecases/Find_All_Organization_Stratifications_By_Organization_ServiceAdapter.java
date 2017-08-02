@@ -37,10 +37,10 @@ public class Find_All_Organization_Stratifications_By_Organization_ServiceAdapte
     private Logger log;
 
     @EJB
-    private OrganizationStratificationDAO organizationStratificationDAO;
+    OrganizationStratificationDAO organizationStratificationDAO;
 
-   @Inject
-    private UserExtras userExtras;
+    @Inject
+    UserExtras userExtras;
 
     public Find_All_Organization_Stratifications_By_Organization_ServiceAdapter() {
     }
@@ -52,7 +52,7 @@ public class Find_All_Organization_Stratifications_By_Organization_ServiceAdapte
     @Produces("application/json")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.DPH_USER, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED})
     @Logged
-    public List<OrganizationStratificationDTO> findAllOrganizationStratificationsByOrg(@PathParam("orgId") int orgId)throws UseCaseException {
+    public List<OrganizationStratificationDTO> findAllOrganizationStratificationsByOrg(@PathParam("orgId") int orgId) throws UseCaseException {
         try {
             // Admin can see all
             // Other only see their organization
@@ -62,7 +62,7 @@ public class Find_All_Organization_Stratifications_By_Organization_ServiceAdapte
 
             if (reqRole == SecurityRoleEnum.ADMIN || reqRole == SecurityRoleEnum.DPH_USER ||
                     (orgId == userExtras.getOrgId() && (reqRole == SecurityRoleEnum.ORG_ADMIN ||
-                            reqRole == SecurityRoleEnum.REGISTERED ))) {
+                            reqRole == SecurityRoleEnum.REGISTERED))) {
                 return organizationStratificationDAO.findAllOrganizationStratificationByOrgId(orgId);
             } else {
                 throw new NotAuthorizedToPerformActionException();
@@ -70,7 +70,7 @@ public class Find_All_Organization_Stratifications_By_Organization_ServiceAdapte
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationMeasuresByOrg", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

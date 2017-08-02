@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * Responsible:</br>
- * 1. Holds an error message for return from a use case</br>
+ * Responsible: Holds an error message for return from a use case</br>
  * <p>
  * Created by johndestefano on 3/15/16.
  * </p>

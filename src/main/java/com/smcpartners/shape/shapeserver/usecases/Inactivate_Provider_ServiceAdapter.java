@@ -36,10 +36,10 @@ public class Inactivate_Provider_ServiceAdapter implements Inactivate_Provider_S
     private Logger log;
 
     @EJB
-    private ProviderDAO providerDAO;
+    ProviderDAO providerDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default Constructor
@@ -76,7 +76,7 @@ public class Inactivate_Provider_ServiceAdapter implements Inactivate_Provider_S
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "inactivateProvider", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

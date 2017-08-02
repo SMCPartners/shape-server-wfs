@@ -19,20 +19,27 @@ import javax.ws.rs.core.Response;
 public class DoubleCookieLoginHelper implements LoginHelper {
 
     @Inject
-    private JWTUtils jwtUtils;
+    JWTUtils jwtUtils;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.security.jwtEmbededCookies.sessionCookieName")
-    private String sessionCookieName;
+    String sessionCookieName;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.security.jwtEmbededCookies.xxsrfCookieName")
-    private String xxsrfCookieName;
+    String xxsrfCookieName;
 
+    /**
+     * Constructor
+     */
     public DoubleCookieLoginHelper() {
     }
 
     @Override
+    /**
+     * Return a response for the Double Cookie login policy
+     *
+     */
     public Response loginResponse(UserDTO user, boolean neverExpires) throws Exception {
         // Generate the JWT token and the X-XSRF-TOKEN
         DoubleCookieTokenPair pair = jwtUtils.generateForDoubleCookieToken(user.getId(), user.getRole(), user.getOrganizationId(), neverExpires);

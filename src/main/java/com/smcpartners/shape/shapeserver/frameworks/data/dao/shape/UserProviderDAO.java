@@ -4,7 +4,7 @@ import com.smcpartners.shape.shapeserver.frameworks.data.dao.CrudDAO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.UserProviderDTO;
 
 /**
- * Responsible:</br>
+ * Responsible: Contract for managing User Provider data</br>
  * 1. Handle CRUD and other data related activities for the UserProvider</br>
  * <p>
  * Created by johndestefano on 10/29/15.

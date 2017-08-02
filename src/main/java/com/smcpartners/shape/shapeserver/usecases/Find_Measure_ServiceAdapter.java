@@ -38,7 +38,7 @@ public class Find_Measure_ServiceAdapter implements Select_Measure_Service {
     private Logger log;
 
     @EJB
-    private MeasureDAO measureDAO;
+    MeasureDAO measureDAO;
 
     /**
      * Default constructor

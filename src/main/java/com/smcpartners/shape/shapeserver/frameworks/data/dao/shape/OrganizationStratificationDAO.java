@@ -7,7 +7,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationStratifica
 import java.util.List;
 
 /**
- * Responsible:</br>
+ * Responsible: Contract for managing Organization Stratification data</br>
  * 1. Handle CRUD and other data related activities for the OrganizationStratification</br>
  * <p>
  * Created by johndestefano on 10/29/15.

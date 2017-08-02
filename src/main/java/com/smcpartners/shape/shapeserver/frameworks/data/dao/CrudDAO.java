@@ -3,7 +3,7 @@ package com.smcpartners.shape.shapeserver.frameworks.data.dao;
 import com.smcpartners.shape.shapeserver.frameworks.data.exceptions.DataAccessException;
 
 /**
- * Base interface which other DAO's can use to implement basic crud functionality
+ * Responsible: Base interface which other DAO's can use to implement basic crud functionality
  * <p>
  * Created by johndestefano on 9/12/15.
  */

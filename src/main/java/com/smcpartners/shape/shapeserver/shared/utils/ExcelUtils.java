@@ -3,7 +3,7 @@ package com.smcpartners.shape.shapeserver.shared.utils;
 import org.apache.poi.ss.usermodel.Sheet;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Utilities for working with MS Excel files</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

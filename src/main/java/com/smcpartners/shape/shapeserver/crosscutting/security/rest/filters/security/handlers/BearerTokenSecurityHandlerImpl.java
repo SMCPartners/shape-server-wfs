@@ -7,8 +7,11 @@ import javax.ws.rs.container.ResourceInfo;
 import java.util.Map;
 
 /**
- * Responsibility: </br>
- * 1. </br>
+ * Responsibility: Implement the Bear Token security policy</br>
+ * 1. Uses a jwt token found in the HTTP Authorization header to validate the user,
+ * check the users roles against the allowed roles for the invocation target (method or
+ * type), and populate the UserExtras request scoped bean. This bean is available in the
+ * invocation target and carries the user id and role information.</br>
  * 2. </br>
  * Created By: johndestefano
  * Date: 6/24/17

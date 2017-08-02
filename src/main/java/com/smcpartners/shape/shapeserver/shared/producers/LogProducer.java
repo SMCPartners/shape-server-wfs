@@ -5,8 +5,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import java.util.logging.Logger;
 
 /**
- * Respondsible:</br>
- * 1. Producer for logging </br>
+ * Respondsible: CDI Producer for logger </br>
  * </br>
  * Changes:</br>
  * 1. </br>

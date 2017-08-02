@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Responsible:</br>
+ * Responsible: Find Measure comparison information</br>
  * 1. Get measure comparison data. ADMIN and DPH_USER can see all organizations.
  * Other users can only see their organization.</br>
  * <p>
@@ -45,16 +45,16 @@ public class Find_Aggregate_Comparison_ServiceAdapter implements Find_Aggregate_
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @EJB
-    private OrganizationDAO oDAO;
+    OrganizationDAO oDAO;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default Constructor
@@ -111,7 +111,7 @@ public class Find_Aggregate_Comparison_ServiceAdapter implements Find_Aggregate_
                     List<OrganizationMeasureDTO> singleOrgLst = orgMList.stream()
                             .filter(organizationMeasureDTO -> organizationMeasureDTO.getOrganizationId() == user.getOrganizationId())
                             .collect(Collectors.toList());
-                    if (singleOrgLst != null && singleOrgLst.size() >0) {
+                    if (singleOrgLst != null && singleOrgLst.size() > 0) {
                         List<Object> orgList = new ArrayList<>();
                         orgList.add(user.getOrganizationName());
                         orgList.add(singleOrgLst.get(0).getDenominatorValue());

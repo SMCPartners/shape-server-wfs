@@ -6,7 +6,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationMeasureDet
 import java.util.List;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Contract for find Organization Measure Detail data</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

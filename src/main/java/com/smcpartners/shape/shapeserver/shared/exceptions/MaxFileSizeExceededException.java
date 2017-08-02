@@ -3,7 +3,7 @@ package com.smcpartners.shape.shapeserver.shared.exceptions;
 import javax.ws.rs.core.Response;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Indicates a maximum file size exceed condition</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
- * Responsible:</br>
+ * Responsible: Manage Measure entity data</br>
  * 1.  Implements MeasureDAO</br>
  * <p>
  * Created by johndestefano on 10/29/15.

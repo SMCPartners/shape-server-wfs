@@ -19,9 +19,7 @@ import java.util.Arrays;
 import java.util.Base64;
 
 /**
- * SecurityUtils.java<br/>
- * Responsibilities:<br/>
- * 1. Utilities used in application security<br/>
+ * Responsible: Utilities used in application security<br/>
  *
  * <p>
  * Changes:<br/>

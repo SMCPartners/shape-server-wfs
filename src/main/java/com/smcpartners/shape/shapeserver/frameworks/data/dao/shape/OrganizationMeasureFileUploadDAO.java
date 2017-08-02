@@ -8,7 +8,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.request.OrganizationMe
 import java.util.Date;
 
 /**
- * Responsible:<br/>
+ * Responsible: Contract for managing Organization Measure File Upload data<br/>
  * 1. <br/>
  * <p>
  * Created by johndestefano on 5/9/16.

@@ -34,10 +34,10 @@ public class Find_All_Organizations_ServiceAdapter implements Find_All_Organizat
     private Logger log;
 
     @EJB
-    private OrganizationDAO organizationDAO;
+    OrganizationDAO organizationDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     public Find_All_Organizations_ServiceAdapter() {
     }
@@ -74,7 +74,7 @@ public class Find_All_Organizations_ServiceAdapter implements Find_All_Organizat
                     dto.setPrimaryContactRole(l.getPrimaryContactRole());
                     retLst.add(dto);
                 });
-            } else if (SecurityRoleEnum.ORG_ADMIN == reqUserRole || SecurityRoleEnum.REGISTERED == reqUserRole){
+            } else if (SecurityRoleEnum.ORG_ADMIN == reqUserRole || SecurityRoleEnum.REGISTERED == reqUserRole) {
                 // Find the organization
                 OrganizationDTO orgDTO = organizationDAO.findById(userExtras.getOrgId());
 

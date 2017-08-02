@@ -7,7 +7,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.MeasureDTO;
 import java.util.List;
 
 /**
- * Responsible:</br>
+ * Responsible: Contract for managing Measure data</br>
  * 1. Handle CRUD and other data related activities for the Measure</br>
  * <p>
  * Created by johndestefano on 10/29/15.

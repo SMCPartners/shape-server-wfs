@@ -40,7 +40,7 @@ public class Logout_ServiceAdapter implements Logout_Service {
      */
     @Inject
     @LogoutHelperQualifier
-    private LogoutHelper logoutHelper;
+    LogoutHelper logoutHelper;
 
     /**
      * Default Constructor

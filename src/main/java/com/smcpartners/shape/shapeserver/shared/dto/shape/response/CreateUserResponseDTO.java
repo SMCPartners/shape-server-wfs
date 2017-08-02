@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * Responsible:<br/>
- * 1. DTO
+ * Responsible: DTO<br/>
+ * 1.
  * <p>
  * Created by johndestefano on 11/2/15.
  * <p>

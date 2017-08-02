@@ -1,4 +1,5 @@
 package com.smcpartners.shape.shapeserver.usecases;
+
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
@@ -37,10 +38,10 @@ public class Find_User_By_Id_ServiceAdapter implements Find_User_By_Id_Service {
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default constructor
@@ -54,7 +55,7 @@ public class Find_User_By_Id_ServiceAdapter implements Find_User_By_Id_Service {
     @Path("/user/find/{targetuserid}")
     @Produces("application/json")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED,
-                                        SecurityRoleEnum.DPH_USER})
+            SecurityRoleEnum.DPH_USER})
     @Logged
     public UserDTO findUser(@PathParam("targetuserid") String targetUserId) throws UseCaseException {
         try {
@@ -77,7 +78,7 @@ public class Find_User_By_Id_ServiceAdapter implements Find_User_By_Id_Service {
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "findUser", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

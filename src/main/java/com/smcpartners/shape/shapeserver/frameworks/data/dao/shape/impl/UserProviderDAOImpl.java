@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 /**
- * Responsible:</br>
+ * Responsible: Manage User Provider Entity data</br>
  * 1.  Implements UserProviderDAO</br>
  * <p>
  * Created by johndestefano on 10/29/15.

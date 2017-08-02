@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Find all Organization Measures<br/>
  * 1. Finds measures. This is an ADMIN only function
  * <p>
  * Created by johndestefano on 11/2/15.
@@ -34,7 +34,7 @@ public class Find_All_Organization_Measures_ServiceAdapter implements Find_All_O
     private Logger log;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     public Find_All_Organization_Measures_ServiceAdapter() {
     }

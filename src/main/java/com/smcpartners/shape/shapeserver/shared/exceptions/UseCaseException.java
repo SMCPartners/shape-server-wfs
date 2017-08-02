@@ -4,8 +4,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 /**
- * Responsible:</br>
- * 1. Thrown by a use case on an exception</br
+ * Responsible: Thrown by a use case on an exception</br>
  * <p>
  * Created by johndestefano on 9/28/15.
  * </p>

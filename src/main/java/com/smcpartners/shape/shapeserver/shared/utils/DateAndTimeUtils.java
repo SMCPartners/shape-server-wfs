@@ -7,8 +7,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
- * Responsible: <br/>
- * 1. Wraps java.time date functionality. Used in many places in the application<br/>
+ * Responsible: Wraps java.time date functionality. Used in many places in the application<br/>
  * <p>
  * <p>
  * Created by johndestefano on 9/12/15.

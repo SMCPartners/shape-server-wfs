@@ -22,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:</br>
+ * Responsible: Activate a User</br>
  * 1.If its ADMIN then make the changes. If its ORG_ADMIN find the requesting users organization
  * and make sure the requesting users organization matches the target users organization</br
  * <p>
@@ -40,10 +40,10 @@ public class Activate_User_ServiceAdapter implements Activate_User_Service {
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default constructor

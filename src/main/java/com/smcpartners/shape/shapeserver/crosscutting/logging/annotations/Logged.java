@@ -9,6 +9,8 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
+ * Responsible: Injecting logging class</br>
+ *
  * Created by johndestefano on 4/21/17.
  */
 @NameBinding

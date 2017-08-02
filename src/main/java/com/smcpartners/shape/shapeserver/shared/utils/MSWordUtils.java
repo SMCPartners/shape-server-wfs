@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 import java.util.List;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Utilities for working with MS Word</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

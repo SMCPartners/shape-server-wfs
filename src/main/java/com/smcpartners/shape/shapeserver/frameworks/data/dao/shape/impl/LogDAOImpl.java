@@ -1,6 +1,6 @@
 package com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.impl;
 
-import com.smcpartners.shape.shapeserver.shared.dto.common.LogDTO;
+import com.smcpartners.shape.shapeserver.crosscutting.logging.filters.LogDTO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.LogDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.entitymodel.shape.LogEntity;
 import com.smcpartners.shape.shapeserver.frameworks.producers.annotations.ShapeDatabase;
@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Manage Logging entity data</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

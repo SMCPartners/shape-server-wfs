@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * Responsible:</br>
- * 1. Indicates a positive return from a use case</br>
+ * Responsible: Indicates a positive return from a use case</br>
  * <p>
  * Created by johndestefano on 10/6/15.
  * </p>

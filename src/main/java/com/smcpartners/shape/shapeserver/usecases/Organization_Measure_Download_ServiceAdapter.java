@@ -38,14 +38,13 @@ public class Organization_Measure_Download_ServiceAdapter implements Organizatio
     private Logger log;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     @EJB
-    private OrganizationMeasureFileUploadDAO organizationMeasureFileUploadDAO;
-
+    OrganizationMeasureFileUploadDAO organizationMeasureFileUploadDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default constructor
@@ -72,7 +71,7 @@ public class Organization_Measure_Download_ServiceAdapter implements Organizatio
             }
 
             // Get the file upload data and create a new file form the contents
-            OrganizationMeasureFileUploadRequestDTO dto =  organizationMeasureFileUploadDAO
+            OrganizationMeasureFileUploadRequestDTO dto = organizationMeasureFileUploadDAO
                     .getOrgMeasureFileUploadForOrgMeasureIdAndUploadDt(orgMeasureId, orgMeasDTO.getFileUploadDate());
 
             // uploaded file data

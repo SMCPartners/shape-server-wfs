@@ -14,7 +14,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.inject.Inject;
 
 /**
- * Responsibility: </br>
+ * Responsibility: CDI producer for Login/Logout policy helpers</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano
@@ -28,7 +28,7 @@ public class AuthenticationHelperProducer {
      */
     @Inject
     @ConfigurationValue("com.smc.server-core.security.jwtEmbededCookies.useCookies")
-    private boolean useCookies;
+    boolean useCookies;
 
     /**
      * Returns the appropriate in login helper depending on the value of

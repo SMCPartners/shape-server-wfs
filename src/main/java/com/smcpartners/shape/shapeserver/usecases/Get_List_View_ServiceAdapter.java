@@ -43,10 +43,10 @@ public class Get_List_View_ServiceAdapter implements Get_List_View_Service {
     private Logger log;
 
     @EJB
-    private MeasureDAO mDAO;
+    MeasureDAO mDAO;
 
     @EJB
-    private OrganizationMeasureDAO orgMDAO;
+    OrganizationMeasureDAO orgMDAO;
 
     /**
      * Default Constructor

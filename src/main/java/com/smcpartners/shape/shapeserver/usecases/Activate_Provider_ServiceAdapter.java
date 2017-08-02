@@ -18,7 +18,7 @@ import javax.ws.rs.Produces;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Activate a Provider<br/>
  * 1. ADMIN and ORG_ADMIN can activate a provider but ORG_ADMIN only for their organization
  * <p>
  * Created by johndestefano on 11/4/15.
@@ -32,7 +32,7 @@ public class Activate_Provider_ServiceAdapter implements Activate_Provider_Servi
     private Logger log;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     public Activate_Provider_ServiceAdapter() {
     }

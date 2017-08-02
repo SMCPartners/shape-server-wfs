@@ -5,9 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Responsibility: </br>
- * 1. Data holder for string with int value</br>
- * 2. </br>
+ * Responsibility: Data holder for string with int value</br>
+ * 1. </br>
  * Created By: johndestefano
  * Date: 6/12/17
  */

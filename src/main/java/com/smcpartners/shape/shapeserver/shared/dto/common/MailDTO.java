@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * Responsible:</br>
- * 1. Holds data for mail messages.</br>
+ * Responsible: Holds data for mail messages.</br>
  * <p>
  * Created by johndestefano on 10/6/15.
  * </p>

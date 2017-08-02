@@ -4,7 +4,8 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Indicates a that a user attempting to perform some action needs to have their password
+ * reset first</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

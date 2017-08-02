@@ -7,8 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Responsible:<br/>
- * 1. Used with EntityManager producer to return a MySQLDatabase EntityManager<br/>
+ * Responsible: Used with EntityManager producer to return a Database EntityManager<br/>
  * <p>
  * Created by johndestefano on 9/10/15.
  * <p>

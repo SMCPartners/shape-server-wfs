@@ -17,7 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Create a list of OrganizationMeasureDetailDTO from the Organization Measure Entity
+ * and the Measure Entity</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

@@ -39,10 +39,10 @@ public class Find_All_Providers_ServiceAdapter implements Find_All_Providers_Ser
     private Logger log;
 
     @EJB
-    private ProviderDAO providerDAO;
+    ProviderDAO providerDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     public Find_All_Providers_ServiceAdapter() {
     }

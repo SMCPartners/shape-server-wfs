@@ -8,6 +8,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.request.CreateUserRequestDTO;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 import com.smcpartners.shape.shapeserver.shared.utils.SecurityUtils;
+import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -19,8 +20,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:</br>
- * 1. Request a password change. The user must provide the old password and a new password.</br>
+ * Responsible: Update the User's password</br>
+ * 1. The user must provide the old password and a new password.</br>
+ * 2. The new password can't be the same as the old password.</br>
+ * 3. Must be a valid user.</br>
  * <p>
  * Created by johndestefano on 3/15/16.
  * </p>
@@ -35,10 +38,14 @@ public class Change_Password_ServiceAdapter implements Change_Password_Service {
     private Logger log;
 
     @EJB
-    private UserDAO dao;
+    UserDAO dao;
 
     @Inject
-    private UserExtras userExtras;
+    @ConfigurationValue("com.smc.server-core.errorMsgs.changePasswordError")
+    String changePasswordError;
+
+    @Inject
+    UserExtras userExtras;
 
     /**
      * Constructor
@@ -58,24 +65,20 @@ public class Change_Password_ServiceAdapter implements Change_Password_Service {
             String userPwd = user.getPassword();
             String newPwd = user.getNewPassword();
 
-            //check new password validity
-            boolean validPassword = SecurityUtils.checkPasswordCompliance(newPwd);
-            //check if valid user
-            if (dao.validateUser(userId, userPwd) != null) {
-                //check if valid password with correct regex
-                if (validPassword) {
-                    dao.changePassword(userId, userPwd, newPwd);
-                    dao.resetPasswordToggle(userId, false);
-                    if (user.getQuestionOne() != null && user.getQuestionTwo() != null) {
-                        dao.addUserSecurityQuestions(userId, user.getQuestionOne(),
-                                user.getQuestionTwo(), user.getAnswerOne(), user.getAnswerTwo());
-                    }
-                }else{
-                    throw new UseCaseException("The new password you entered did not meet the required format.");
+            // Check valid user, valid new password, new and old are not the same
+            if (dao.validateUser(userId, userPwd) != null &&
+                    SecurityUtils.checkPasswordCompliance(newPwd) &&
+                    dao.validateUser(userId, newPwd) == null) {
+                dao.changePassword(userId, userPwd, newPwd);
+                dao.resetPasswordToggle(userId, false);
+                if (user.getQuestionOne() != null && user.getQuestionTwo() != null) {
+                    dao.addUserSecurityQuestions(userId, user.getQuestionOne(),
+                            user.getQuestionTwo(), user.getAnswerOne(), user.getAnswerTwo());
                 }
-            }else{
-                throw new UseCaseException("Your current password is not correct.");
+            } else {
+                throw new UseCaseException(changePasswordError);
             }
+
             //returns true if new password uses correct regex and is a valid user
             return new BooleanValueDTO(true);
         } catch (Exception e) {

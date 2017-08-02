@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
- * Responsible:<br/>
+ * Responsible: Manage User Entity data<br/>
  * 1.  Implements UserDAO
  * <p>
  * Created by johndestefano on 9/10/15.

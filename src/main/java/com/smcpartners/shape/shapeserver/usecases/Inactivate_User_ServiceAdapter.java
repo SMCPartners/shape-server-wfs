@@ -40,10 +40,10 @@ public class Inactivate_User_ServiceAdapter implements Inactivate_User_Service {
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default constructor
@@ -83,7 +83,7 @@ public class Inactivate_User_ServiceAdapter implements Inactivate_User_Service {
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "inactivateUser", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Add an Organization Measure<br/>
  * 1. ADMIN can add for any organization measure.
  * ORG_ADMIN and REGISTERED can only add for their organizations<br/>
  * 2. Can only have 1 measure type per organization per year.</br>
@@ -41,14 +41,14 @@ public class Add_Organization_Measure_ServiceAdapter implements Add_Organization
     private Logger log;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.onlyOneMeasureTypePerOrgPerYearError")
-    private String onlyOneMeasureTypePerOrgPerYearError;
+    String onlyOneMeasureTypePerOrgPerYearError;
 
 
     /**

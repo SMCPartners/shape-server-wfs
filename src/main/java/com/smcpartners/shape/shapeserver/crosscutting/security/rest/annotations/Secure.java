@@ -13,7 +13,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Used to manage what classes and methods require a security check.</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

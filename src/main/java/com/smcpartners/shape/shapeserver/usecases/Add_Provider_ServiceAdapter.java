@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Add a Provider<br/>
  * 1. ADMIN and ORG_ADMIN can add a provider. If its and org admin the provider must be for their organization.
  * <p>
  * Created by johndestefano on 11/4/15.
@@ -35,10 +35,10 @@ public class Add_Provider_ServiceAdapter implements Add_Provider_Service {
     private Logger log;
 
     @EJB
-    private ProviderDAO providerDAO;
+    ProviderDAO providerDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
 
     public Add_Provider_ServiceAdapter() {
@@ -71,7 +71,7 @@ public class Add_Provider_ServiceAdapter implements Add_Provider_Service {
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "addProvider", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

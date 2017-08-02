@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
  * <p>
  * Changes:<b/>
  */
-@Path("/common")
+@Path("/admin")
 public interface Add_Organization_Service {
 
     @POST

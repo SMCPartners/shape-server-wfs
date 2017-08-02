@@ -11,8 +11,8 @@ import javax.ws.rs.core.Cookie;
 import java.util.Map;
 
 /**
- * Responsibility: </br>
- * 1. </br>
+ * Responsibility: Provide security using JWT tokens and cookies</br>
+ * 1. WORK IN PROGRESS, NOT READY FOR IMPLEMENTATION</br>
  * 2. </br>
  * Created By: johndestefano
  * Date: 6/24/17

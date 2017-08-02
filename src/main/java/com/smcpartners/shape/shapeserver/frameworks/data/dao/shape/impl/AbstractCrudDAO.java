@@ -9,8 +9,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:</br>
- * 1. Abstract generic class to support CRUD functionality for data access implementation classes</br
+ * Responsible: Abstract generic class to support CRUD functionality for data access implementation classes</br>
+ * 1. </br>
+ *
  * <p>
  * Created by johndestefano on 9/12/15.
  * </p>

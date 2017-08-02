@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
- * Responsible:</br>
+ * Responsible: Measure definition</br>
  * 1.  Entity</br>
  * <p>
  * Created by johndestefano on 3/15/16.

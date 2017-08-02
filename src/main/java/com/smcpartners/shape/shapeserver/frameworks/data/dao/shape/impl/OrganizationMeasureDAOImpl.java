@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.logging.Level;
 
 /**
- * Responsible:</br>
+ * Responsible: Manage OrganizationMeasure entity data</br>
  * 1.  Implements OrganizationMaeasureDAO</br>
  * <p>
  * Created by johndestefano on 10/29/15.

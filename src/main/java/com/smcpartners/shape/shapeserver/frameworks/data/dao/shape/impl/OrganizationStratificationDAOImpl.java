@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
- * Responsible:</br>
+ * Responsible: Manage Organization Stratification data</br>
  * 1.  Implements OrganizationStartificationDAO</br>
  * <p>
  * Created by johndestefano on 10/29/15.

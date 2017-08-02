@@ -7,7 +7,7 @@ import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.ext.Provider;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Register a XSS filter for responses</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

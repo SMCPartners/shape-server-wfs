@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Find all measures<br/>
  * 1. Any user can look up a measure.
  * <p>
  * Created by johndestefano on 11/2/15.
@@ -34,7 +34,7 @@ public class Find_All_Measures_ServiceAdapter implements Find_All_Measures_Servi
     private Logger log;
 
     @EJB
-    private MeasureDAO measureDAO;
+    MeasureDAO measureDAO;
 
     public Find_All_Measures_ServiceAdapter() {
     }

@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Create a new User<br/>
  * 1. To set the ADMIN role you must be an ADMIN.
  * To set the ORG_ADMIN role you must be and ADMIN or
  * An ORG_ADMIN and the new user account must have the
@@ -41,13 +41,13 @@ public class Add_User_Account_ServiceAdapter implements Create_User_Account_Serv
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @EJB
-    private SendMailService sms;
+    SendMailService sms;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
 
     public Add_User_Account_ServiceAdapter() {

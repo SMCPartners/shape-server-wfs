@@ -33,7 +33,7 @@ public class Inactivate_Organization_ServiceAdapter implements Inactivate_Organi
     private Logger log;
 
     @EJB
-    private OrganizationDAO organizationDAO;
+    OrganizationDAO organizationDAO;
 
     /**
      * Default Constructor

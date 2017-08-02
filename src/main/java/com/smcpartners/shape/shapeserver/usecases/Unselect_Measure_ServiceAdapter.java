@@ -36,9 +36,9 @@ public class Unselect_Measure_ServiceAdapter implements Unselect_Measure_Service
     private Logger log;
 
     @EJB
-    private MeasureDAO measureDAO;
+    MeasureDAO measureDAO;
 
-     /**
+    /**
      * Default constructor
      */
     public Unselect_Measure_ServiceAdapter() {

@@ -22,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Edit a Provider<br/>
  * 1. Only ADMIN or ORG_ADMIN can edit provider. ORG_ADMIN can only edit there organization
  * <p>
  * Created by johndestefano on 11/4/15.
@@ -36,10 +36,10 @@ public class Edit_Provider_ServiceAdapter implements Edit_Provider_Service {
     private Logger log;
 
     @EJB
-    private ProviderDAO providerDAO;
+    ProviderDAO providerDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default Constructor
@@ -72,7 +72,7 @@ public class Edit_Provider_ServiceAdapter implements Edit_Provider_Service {
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "editProvider", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

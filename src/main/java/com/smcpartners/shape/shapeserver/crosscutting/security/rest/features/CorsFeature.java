@@ -7,7 +7,7 @@ import org.jboss.resteasy.plugins.interceptors.CorsFilter;
 
 
 /**
- * Responsibility: </br>
+ * Responsibility: Registers a CORS filter used in handling requests</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

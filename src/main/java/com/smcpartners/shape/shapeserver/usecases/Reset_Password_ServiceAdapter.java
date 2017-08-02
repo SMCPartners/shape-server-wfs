@@ -37,10 +37,10 @@ public class Reset_Password_ServiceAdapter implements Reset_Password_Service {
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @EJB
-    private SendMailService sms;
+    SendMailService sms;
 
     /**
      * Default Password
@@ -91,7 +91,7 @@ public class Reset_Password_ServiceAdapter implements Reset_Password_Service {
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "resetPassword", e.getMessage(), e);
             if (e instanceof PasswordResetException) {
-                throw (PasswordResetException)e;
+                throw (PasswordResetException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

@@ -34,7 +34,7 @@ public class Find_All_Organization_Stratifications_ServiceAdapter implements Fin
     private Logger log;
 
     @EJB
-    private OrganizationStratificationDAO organizationStratificationDAO;
+    OrganizationStratificationDAO organizationStratificationDAO;
 
     public Find_All_Organization_Stratifications_ServiceAdapter() {
     }

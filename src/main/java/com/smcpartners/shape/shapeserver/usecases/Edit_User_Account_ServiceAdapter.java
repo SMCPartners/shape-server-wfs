@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:</br>
+ * Responsible: Edit the User account</br>
  * 1. Edit the users account. Can't change the organization or the role. </br>
  * <p>
  * Created by johndestefano on 3/15/16.
@@ -38,10 +38,10 @@ public class Edit_User_Account_ServiceAdapter implements Edit_User_Account_Servi
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default Constructor
@@ -55,7 +55,7 @@ public class Edit_User_Account_ServiceAdapter implements Edit_User_Account_Servi
     @Produces("application/json")
     @Consumes("application/json")
     @Secure({SecurityRoleEnum.ADMIN, SecurityRoleEnum.ORG_ADMIN, SecurityRoleEnum.REGISTERED,
-                                        SecurityRoleEnum.DPH_USER})
+            SecurityRoleEnum.DPH_USER})
     @Logged
     public BooleanValueDTO editUserAccount(UserDTO user) throws UseCaseException {
         try {
@@ -80,7 +80,7 @@ public class Edit_User_Account_ServiceAdapter implements Edit_User_Account_Servi
             log.logp(Level.SEVERE, this.getClass().getName(), "editUserAccount", e.getMessage(), e);
 
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

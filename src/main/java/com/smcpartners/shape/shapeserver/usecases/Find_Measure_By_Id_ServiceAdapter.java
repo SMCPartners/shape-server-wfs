@@ -38,10 +38,10 @@ public class Find_Measure_By_Id_ServiceAdapter implements Find_Measure_By_Id_Ser
     private Logger log;
 
     @EJB
-    private MeasureDAO measureDAO;
+    MeasureDAO measureDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     public Find_Measure_By_Id_ServiceAdapter() {
     }

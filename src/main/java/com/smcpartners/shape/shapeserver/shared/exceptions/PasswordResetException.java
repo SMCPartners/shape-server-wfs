@@ -3,7 +3,7 @@ package com.smcpartners.shape.shapeserver.shared.exceptions;
 import javax.ws.rs.core.Response;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Indicates a password reset failed</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

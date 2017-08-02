@@ -38,20 +38,20 @@ public class Login_ServiceAdapter implements Login_Service {
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.userNotAuthorizedError")
-    private String userNotAuthorizedError;
+    String userNotAuthorizedError;
 
     @Inject
     @LoginHelperQualifier
-    private LoginHelper loginHelper;
+    LoginHelper loginHelper;
 
     /**
      * Default Constructor
      */
-    public Login_ServiceAdapter(){
+    public Login_ServiceAdapter() {
     }
 
     @Override
@@ -70,10 +70,10 @@ public class Login_ServiceAdapter implements Login_Service {
                 boolean isExpired = userDAO.isExpired(ue.getId());
                 if (ue.isActive()) {
                     if (isGenPwd && isExpired) {
-                        throw new Exception ("Password has expired, please use Forgot Password to generate a new one");
+                        throw new Exception("Password has expired, please use Forgot Password to generate a new one");
                     }
                     return loginHelper.loginResponse(ue, false);
-                } else{
+                } else {
                     return Response.status(Response.Status.UNAUTHORIZED).entity("Inactive").build();
                 }
             } else {
@@ -84,7 +84,7 @@ public class Login_ServiceAdapter implements Login_Service {
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "authentication", e.getMessage(), e);
             if (e instanceof NotAuthorizedException) {
-                throw (NotAuthorizedException)e;
+                throw (NotAuthorizedException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

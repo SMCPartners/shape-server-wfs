@@ -20,8 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:</br>
- * 1. Supports the validation, creation, and extension of JWTs</br
+ * Responsible: Supports the validation, creation, and extension of JWTs</br>
  * <p>
  * Created by johndestefano on 9/14/15.
  * </p>
@@ -43,11 +42,11 @@ public class JWTUtils {
 
     @Inject
     @ConfigurationValue("com.smc.server-core.security.appKey")
-    private String appKey;
+    String appKey;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.security.expireLength")
-    private Long expireLength;
+    Long expireLength;
 
     private SecretKey key;
 

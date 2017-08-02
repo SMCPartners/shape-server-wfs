@@ -38,7 +38,7 @@ public class Get_Measure_Years_ServiceAdapter implements Get_Measure_Years_Servi
     private Logger log;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     /**
      * Default Constructor

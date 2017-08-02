@@ -19,7 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Save and log an Organization Measure File Upload an associated
+ * Organization Measure</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

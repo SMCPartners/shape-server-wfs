@@ -3,7 +3,7 @@ package com.smcpartners.shape.shapeserver.shared.utils;
 import java.util.Random;
 
 /**
- * Responsible:<br/>
+ * Responsible: Generate randon passwords that meet the systems passowrd requirements<br/>
  * 1. Generate a random password
  * <p>
  * Created by johndestefano on 11/2/15.

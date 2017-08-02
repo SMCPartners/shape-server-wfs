@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Responsible:<br/>
- * 1. Base class for request and response
+ * Responsible: Base class for request and response
  * <p>
  * Created by johndestefano on 10/7/15.
  * <p>

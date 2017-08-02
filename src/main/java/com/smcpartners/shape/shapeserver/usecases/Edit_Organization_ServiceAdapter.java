@@ -23,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Edit and Organizational<br/>
  * 1. Only ADMIN or ORG_ADMIN can edi organizations. ORG_ADMIN can only edit there organization
  * <p>
  * Created by johndestefano on 11/4/15.
@@ -37,10 +37,10 @@ public class Edit_Organization_ServiceAdapter implements Edit_Organization_Servi
     private Logger log;
 
     @EJB
-    private OrganizationDAO organizationDAO;
+    OrganizationDAO organizationDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default Constructor
@@ -72,7 +72,7 @@ public class Edit_Organization_ServiceAdapter implements Edit_Organization_Servi
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "editOrganization", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

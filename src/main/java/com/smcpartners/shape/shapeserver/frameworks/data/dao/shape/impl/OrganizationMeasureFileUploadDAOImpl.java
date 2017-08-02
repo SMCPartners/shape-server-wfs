@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.logging.Level;
 
 /**
- * Responsible:<br/>
+ * Responsible: Manage Organization Measure File Upload Entity data<br/>
  * 1. <br/>
  * <p>
  * Created by johndestefano on 5/9/16.
@@ -24,7 +24,9 @@ import java.util.logging.Level;
  * </p>
  */
 @Stateless
-public class OrganizationMeasureFileUploadDAOImpl extends AbstractCrudDAO<OrganizationMeasureFileUploadRequestDTO, OrganizationMeasureFileUploadEntity, Integer> implements OrganizationMeasureFileUploadDAO {
+public class OrganizationMeasureFileUploadDAOImpl
+        extends AbstractCrudDAO<OrganizationMeasureFileUploadRequestDTO, OrganizationMeasureFileUploadEntity, Integer>
+        implements OrganizationMeasureFileUploadDAO {
 
     @Inject
     public OrganizationMeasureFileUploadDAOImpl(@ShapeDatabase EntityManager em) {

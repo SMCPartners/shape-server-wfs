@@ -21,8 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsibility: </br>
- * 1. Filter to handle security. It delegates the handling to an inject handler.
+ * Responsibility: Filter to handle security.</br>
+ * 1. Delegates the handling to an inject handler.
  * The injected handler is provided based on the useCookies value from the config file.
  * Currently there is a bearer token handler and a Double cookie handler providing
  * two method for security. Only one can be active at a time.</br>
@@ -43,7 +43,7 @@ public class SecurityFilter extends AbstractSecurityHandler implements Container
     SecurityHandler securityHandler;
 
     @Context
-    private ResourceInfo resourceInfo;
+    ResourceInfo resourceInfo;
 
     /**
      * Default constructor

@@ -23,24 +23,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Add a new Organization<br/>
  * 1. Only ADMIN can add an organization
  * <p>
  * Created by johndestefano on 11/4/15.
  * <p>
  * Changes:<b/>
  */
-@Path("/common")
+@Path("/admin")
 public class Add_Organization_ServiceAdapter implements Add_Organization_Service {
 
     @Inject
     private Logger log;
 
     @EJB
-    private OrganizationDAO organizationDAO;
+    OrganizationDAO organizationDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
 
     public Add_Organization_ServiceAdapter() {

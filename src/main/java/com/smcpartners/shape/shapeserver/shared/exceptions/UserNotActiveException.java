@@ -4,7 +4,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Indicates a user attempting to perform an action does not have an active account</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

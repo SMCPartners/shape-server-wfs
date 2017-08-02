@@ -14,8 +14,8 @@ import javax.mail.internet.MimeMessage;
 import java.util.Date;
 
 /**
- * Responsible:</br>
- * 1. EJB to send out emails. Uses the Apache commons email library</br>
+ * Responsible: EJB to send out emails.</br>
+ * 1. </br>
  * <p>
  * Created by johndestefano on 10/6/15.
  * </p>

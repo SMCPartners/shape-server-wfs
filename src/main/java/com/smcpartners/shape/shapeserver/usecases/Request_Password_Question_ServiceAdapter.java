@@ -40,13 +40,13 @@ public class Request_Password_Question_ServiceAdapter implements Request_Passwor
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Inject
-    private MathUtils mathUtils;
+    MathUtils mathUtils;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Constructor
@@ -72,7 +72,7 @@ public class Request_Password_Question_ServiceAdapter implements Request_Passwor
                 UserDTO userDTO = userDAO.findById(userId);
 
                 // Generate a random number between 1 and 2
-                int choice = mathUtils.getRandomNumberInRange(1,2);
+                int choice = mathUtils.getRandomNumberInRange(1, 2);
                 if (choice == 1) {
                     retDTO.setPasswordQuestion(userDTO.getQuestionOne());
                 } else {
@@ -90,7 +90,7 @@ public class Request_Password_Question_ServiceAdapter implements Request_Passwor
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "requestPasswordQuestion", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

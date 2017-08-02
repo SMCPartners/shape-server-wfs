@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Responsibility: </br>
+ * Responsibility: DTO</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

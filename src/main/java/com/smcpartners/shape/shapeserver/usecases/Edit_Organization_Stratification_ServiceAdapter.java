@@ -23,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Edit an Organization Stratification<br/>
  * 1. ADMIN can add for any organizations. ORG_ADMIN and REGISTERED can only add for their organizations
  * <p>
  * Created by johndestefano on 11/4/15.
@@ -37,10 +37,10 @@ public class Edit_Organization_Stratification_ServiceAdapter implements Edit_Org
     private Logger log;
 
     @EJB
-    private OrganizationStratificationDAO organizationStratificationDAO;
+    OrganizationStratificationDAO organizationStratificationDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
 
     /**
@@ -86,7 +86,7 @@ public class Edit_Organization_Stratification_ServiceAdapter implements Edit_Org
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "editOrganizationStratification", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

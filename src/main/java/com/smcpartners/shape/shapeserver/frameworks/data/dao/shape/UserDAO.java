@@ -9,7 +9,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.UserDTO;
 import java.util.List;
 
 /**
- * Responsible:<br/>
+ * Responsible: Contract for managing User data<br/>
  * 1. User data dao<br/>
  * <p>
  * Created by johndestefano on 9/10/15.

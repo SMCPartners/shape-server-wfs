@@ -1,4 +1,4 @@
-package com.smcpartners.shape.shapeserver.shared.dto.common;
+package com.smcpartners.shape.shapeserver.crosscutting.logging.filters;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +7,8 @@ import javax.enterprise.context.RequestScoped;
 import java.util.Date;
 
 /**
- * Responsibility: </br>
- * 1. </br>
+ * Responsibility: Holds request data that will be used for logging.</br>
+ * 1. This is a request scoped bean.</br>
  * 2. </br>
  * Created By: johndestefano
  * Date: 4/25/17

@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  * 1. Take the user id and the email associated with the id. If they are
  * valid then return the user id and one of the user challenge questions. The
  * user must be active. </br>
- *
+ * <p>
  * <p>
  * Created by johndestefano on 6/20/17.
  * </p>
@@ -39,7 +39,7 @@ public class Forgot_Password_ServiceAdapter implements Forgot_Password_Service {
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     /**
      * Constructor

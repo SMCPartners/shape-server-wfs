@@ -23,8 +23,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
- * 1. Create a new measure. Only an ADMIN can add a measure.</br>
+ * Responsible: Create a new measure<br/>
+ * 1. Only an ADMIN can add a measure.</br>
  * 2. When adding, there can only be 1 active measure with a given name</br>
  * <p>
  * Created by johndestefano on 11/4/15.
@@ -38,7 +38,7 @@ public class Add_Measure_ServiceAdapter implements Add_Measure_Service {
     private Logger log;
 
     @EJB
-    private MeasureDAO measureDAO;
+    MeasureDAO measureDAO;
 
     /**
      * Default Constructor

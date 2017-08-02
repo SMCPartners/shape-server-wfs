@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * Responsible:<br/>
- * 1. DTO
+ * Responsible: DTO<br/>
+ * 1. </br>
  * <p>
  * Created by johndestefano on 11/4/15.
  * <p>
- * Changes:<b/>
+ * Changes:<br/>
  */
 @Data
 @NoArgsConstructor

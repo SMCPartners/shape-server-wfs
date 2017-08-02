@@ -7,7 +7,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.OrganizationDTO;
 import java.util.List;
 
 /**
- * Responsible:</br>
+ * Responsible: Contract for managing Organization data</br>
  * 1. Handle CRUD and other data related activities for the Organization</br>
  * <p>
  * Created by johndestefano on 10/29/15.

@@ -9,7 +9,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Provides a Response for any Throwable exception not already mapped</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

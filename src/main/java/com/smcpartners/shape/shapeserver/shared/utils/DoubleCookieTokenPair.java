@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Hold encoded tokens used in the Double Cookie Security mechanism</br>
  * 1. </br>
  * 2. </br>
  * Created By: johndestefano

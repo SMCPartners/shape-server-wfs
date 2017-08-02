@@ -23,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Find all Organization Measures by organization id<br/>
  * 1. ADMIN and DPH_USER can see measures for any organization. Other users can only see measures
  * for their organization.
  * <p>
@@ -38,10 +38,10 @@ public class Find_All_Organization_Measures_By_Organization_ServiceAdapter imple
     private Logger log;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     public Find_All_Organization_Measures_By_Organization_ServiceAdapter() {
     }
@@ -73,7 +73,7 @@ public class Find_All_Organization_Measures_By_Organization_ServiceAdapter imple
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationMeasuresByOrg", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }
@@ -92,7 +92,7 @@ public class Find_All_Organization_Measures_By_Organization_ServiceAdapter imple
                 }
             }
 
-            for (OrganizationMeasureDTO omg: orgMList) {
+            for (OrganizationMeasureDTO omg : orgMList) {
                 if (omg.getReportPeriodYear() == reportPeriod) {
                     retList.add(omg);
                 }

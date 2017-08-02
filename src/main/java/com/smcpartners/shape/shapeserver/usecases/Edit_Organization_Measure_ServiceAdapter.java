@@ -40,14 +40,14 @@ public class Edit_Organization_Measure_ServiceAdapter implements Edit_Organizati
     private Logger log;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.orgMeasureEditMustMatchError")
-    private String orgMeasureEditMustMatchError;
+    String orgMeasureEditMustMatchError;
 
     /**
      * Default Constructor
@@ -97,7 +97,7 @@ public class Edit_Organization_Measure_ServiceAdapter implements Edit_Organizati
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "editOrganizationMeasure", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }

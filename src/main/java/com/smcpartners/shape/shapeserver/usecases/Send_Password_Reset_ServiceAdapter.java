@@ -39,10 +39,10 @@ public class Send_Password_Reset_ServiceAdapter implements Send_Password_Reset_S
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @EJB
-    private SendMailService sendEmailMsg;
+    SendMailService sendEmailMsg;
 
     /**
      * Constructor

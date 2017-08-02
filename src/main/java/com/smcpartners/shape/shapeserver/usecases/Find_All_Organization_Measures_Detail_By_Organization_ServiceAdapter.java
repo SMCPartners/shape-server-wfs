@@ -36,11 +36,14 @@ public class Find_All_Organization_Measures_Detail_By_Organization_ServiceAdapte
     private Logger log;
 
     @EJB
-    private OrganizationMeasureDetailDAO organizationMeasureDetailDAO;
+    OrganizationMeasureDetailDAO organizationMeasureDetailDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
+    /**
+     * Default Constructor
+     */
     public Find_All_Organization_Measures_Detail_By_Organization_ServiceAdapter() {
     }
 
@@ -71,7 +74,7 @@ public class Find_All_Organization_Measures_Detail_By_Organization_ServiceAdapte
         } catch (Exception e) {
             log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationMeasuresByOrg", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
-                throw (NotAuthorizedToPerformActionException)e;
+                throw (NotAuthorizedToPerformActionException) e;
             } else {
                 throw new UseCaseException(e.getMessage());
             }
@@ -90,7 +93,7 @@ public class Find_All_Organization_Measures_Detail_By_Organization_ServiceAdapte
                 }
             }
 
-            for (OrganizationMeasureDetailDTO omg: orgMList) {
+            for (OrganizationMeasureDetailDTO omg : orgMList) {
                 if (omg.getOrgData().getReportPeriodYear() == reportPeriod) {
                     retList.add(omg);
                 }

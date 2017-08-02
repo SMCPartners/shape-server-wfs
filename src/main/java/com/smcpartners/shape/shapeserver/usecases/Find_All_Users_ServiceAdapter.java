@@ -36,10 +36,10 @@ public class Find_All_Users_ServiceAdapter implements Find_All_Users_Service {
     private Logger log;
 
     @EJB
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Default constructor

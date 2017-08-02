@@ -18,6 +18,7 @@ import com.smcpartners.shape.shapeserver.shared.exceptions.MaxFileSizeExceededEx
 import com.smcpartners.shape.shapeserver.shared.exceptions.NotAuthorizedToPerformActionException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 import com.smcpartners.shape.shapeserver.shared.utils.ExcelUtils;
+import com.smcpartners.shape.shapeserver.usecases.helpers.UploadDownLoadHelpers;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -41,7 +42,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Upload a file with organization measure data and create a new organization measure from it<br/>
  * 1. Upload a file that contains a measure. All files will be in a consistent excel format.</br>
  * 2. A record of the file processing, including the file contents must be saved.</br>
  * 3. The data in the file will create an organizational measure</br>
@@ -61,32 +62,35 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
     private Logger log;
 
     @EJB
-    private OrganizationMeasureFileUploadProcessorDAO fileUploadProcessorDAO;
+    OrganizationMeasureFileUploadProcessorDAO fileUploadProcessorDAO;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     @EJB
-    private MeasureDAO measureDAO;
+    MeasureDAO measureDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
+
+    @Inject
+    UploadDownLoadHelpers uploadDownLoadHelpers;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.fileUpload.measureFileUploadKey")
-    private String formFileUploadKey;
+    String formFileUploadKey;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.fileUpload.maxUploadSize")
-    private long maxUploadSize;
+    long maxUploadSize;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.onlyOneMeasureTypePerOrgPerYearError")
-    private String onlyOneMeasureTypePerOrgPerYearError;
+    String onlyOneMeasureTypePerOrgPerYearError;
 
     @Inject
     @ConfigurationValue("com.smc.server-core.errorMsgs.canOnlyHaveOneActiveMeasureWithAGivenNameError")
-    private String canOnlyHaveOneActiveMeasureWithAGivenNameError;
+    String canOnlyHaveOneActiveMeasureWithAGivenNameError;
 
 
     /**
@@ -106,9 +110,7 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
                                                   @HeaderParam("content-length") long contentLength) throws UseCaseException {
         try {
             // Check maximum content length
-            if (contentLength > maxUploadSize) {
-                throw new MaxFileSizeExceededException();
-            }
+            uploadDownLoadHelpers.checkContentLength(maxUploadSize, contentLength);
 
             // Create the return object
             final FileUploadResponseDTO retDTO = new FileUploadResponseDTO();
@@ -138,7 +140,7 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
                 try {
                     // Get file name and bytes
                     MultivaluedMap<String, String> header = inputPart.getHeaders();
-                    fileName = getFileName(header);
+                    fileName = uploadDownLoadHelpers.getFileName(header);
 
                     //convert the uploaded file to input stream
                     InputStream inputStream = inputPart.getBody(InputStream.class, null);
@@ -262,27 +264,5 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
                 throw new UseCaseException(e.getMessage());
             }
         }
-    }
-
-    /**
-     * Extract the file name from the Content-disposition of the request
-     *
-     * @param header
-     * @return
-     */
-    private String getFileName(MultivaluedMap<String, String> header) {
-
-        String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
-
-        for (String filename : contentDisposition) {
-            if ((filename.trim().startsWith("filename"))) {
-
-                String[] name = filename.split("=");
-
-                String finalFileName = name[1].trim().replaceAll("\"", "");
-                return finalFileName;
-            }
-        }
-        return "unknown";
     }
 }

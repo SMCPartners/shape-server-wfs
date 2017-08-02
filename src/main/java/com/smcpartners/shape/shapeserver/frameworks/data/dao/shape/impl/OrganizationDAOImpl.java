@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
- * Responsible:</br>
+ * Responsible: Manage Organization entity data</br>
  * 1.  Implements OrganizationDAO</br>
  * <p>
  * Created by johndestefano on 10/29/15.

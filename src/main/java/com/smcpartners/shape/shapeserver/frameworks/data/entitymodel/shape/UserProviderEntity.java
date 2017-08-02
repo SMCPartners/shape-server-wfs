@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
- * Responsible:</br>
+ * Responsible: The association to link a user to a provider. Not all users are providers.</br>
  * 1.  Entity</br>
  * <p>
  * Created by johndestefano on 10/28/15.

@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * Responsible:</br>
+ * Responsible: System user attributes</br>
  * 1. Entity </br>
  * <p>
  * Created by johndestefano on 10/28/15.

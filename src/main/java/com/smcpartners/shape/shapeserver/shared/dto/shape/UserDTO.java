@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Responsible:<br/>
- * 1. DTO
+ * Responsible: DTO<br/>
+ * 1.
  * <p>
  * Created by johndestefano on 9/11/15.
  * </p>

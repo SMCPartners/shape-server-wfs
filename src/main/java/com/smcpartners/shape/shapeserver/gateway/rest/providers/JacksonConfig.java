@@ -11,8 +11,9 @@ import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 /**
- * Responsible:<br/>
- * 1.This class will make sure JSON timestamps is written in the format yyyy-MM-dd'T'hh:mm:ss'Z'<br/>
+ * Responsible: Configures Jackson Object Mapper</br>
+ * 1. JSON timestamps to assure it's written in the format yyyy-MM-dd'T'hh:mm:ss'Z'<br/>
+ * 2. Allows single quotes in JSON data</br>
  * <p>
  * Created by johndestefano on 9/18/15.
  * <p>

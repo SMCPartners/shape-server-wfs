@@ -7,7 +7,7 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.ProviderDTO;
 import java.util.List;
 
 /**
- * Responsible:</br>
+ * Responsible: Contract for managing Provider data</br>
  * 1. Handle CRUD and other data related activities for the Provider</br>
  * <p>
  * Created by johndestefano on 10/29/15.

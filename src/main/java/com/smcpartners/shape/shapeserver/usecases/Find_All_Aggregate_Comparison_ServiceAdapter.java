@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Responsibility: </br>
+ * Responsibility: Find all aggregate measure comparisons</br>
  * 1. Bring back aggregate measure data for all organizations user has relationship with.</br>
  * 2. </br>
  * Created By: johndestefano
@@ -40,13 +40,13 @@ public class Find_All_Aggregate_Comparison_ServiceAdapter implements Find_All_Ag
     private Logger log;
 
     @EJB
-    private OrganizationDAO oDAO;
+    OrganizationDAO oDAO;
 
     @EJB
-    private OrganizationMeasureDAO organizationMeasureDAO;
+    OrganizationMeasureDAO organizationMeasureDAO;
 
     @Inject
-    private UserExtras userExtras;
+    UserExtras userExtras;
 
     /**
      * Constructor
