@@ -122,6 +122,7 @@ public class ProviderDAOImpl extends AbstractCrudDAO<ProviderDTO, ProviderEntity
 
         if (entity.getOrganizationById() != null) {
             dto.setOrganizationId(entity.getOrganizationById().getId());
+            dto.setOrganizationName(entity.getOrganizationById().getName());
         }
 
         // Return dto

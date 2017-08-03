@@ -28,4 +28,5 @@ public class ProviderDTO implements Serializable {
     private Date modifiedDt;
     private String modifiedBy;
     private int organizationId;
+    private String organizationName;
 }

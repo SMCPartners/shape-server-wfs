@@ -8,6 +8,7 @@ import com.smcpartners.shape.shapeserver.frameworks.data.entitymodel.shape.UserE
 import com.smcpartners.shape.shapeserver.frameworks.producers.annotations.ShapeDatabase;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.request.OrganizationStratificationFileUploadRequestDTO;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -18,6 +19,7 @@ import javax.persistence.EntityManager;
  * Created By: johndestefano
  * Date: 7/24/17
  */
+@Stateless
 public class OrganizationStratificationFileUploadDAOImpl extends
         AbstractCrudDAO<OrganizationStratificationFileUploadRequestDTO, OrganizationStratificationFileUploadEntity, Integer>
         implements OrganizationStratificationFileUploadDAO {

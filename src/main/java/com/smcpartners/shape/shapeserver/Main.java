@@ -31,11 +31,11 @@ public class Main {
         // Mail
         // Need this until setting up mail with config file is clear
         swarm.fraction(new MailFraction().smtpServer("ShapeMail",
-                s -> s.host("localhost")
-                        .port(24)
+                s -> s.host("smtp.gmail.com")
+                        .port(587)
                         .tls(true)
-                        .password("somepassword")
-                        .username("someusername")
+                        .password("q1w2e3r4!")
+                        .username("smctestemails@gmail.com")
         ));
 
         // Start and deploy WAR

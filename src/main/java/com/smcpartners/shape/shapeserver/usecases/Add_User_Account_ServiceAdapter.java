@@ -14,7 +14,9 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.request.CreateUserRequ
 import com.smcpartners.shape.shapeserver.shared.dto.shape.response.CreateUserResponseDTO;
 import com.smcpartners.shape.shapeserver.shared.exceptions.SendEmailException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
+import com.smcpartners.shape.shapeserver.shared.exceptions.UserEmailDuplicateException;
 import com.smcpartners.shape.shapeserver.shared.utils.RandomPasswordGenerator;
+import org.omg.CORBA.ExceptionDefOperations;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -92,6 +94,16 @@ public class Add_User_Account_ServiceAdapter implements Create_User_Account_Serv
                     }
                 }
 
+                // Add to database if user email is sent successfully
+
+                UserDTO respDTO = null;
+
+                try {
+                    respDTO = userDAO.create(nDTO);
+                } catch (Exception e) {
+                    throw new UserEmailDuplicateException();
+                }
+
                 // Next send a confirmation email with the random password and account set to change password.
                 // This will result in the user having to change their password.
                 MailDTO mail = new MailDTO();
@@ -113,10 +125,6 @@ public class Add_User_Account_ServiceAdapter implements Create_User_Account_Serv
                 } catch (Exception e) {
                     throw new SendEmailException();
                 }
-
-                // Add to database if user email is sent successfully
-                UserDTO respDTO = userDAO.create(nDTO);
-
                 // Generate return
                 return new CreateUserResponseDTO(respDTO.getId());
             } else {
