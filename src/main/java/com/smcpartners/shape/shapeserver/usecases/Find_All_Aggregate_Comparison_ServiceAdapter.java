@@ -97,7 +97,7 @@ public class Find_All_Aggregate_Comparison_ServiceAdapter implements Find_All_Ag
             for (String s : retObj.getYearsSpanLst()) avgByYearMap.put(s, 0.0);
             aggMap.forEach((k, val) -> {
                 double avg = val.stream().mapToDouble(f -> f.doubleValue()).average().getAsDouble();
-                avgByYearMap.put(k, avg);
+                avgByYearMap.put(k, avg * 100);
             });
             retObj.setAggAvgDataByYear(avgByYearMap.values().stream().collect(Collectors.toList()));
 
@@ -112,6 +112,7 @@ public class Find_All_Aggregate_Comparison_ServiceAdapter implements Find_All_Ag
                 List<NameDoubleValDTO> ndLst = v.getMeasureYearAvgDTOS();
                 ndLst.forEach(item -> {
                     String yearKey = item.getKey();
+                    item.setDoubleVal(item.getDoubleVal() * 100);
                     nDDTOMap.put(yearKey, item);
                 });
 
