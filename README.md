@@ -8,7 +8,12 @@ The application uses typical JEE design approaches. It is deployed on JBoss's [W
 This allows for easy configuration and application execution. See the Wildfly Swarm documentation for the many 
 advantaged of developing with Swarm.
 
-
+The applications packaging is divided into the following packages:
+  * crosscutting - Application wide security and logging
+  * frameworks - Primarily data access
+  * gateway - Servicing REST requests
+  * shared - Artifacts shared between the business layer (use cases) and the rest of the application
+  * usescases - Business logic components
 
 #### General Approach to Servicing Requests
 ![Request Flow](doc/images/RequestFlow.png)
@@ -34,7 +39,7 @@ The transport gateway contains all the REST interfaces. They can be found in the
 client applications. The interfaces are annotated with JaxRS annotations and could be consumed 
 by a java JaxRS client to quickly generate code to connect to the service layer.
 
-#### Service View
+#### Business Logic View
 The service layer services all client requests. Services may be annotated with application 
 specific annotations to implement specific behavior. For example, service methods that require
 user authentication are annotated with the @Secure annotation (see crosscutting.security.rest.annotations.Secure).
@@ -86,23 +91,21 @@ user authentication are annotated with the @Secure annotation (see crosscutting.
 email, 
 
 #### Shared Code
-Shared code is code that is shared between the framework layer and the service layer of the 
+Shared code is code that is shared between the framework layers and the business logic layer of the 
 application. This package (*shared*) contains various utilities that assist with JWT token
 creation and parsing, application exception handling, and primarily data transfer objections or 
 DTOs. DTOs are used to carry data from the framework layer to the service layer and vice versa. 
 
 Although many DTOs mimic entity beans that are present in the framework layer many do not.
 Some would consider the presence of DTOs in this context as an anti-pattern, however there are 
-reasons why this approach was chosen. First, in many cases the entity bean layer is not 
+reasons why this approach was chosen. First, in many cases the entity bean layer, being course grained, is not 
 granular enough to support the service layers requirements. Second, there was a conscious effort
-made during the development process to uncouple the service layer from certain frameworks, such
+made during the development process to uncouple the business layer from the frameworks layers, such
 as JPA. That being the case, for convenience and easy of understanding of the business logic, 
-almost all service components utilize enterprise java beans (EJBs) and thus have data access 
-object (DAO) stateless session beans injected by way of the @EJB annotation. The the code in the 
-service layer (*usecases*) for examples.
-
+almost all business logic components utilize enterprise java beans (EJBs) and thus have data access 
+object (DAO) stateless session beans injected by way of the @EJB annotation. 
 
 
 #### Wildfly Swarm Specific Features
 
-#### Building the service layer
+#### Building and Running the Application 
