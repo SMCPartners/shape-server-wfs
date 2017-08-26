@@ -34,9 +34,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Change_Password_ServiceAdapter implements Change_Password_Service {
-    @Inject
-    private Logger log;
-
     @EJB
     UserDAO dao;
 
@@ -82,7 +79,6 @@ public class Change_Password_ServiceAdapter implements Change_Password_Service {
             //returns true if new password uses correct regex and is a valid user
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "changeUserPassword", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

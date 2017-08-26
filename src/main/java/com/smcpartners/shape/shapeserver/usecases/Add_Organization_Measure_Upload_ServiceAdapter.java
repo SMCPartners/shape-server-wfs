@@ -4,8 +4,8 @@ package com.smcpartners.shape.shapeserver.usecases;
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.MeasureDAO;
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureFileUploadProcessorDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureDAO;
+import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureFileUploadProcessorDAO;
 import com.smcpartners.shape.shapeserver.gateway.rest.services.Add_Organization_Measure_Upload_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.BooleanValueDTO;
@@ -38,8 +38,6 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Upload a file with organization measure data and create a new organization measure from it<br/>
@@ -57,10 +55,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organization_Measure_Upload_Service {
-
-    @Inject
-    private Logger log;
-
     @EJB
     OrganizationMeasureFileUploadProcessorDAO fileUploadProcessorDAO;
 
@@ -238,8 +232,6 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
                     retDTO.addToMap(fileName, dto.isValue() ? "succeeded" : "false");
 
                 } catch (Exception e) {
-                    log.logp(Level.SEVERE, this.getClass().getName(), "addMeasureUpload - file", e.getMessage(), e);
-
                     // On errors record the files name and failed
                     retDTO.addToMap(fileName, "failed");
                 } finally {
@@ -255,7 +247,6 @@ public class Add_Organization_Measure_Upload_ServiceAdapter implements Add_Organ
 
             return retDTO;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "addMeasureUpload", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else if (e instanceof MaxFileSizeExceededException) {

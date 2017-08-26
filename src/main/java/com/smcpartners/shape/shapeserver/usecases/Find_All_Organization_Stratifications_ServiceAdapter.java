@@ -11,16 +11,13 @@ import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Return all organization stratification<br/>
  * 1. ADMIN can find all organozation stratifications.
  * <p>
  * Created by johndestefano on 11/2/15.
@@ -29,9 +26,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Find_All_Organization_Stratifications_ServiceAdapter implements Find_All_Organization_Stratifications_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationStratificationDAO organizationStratificationDAO;
@@ -51,7 +45,6 @@ public class Find_All_Organization_Stratifications_ServiceAdapter implements Fin
             // Admin can see all
             return organizationStratificationDAO.findAllOrganizationStratification();
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationStratifications", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

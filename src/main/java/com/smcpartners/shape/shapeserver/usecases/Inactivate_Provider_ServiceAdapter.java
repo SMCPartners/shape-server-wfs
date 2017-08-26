@@ -32,9 +32,6 @@ import java.util.logging.Logger;
 @Path("/admin")
 public class Inactivate_Provider_ServiceAdapter implements Inactivate_Provider_Service {
 
-    @Inject
-    private Logger log;
-
     @EJB
     ProviderDAO providerDAO;
 
@@ -74,7 +71,6 @@ public class Inactivate_Provider_ServiceAdapter implements Inactivate_Provider_S
             // Return value
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "inactivateProvider", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

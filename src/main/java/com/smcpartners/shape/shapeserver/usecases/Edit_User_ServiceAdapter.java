@@ -17,8 +17,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Edit ser account.<br/>
@@ -34,9 +32,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Edit_User_ServiceAdapter implements Edit_User_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -87,7 +82,6 @@ public class Edit_User_ServiceAdapter implements Edit_User_Service {
             // Return value
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "editUser", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

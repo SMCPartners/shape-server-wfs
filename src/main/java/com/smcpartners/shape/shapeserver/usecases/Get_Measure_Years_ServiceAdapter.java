@@ -2,7 +2,6 @@ package com.smcpartners.shape.shapeserver.usecases;
 
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.MeasureDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationMeasureDAO;
 import com.smcpartners.shape.shapeserver.gateway.rest.services.Get_Measure_Years_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
@@ -11,14 +10,11 @@ import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
@@ -33,9 +29,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Get_Measure_Years_ServiceAdapter implements Get_Measure_Years_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationMeasureDAO organizationMeasureDAO;
@@ -78,7 +71,6 @@ public class Get_Measure_Years_ServiceAdapter implements Get_Measure_Years_Servi
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "getMeasureYears", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

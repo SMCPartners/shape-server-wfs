@@ -16,7 +16,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.*;
-import java.util.logging.Level;
 
 /**
  * Responsible: Manage OrganizationMeasure entity data</br>
@@ -55,7 +54,6 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationMeasure", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -78,7 +76,6 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationMeasureByOrgId", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -102,7 +99,6 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findOrgMeasureByOrgIdAndMeasureId", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -128,7 +124,6 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findOrgMeasureByMeasureIdAndYearAndOrg", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -183,7 +178,6 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
             retMap.put("ORG", orgAggMap);
             return retMap;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "getAvgForAllByYearByMeasure", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -206,7 +200,6 @@ public class OrganizationMeasureDAOImpl extends AbstractCrudDAO<OrganizationMeas
                 return false;
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "checkMeasureForYearForOrgAlreadyEntered", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

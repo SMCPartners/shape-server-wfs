@@ -9,7 +9,6 @@ import com.smcpartners.shape.shapeserver.shared.dto.common.MailDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.common.NameStringValDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.UserDTO;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
-import com.smcpartners.shape.shapeserver.shared.utils.RandomPasswordGenerator;
 import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.ejb.EJB;
@@ -18,11 +17,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Responsible:</br>
+ * Responsible: Return the users user name from their email address</br>
  * 1. Retrieve the users email address. Look up the user from it and check the account status.</br>
  * 2. Send the user an email with their userid. </br>
  * <p>
@@ -35,8 +32,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Forgot_Username_ServiceAdapter implements Forgot_Username_Service {
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -89,7 +84,6 @@ public class Forgot_Username_ServiceAdapter implements Forgot_Username_Service {
             // Return
             return BooleanValueDTO.get(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "forgotUsername", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

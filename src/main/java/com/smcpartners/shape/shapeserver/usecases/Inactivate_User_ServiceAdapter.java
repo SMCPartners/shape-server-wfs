@@ -17,8 +17,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
@@ -35,9 +33,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Inactivate_User_ServiceAdapter implements Inactivate_User_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -81,7 +76,6 @@ public class Inactivate_User_ServiceAdapter implements Inactivate_User_Service {
 
             return new BooleanValueDTO(false);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "inactivateUser", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

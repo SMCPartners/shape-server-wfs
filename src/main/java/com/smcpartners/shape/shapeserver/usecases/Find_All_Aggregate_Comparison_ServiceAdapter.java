@@ -22,8 +22,6 @@ import javax.ws.rs.Produces;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -35,9 +33,6 @@ import java.util.stream.Collectors;
  */
 @Path("/common")
 public class Find_All_Aggregate_Comparison_ServiceAdapter implements Find_All_Aggregate_Comparison_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationDAO oDAO;
@@ -124,7 +119,6 @@ public class Find_All_Aggregate_Comparison_ServiceAdapter implements Find_All_Ag
             // Return object
             return retObj;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "showAggregateComparison", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * Responsible: Manage Measure entity data</br>
@@ -44,7 +43,6 @@ public class MeasureDAOImpl extends AbstractCrudDAO<MeasureDTO, MeasureEntity, I
             m.setSelected(status);
             em.merge(m);
         } catch(Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "changeMeasureSelectStatus", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -62,7 +60,6 @@ public class MeasureDAOImpl extends AbstractCrudDAO<MeasureDTO, MeasureEntity, I
             }));
             return retLst;
         } catch(Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findActiveMeasuresByName", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -78,7 +75,6 @@ public class MeasureDAOImpl extends AbstractCrudDAO<MeasureDTO, MeasureEntity, I
             }));
             return retLst;
         } catch(Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllMeasures", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -97,7 +93,6 @@ public class MeasureDAOImpl extends AbstractCrudDAO<MeasureDTO, MeasureEntity, I
             }));
             return retLst;
         } catch(Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllMeasuresById", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

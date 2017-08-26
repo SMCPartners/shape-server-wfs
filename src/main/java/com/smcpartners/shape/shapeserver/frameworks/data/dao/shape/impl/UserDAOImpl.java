@@ -18,7 +18,6 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * Responsible: Manage User Entity data<br/>
@@ -46,7 +45,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
             ue.setUserResetPwdChallenge(choice);
             em.merge(ue);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "validateUser", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -64,7 +62,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
             // User not found or pwd not valid
             return null;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "validateUser", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -109,7 +106,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
                 throw new DataAccessException("The user id is already in use.");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "addUser", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -129,7 +125,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
                 throw new DataAccessException("The user does not exist");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "addUserSecurityQuestions", e.getMessage(), e);
             throw new DataAccessException(e);
         }
 
@@ -161,7 +156,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
                 throw new DataAccessException("User does not exist!");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "changePassword", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -184,7 +178,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
                 throw new DataAccessException("User does not exist!");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "forcePasswordChane", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -198,7 +191,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
             }
             return new BooleanValueDTO(false);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "checkUserId", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -217,7 +209,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAll", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -233,7 +224,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
                 throw new DataAccessException("User not found.");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAll", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -249,7 +239,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
                 throw new DataAccessException("User not found.");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAll", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -269,7 +258,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAll", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -282,7 +270,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
             UserDTO dto = this.mapEntityToDTO(ue);
             return dto;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAll", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -295,7 +282,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
 
             return this.mapEntityToDTO(ue);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "create", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -340,7 +326,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
             }
 
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "update", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -360,7 +345,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
             }
 
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "setActiveStatus", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -380,7 +364,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
             }
 
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "setActiveStatus", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -422,7 +405,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
                 return new BooleanValueDTO(false);
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "isActive", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -438,7 +420,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
                 return false;
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "isGeneratedPwd", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -457,7 +438,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
             else return false;
 
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "isExpired", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -479,7 +459,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
             em.merge(ue);
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "setResetPwd", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -491,7 +470,6 @@ public class UserDAOImpl extends AbstractCrudDAO<UserDTO, UserEntity, String> im
             ue.setResetPwd(b);
             em.merge(ue);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "resetPasswordToggle", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

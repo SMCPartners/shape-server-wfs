@@ -16,11 +16,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Find all users<br/>
  * 1. The ADMIN role can see everybody. The ORG_ADMIN can see others in their ORG
  * Everyone else gets nothing
  * <p>
@@ -31,9 +29,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Find_All_Users_ServiceAdapter implements Find_All_Users_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -71,7 +66,6 @@ public class Find_All_Users_ServiceAdapter implements Find_All_Users_Service {
             }
             return lst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllUser", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

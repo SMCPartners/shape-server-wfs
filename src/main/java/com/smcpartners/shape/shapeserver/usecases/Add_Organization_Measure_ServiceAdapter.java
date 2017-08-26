@@ -20,8 +20,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Add an Organization Measure<br/>
@@ -36,9 +34,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Add_Organization_Measure_ServiceAdapter implements Add_Organization_Measure_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationMeasureDAO organizationMeasureDAO;
@@ -97,7 +92,6 @@ public class Add_Organization_Measure_ServiceAdapter implements Add_Organization
                 }
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "addOrganizationMeasure", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException)e;
             } else {

@@ -18,8 +18,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
@@ -36,8 +34,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Request_Password_Question_ServiceAdapter implements Request_Password_Question_Service {
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -88,7 +84,6 @@ public class Request_Password_Question_ServiceAdapter implements Request_Passwor
                 throw new NotAuthorizedToPerformActionException();
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "requestPasswordQuestion", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

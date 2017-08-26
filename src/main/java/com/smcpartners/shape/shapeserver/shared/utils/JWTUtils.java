@@ -16,8 +16,6 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Supports the validation, creation, and extension of JWTs</br>
@@ -31,9 +29,6 @@ import java.util.logging.Logger;
  */
 @ApplicationScoped
 public class JWTUtils {
-
-    @Inject
-    private Logger log;
 
     public static final String USERID = "userId";
     public static final String ROLE = "role";
@@ -159,7 +154,6 @@ public class JWTUtils {
             String role = (String) claims.getHeader().get(ROLE);
             return role;
         } catch (SignatureException e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "getRole", e.getMessage(), e);
             throw new Exception(e);
         }
     }
@@ -177,7 +171,6 @@ public class JWTUtils {
             String orgId = (String) claims.getHeader().get(ORGID);
             return Integer.parseInt(orgId);
         } catch (SignatureException e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "getOrgId", e.getMessage(), e);
             throw new Exception(e);
         }
     }

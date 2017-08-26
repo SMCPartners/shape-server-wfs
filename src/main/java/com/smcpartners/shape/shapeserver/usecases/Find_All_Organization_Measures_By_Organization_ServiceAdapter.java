@@ -19,8 +19,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Find all Organization Measures by organization id<br/>
@@ -33,9 +31,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Find_All_Organization_Measures_By_Organization_ServiceAdapter implements Find_All_Organization_Measures_By_Organization_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationMeasureDAO organizationMeasureDAO;
@@ -71,7 +66,6 @@ public class Find_All_Organization_Measures_By_Organization_ServiceAdapter imple
                 }
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationMeasuresByOrg", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

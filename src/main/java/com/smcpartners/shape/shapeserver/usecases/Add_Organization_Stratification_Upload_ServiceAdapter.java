@@ -19,8 +19,6 @@ import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Upload a file with Organization Stratification information and save it to<br/>
@@ -38,9 +36,6 @@ import java.util.logging.Logger;
 // TODO: Implement
 @Path("/admin")
 public class Add_Organization_Stratification_Upload_ServiceAdapter implements Add_Organization_Stratification_Upload_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationStratificationFileUploadProcessorDAO fileUploadProcessorDAO;
@@ -235,7 +230,6 @@ public class Add_Organization_Stratification_Upload_ServiceAdapter implements Ad
 
             throw new UnsupportedOperationException("Not yet implemented");
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "addStratificationUpload", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else if (e instanceof MaxFileSizeExceededException) {

@@ -16,11 +16,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible Find all organizations:<br/>
  * 1. ADMIN and DPH_User roles can see all organizations. ORG_ADMIN and REGISTERED user can see only their organization
  * <p>
  * Created by johndestefano on 11/2/15.
@@ -29,9 +27,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Find_All_Organizations_ServiceAdapter implements Find_All_Organizations_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationDAO organizationDAO;
@@ -97,7 +92,6 @@ public class Find_All_Organizations_ServiceAdapter implements Find_All_Organizat
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizations", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

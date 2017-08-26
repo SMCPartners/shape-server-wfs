@@ -10,16 +10,13 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.request.IntEntityIdReq
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Responsible:</br>
+ * Responsible: Select a measure for an organization</br>
  * 1. ADMIN can select a measure for any organization </br
  * <p>
  * <p>
@@ -31,12 +28,9 @@ import java.util.logging.Logger;
  * 1.
  * </p>
  */
+//TODO: Not names appropriately
 @Path("/admin")
 public class Find_Measure_ServiceAdapter implements Select_Measure_Service {
-
-    @Inject
-    private Logger log;
-
     @EJB
     MeasureDAO measureDAO;
 
@@ -59,7 +53,6 @@ public class Find_Measure_ServiceAdapter implements Select_Measure_Service {
             measureDAO.changeMeasureSelectStatus(id.getEntId(), true);
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "selectMeasure", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

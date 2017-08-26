@@ -7,7 +7,6 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
@@ -48,16 +47,12 @@ public class XSSSanatizerFilter implements ContainerResponseFilter {
 
     @Override
     public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
-        try {
-            // Entity
-            Object entity = containerResponseContext.getEntity();
-            if (entity != null && entity instanceof String) {
-                String escapedMsg = stripXSS((String) entity);
-                containerResponseContext.setEntity(escapedMsg);
-            }
 
-        } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "filter", e.getMessage(), e);
+        // Entity
+        Object entity = containerResponseContext.getEntity();
+        if (entity != null && entity instanceof String) {
+            String escapedMsg = stripXSS((String) entity);
+            containerResponseContext.setEntity(escapedMsg);
         }
     }
 
@@ -75,7 +70,7 @@ public class XSSSanatizerFilter implements ContainerResponseFilter {
             value = value.replaceAll("\0", "");
 
             // Remove all sections that match a pattern
-            for (Pattern scriptPattern : patterns){
+            for (Pattern scriptPattern : patterns) {
                 value = scriptPattern.matcher(value).replaceAll("");
             }
         }

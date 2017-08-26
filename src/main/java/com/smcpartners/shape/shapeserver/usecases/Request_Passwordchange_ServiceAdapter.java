@@ -13,7 +13,6 @@ import com.smcpartners.shape.shapeserver.shared.exceptions.NotAuthorizedToPerfor
 import com.smcpartners.shape.shapeserver.shared.exceptions.PasswordResetException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 import com.smcpartners.shape.shapeserver.shared.utils.MathUtils;
-import org.apache.xpath.operations.Bool;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -21,8 +20,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
@@ -39,8 +36,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Request_Passwordchange_ServiceAdapter implements Request_Password_Change_Service {
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -91,7 +86,6 @@ public class Request_Passwordchange_ServiceAdapter implements Request_Password_C
                 throw new IllegalAccessException("Your account is not allowed to reset this user's password");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "requestPasswordChange", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (PasswordResetException) e;
             } else {

@@ -24,11 +24,9 @@ import javax.ws.rs.Produces;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Find the demographic history for an organization, measure and year<br/>
  * 1. Formats the demographic information to align with Google Charts Polymer element that uses Google Charts API.
  * If there is no data for a specific demographic, it will send back a false for the front end to display a message of
  * no data available. Formats into two decimal percentage.
@@ -39,9 +37,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Find_App_Hist_Demographic_ServiceAdapter implements Find_App_Hist_Demographic_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationMeasureDAO organizationMeasureDAO;
@@ -234,7 +229,6 @@ public class Find_App_Hist_Demographic_ServiceAdapter implements Find_App_Hist_D
             return retLst;
 
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "showAppHistDemographic", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
 

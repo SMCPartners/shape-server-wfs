@@ -13,9 +13,10 @@ import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.ws.rs.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 /**
  * Responsible: Delete an Organizational Measure</br>
@@ -31,9 +32,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Delete_Organization_Measure_ServiceAdapter implements Delete_Organization_Measure_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationMeasureDAO organizationMeasureDAO;
@@ -73,7 +71,6 @@ public class Delete_Organization_Measure_ServiceAdapter implements Delete_Organi
 
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "deleteOrganizationMeasure", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

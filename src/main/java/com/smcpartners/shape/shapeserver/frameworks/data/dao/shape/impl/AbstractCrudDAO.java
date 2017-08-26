@@ -5,8 +5,6 @@ import com.smcpartners.shape.shapeserver.frameworks.data.dao.CrudDAO;
 import com.smcpartners.shape.shapeserver.frameworks.data.exceptions.DataAccessException;
 
 import javax.persistence.EntityManager;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Abstract generic class to support CRUD functionality for data access implementation classes</br>
@@ -21,7 +19,6 @@ import java.util.logging.Logger;
  * </p>
  */
 public abstract class AbstractCrudDAO<T, E, K> implements CrudDAO<T, K> {
-    protected Logger log = Logger.getLogger(this.getClass().getName());
 
     /**
      * Child classes must set this through constructor injection
@@ -35,7 +32,6 @@ public abstract class AbstractCrudDAO<T, E, K> implements CrudDAO<T, K> {
             E e = em.find(this.getGenericEntityClass(), key);
             em.remove(e);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "delete", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -46,7 +42,6 @@ public abstract class AbstractCrudDAO<T, E, K> implements CrudDAO<T, K> {
             E e = em.find(this.getGenericEntityClass(), key);
             return this.mapEntityToDTO(e);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findById", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -61,7 +56,6 @@ public abstract class AbstractCrudDAO<T, E, K> implements CrudDAO<T, K> {
             em.refresh(et);
             return this.mapEntityToDTO(et);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "create", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -81,7 +75,6 @@ public abstract class AbstractCrudDAO<T, E, K> implements CrudDAO<T, K> {
             et = em.merge(et);
             return this.mapEntityToDTO(et);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "update", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

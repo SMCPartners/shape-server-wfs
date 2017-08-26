@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * Responsible: Manage Organization entity data</br>
@@ -50,7 +49,6 @@ public class OrganizationDAOImpl extends AbstractCrudDAO<OrganizationDTO, Organi
 
             return retLst;
         } catch(Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAll", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -63,7 +61,6 @@ public class OrganizationDAOImpl extends AbstractCrudDAO<OrganizationDTO, Organi
             orgEnt.setActive(status);
             em.merge(orgEnt);
         } catch(Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "inactivateOrganization", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

@@ -3,7 +3,6 @@ package com.smcpartners.shape.shapeserver.usecases;
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.MeasureDAO;
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
 import com.smcpartners.shape.shapeserver.gateway.rest.services.Find_Measures_By_Id_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.UserExtras;
@@ -20,11 +19,9 @@ import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Find a measure by its ID<br/>
  * 1. Takes a list of Organization Measure DTOs from FindAllOrganizationMeasuresByOrg service and returns the specific
  * measures for just that organization. Since there will be duplicates, the service adds them to a Hashset and returns
  * them back as a list to remove duplicates.
@@ -33,12 +30,9 @@ import java.util.logging.Logger;
  * <p>
  * Changes:<b/>
  */
+//TODO: Should be a GET verb?
 @Path("/admin")
 public class Find_Measures_By_Id_ServiceAdapter implements Find_Measures_By_Id_Service {
-
-    @Inject
-    private Logger log;
-
     @EJB
     MeasureDAO measureDAO;
 
@@ -76,7 +70,6 @@ public class Find_Measures_By_Id_ServiceAdapter implements Find_Measures_By_Id_S
                 throw new Exception("List has no data");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findMeasuresById", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

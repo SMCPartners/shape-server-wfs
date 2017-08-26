@@ -14,8 +14,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
@@ -31,9 +29,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Logout_ServiceAdapter implements Logout_Service {
-
-    @Inject
-    private Logger log;
 
     /**
      * Provides logic to create logout response
@@ -58,7 +53,6 @@ public class Logout_ServiceAdapter implements Logout_Service {
         try {
             return logoutHelper.logoutResponse();
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "logout", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

@@ -19,8 +19,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Edit an Organization Stratification<br/>
@@ -32,9 +30,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Edit_Organization_Stratification_ServiceAdapter implements Edit_Organization_Stratification_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationStratificationDAO organizationStratificationDAO;
@@ -84,7 +79,6 @@ public class Edit_Organization_Stratification_ServiceAdapter implements Edit_Org
             }
 
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "editOrganizationStratification", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

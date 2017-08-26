@@ -1,11 +1,9 @@
 package com.smcpartners.shape.shapeserver.usecases;
 
 
-
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.MeasureDAO;
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
 import com.smcpartners.shape.shapeserver.gateway.rest.services.Add_Measure_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.MeasureDTO;
@@ -13,14 +11,11 @@ import com.smcpartners.shape.shapeserver.shared.dto.shape.response.IntEntityResp
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Create a new measure<br/>
@@ -33,9 +28,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Add_Measure_ServiceAdapter implements Add_Measure_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     MeasureDAO measureDAO;
@@ -67,7 +59,6 @@ public class Add_Measure_ServiceAdapter implements Add_Measure_Service {
 
             return IntEntityResponseDTO.makeNew(measureDTO.getId());
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "addMeasure", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

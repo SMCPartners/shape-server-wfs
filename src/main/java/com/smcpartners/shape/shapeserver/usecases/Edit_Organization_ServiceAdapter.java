@@ -4,7 +4,6 @@ package com.smcpartners.shape.shapeserver.usecases;
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationDAO;
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
 import com.smcpartners.shape.shapeserver.gateway.rest.services.Edit_Organization_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.BooleanValueDTO;
@@ -19,8 +18,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Edit and Organizational<br/>
@@ -32,9 +29,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Edit_Organization_ServiceAdapter implements Edit_Organization_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationDAO organizationDAO;
@@ -70,7 +64,6 @@ public class Edit_Organization_ServiceAdapter implements Edit_Organization_Servi
             // Return value
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "editOrganization", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Responsible:</br>
+ * Responsible: Return a challenge question so the user can reset their ID </br>
  * 1. Take the user id and the email associated with the id. If they are
  * valid then return the user id and one of the user challenge questions. The
  * user must be active. </br>
@@ -33,10 +33,9 @@ import java.util.logging.Logger;
  * 1. </br>
  * </p>
  */
+//TODO: Should change to GET?
 @Path("/common")
 public class Forgot_Password_ServiceAdapter implements Forgot_Password_Service {
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -76,8 +75,6 @@ public class Forgot_Password_ServiceAdapter implements Forgot_Password_Service {
                 throw new Exception("Either the email or username is incorrect, please check both and try again.");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "forgotUserPassword", e.getMessage(), e);
-
             // Account for not finding the user
             // TODO: This is brittle, do we need a specific exception from the data layer?
             if (e instanceof DataAccessException) {

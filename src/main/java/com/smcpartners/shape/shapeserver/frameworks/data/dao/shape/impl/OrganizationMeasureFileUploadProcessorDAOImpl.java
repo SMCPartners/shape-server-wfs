@@ -29,9 +29,6 @@ import java.util.logging.Logger;
 @Stateless
 public class OrganizationMeasureFileUploadProcessorDAOImpl implements OrganizationMeasureFileUploadProcessorDAO {
 
-    @Inject
-    private Logger log;
-
     @EJB
     private OrganizationMeasureFileUploadDAO fileUploadDAO;
 
@@ -77,7 +74,6 @@ public class OrganizationMeasureFileUploadProcessorDAOImpl implements Organizati
 
             return BooleanValueDTO.get(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "createAndLogFileMeasureUpload", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

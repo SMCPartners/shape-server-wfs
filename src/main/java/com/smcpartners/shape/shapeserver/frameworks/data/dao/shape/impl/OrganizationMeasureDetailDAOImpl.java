@@ -26,7 +26,6 @@ import java.util.logging.Logger;
  */
 @Stateless
 public class OrganizationMeasureDetailDAOImpl implements OrganizationMeasureDetailDAO {
-    protected Logger log = Logger.getLogger(this.getClass().getName());
 
     @EJB
     private OrganizationMeasureDAO organizationMeasureDAO;
@@ -64,7 +63,6 @@ public class OrganizationMeasureDetailDAOImpl implements OrganizationMeasureDeta
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationMeasureByOrgId", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

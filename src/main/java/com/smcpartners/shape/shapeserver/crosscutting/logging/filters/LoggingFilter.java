@@ -33,9 +33,6 @@ import java.util.logging.Logger;
 @PreMatching
 public class LoggingFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
-    @Inject
-    private Logger log;
-
     /**
      * Should logging be done at all. This is a configuration parameter in the project-defaults.
      */
@@ -113,7 +110,6 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
                 // Update database
                 logDAO.create(logDTO);
             } catch (Exception e) {
-                log.logp(Level.SEVERE, this.getClass().getName(), "filter", e.getMessage(), e);
                 throw new WebApplicationException(e.getMessage(), Response.Status.INTERNAL_SERVER_ERROR);
             }
         }

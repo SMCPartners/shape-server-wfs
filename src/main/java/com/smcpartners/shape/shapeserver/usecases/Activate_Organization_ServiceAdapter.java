@@ -4,7 +4,6 @@ package com.smcpartners.shape.shapeserver.usecases;
 import com.smcpartners.shape.shapeserver.crosscutting.logging.annotations.Logged;
 import com.smcpartners.shape.shapeserver.crosscutting.security.rest.annotations.Secure;
 import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.OrganizationDAO;
-import com.smcpartners.shape.shapeserver.frameworks.data.dao.shape.UserDAO;
 import com.smcpartners.shape.shapeserver.gateway.rest.services.Activate_Organization_Service;
 import com.smcpartners.shape.shapeserver.shared.constants.SecurityRoleEnum;
 import com.smcpartners.shape.shapeserver.shared.dto.common.BooleanValueDTO;
@@ -19,7 +18,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -32,9 +30,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Activate_Organization_ServiceAdapter implements Activate_Organization_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationDAO organizationDAO;
@@ -66,8 +61,6 @@ public class Activate_Organization_ServiceAdapter implements Activate_Organizati
                 throw new NotAuthorizedToPerformActionException();
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "activateOrganization", e.getMessage(), e);
-
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException)e;
             } else {

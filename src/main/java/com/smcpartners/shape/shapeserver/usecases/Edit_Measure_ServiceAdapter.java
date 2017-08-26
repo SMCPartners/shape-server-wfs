@@ -18,8 +18,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Edit a Measure<br/>
@@ -32,9 +30,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Edit_Measure_ServiceAdapter implements Edit_Measure_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     MeasureDAO measureDAO;
@@ -70,7 +65,6 @@ public class Edit_Measure_ServiceAdapter implements Edit_Measure_Service {
             // Return value
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "editMeasure", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

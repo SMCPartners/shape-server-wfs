@@ -16,14 +16,11 @@ import com.smcpartners.shape.shapeserver.shared.exceptions.SendEmailException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UserEmailDuplicateException;
 import com.smcpartners.shape.shapeserver.shared.utils.RandomPasswordGenerator;
-import org.omg.CORBA.ExceptionDefOperations;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Create a new User<br/>
@@ -38,9 +35,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Add_User_Account_ServiceAdapter implements Create_User_Account_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -131,8 +125,6 @@ public class Add_User_Account_ServiceAdapter implements Create_User_Account_Serv
                 throw new NotAuthorizedException("User id is in use.");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "createUserAccount", e.getMessage(), e);
-
             if (e instanceof SendEmailException) {
                 throw (SendEmailException) e;
             } else if (e instanceof NotAuthorizedException) {

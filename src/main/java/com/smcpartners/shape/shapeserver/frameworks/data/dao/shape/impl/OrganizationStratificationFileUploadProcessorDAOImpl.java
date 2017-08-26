@@ -27,9 +27,6 @@ import java.util.logging.Logger;
 @Stateless
 public class OrganizationStratificationFileUploadProcessorDAOImpl implements OrganizationStratificationFileUploadProcessorDAO {
 
-    @Inject
-    private Logger log;
-
     @EJB
     private OrganizationStratificationFileUploadDAO fileUploadDAO;
 
@@ -54,7 +51,6 @@ public class OrganizationStratificationFileUploadProcessorDAOImpl implements Org
 
             return BooleanValueDTO.get(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "createAndLogFileStratificationUpload", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

@@ -11,13 +11,10 @@ import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Find all Organization Measures<br/>
@@ -29,9 +26,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Find_All_Organization_Measures_ServiceAdapter implements Find_All_Organization_Measures_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationMeasureDAO organizationMeasureDAO;
@@ -51,7 +45,6 @@ public class Find_All_Organization_Measures_ServiceAdapter implements Find_All_O
             // Admin can see all
             return organizationMeasureDAO.findAllOrganizationMeasure();
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationMeasures", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

@@ -12,13 +12,10 @@ import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
 import com.smcpartners.shape.shapeserver.shared.utils.RandomPasswordGenerator;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
@@ -35,8 +32,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Send_Password_Reset_ServiceAdapter implements Send_Password_Reset_Service {
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -98,7 +93,6 @@ public class Send_Password_Reset_ServiceAdapter implements Send_Password_Reset_S
                 throw new Exception("Can't find the user");
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "forgotUserPassword", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

@@ -6,16 +6,14 @@ import com.smcpartners.shape.shapeserver.gateway.rest.services.Login_Service;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.UserDTO;
 import com.smcpartners.shape.shapeserver.shared.dto.shape.request.LoginRequestDTO;
 import com.smcpartners.shape.shapeserver.shared.exceptions.UseCaseException;
-import com.smcpartners.shape.shapeserver.usecases.helpers.authentication.login.LoginHelper;
 import com.smcpartners.shape.shapeserver.usecases.helpers.authentication.LoginHelperQualifier;
+import com.smcpartners.shape.shapeserver.usecases.helpers.authentication.login.LoginHelper;
 import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible:</br>
@@ -34,8 +32,6 @@ import java.util.logging.Logger;
 @Path("/common")
 public class Login_ServiceAdapter implements Login_Service {
 
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -82,7 +78,6 @@ public class Login_ServiceAdapter implements Login_Service {
                         Response.status(Response.Status.UNAUTHORIZED));
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "authentication", e.getMessage(), e);
             if (e instanceof NotAuthorizedException) {
                 throw (NotAuthorizedException) e;
             } else {

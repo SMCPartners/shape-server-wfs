@@ -17,11 +17,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Responsible:</br>
+ * Responsible: Find a user by their ID</br>
  * 1. ADMIN and DPH_USER can find any user. ORG_ADMIN and REGISTERED user can only find users in their organization.</br
  * <p>
  * Created by johndestefano on 9/28/15.
@@ -33,9 +31,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Find_User_By_Id_ServiceAdapter implements Find_User_By_Id_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -76,7 +71,6 @@ public class Find_User_By_Id_ServiceAdapter implements Find_User_By_Id_Service {
             }
 
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findUser", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

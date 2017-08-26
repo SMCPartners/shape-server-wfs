@@ -19,11 +19,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Responsible:<br/>
+ * Responsible: Find all organization stratification for an organization. <br/>
  * 1. ADMIN and DPH_USER can see all. Others can see only their organzations
  * <p>
  * Created by johndestefano on 11/2/15.
@@ -32,9 +30,6 @@ import java.util.logging.Logger;
  */
 @Path("/common")
 public class Find_All_Organization_Stratifications_By_Organization_ServiceAdapter implements Find_All_Organization_Stratifications_ByOrganizationService {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationStratificationDAO organizationStratificationDAO;
@@ -68,7 +63,6 @@ public class Find_All_Organization_Stratifications_By_Organization_ServiceAdapte
                 throw new NotAuthorizedToPerformActionException();
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationMeasuresByOrg", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

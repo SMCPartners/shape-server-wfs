@@ -18,8 +18,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Edit a Provider<br/>
@@ -31,9 +29,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Edit_Provider_ServiceAdapter implements Edit_Provider_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     ProviderDAO providerDAO;
@@ -70,7 +65,6 @@ public class Edit_Provider_ServiceAdapter implements Edit_Provider_Service {
             // Return value
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "editProvider", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

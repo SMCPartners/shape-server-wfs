@@ -33,9 +33,6 @@ import java.util.logging.Logger;
 @Path("/admin")
 public class Add_Organization_ServiceAdapter implements Add_Organization_Service {
 
-    @Inject
-    private Logger log;
-
     @EJB
     OrganizationDAO organizationDAO;
 
@@ -59,7 +56,6 @@ public class Add_Organization_ServiceAdapter implements Add_Organization_Service
             OrganizationDTO orgDTO = organizationDAO.create(org);
             return IntEntityResponseDTO.makeNew(orgDTO.getId());
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "addOrganization", e.getMessage(), e);
             throw new UseCaseException(e.getMessage());
         }
     }

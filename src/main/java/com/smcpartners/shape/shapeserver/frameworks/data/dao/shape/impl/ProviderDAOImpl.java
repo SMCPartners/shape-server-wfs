@@ -41,7 +41,6 @@ public class ProviderDAOImpl extends AbstractCrudDAO<ProviderDTO, ProviderEntity
             }));
             return retLst;
         } catch(Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAll", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -60,7 +59,6 @@ public class ProviderDAOImpl extends AbstractCrudDAO<ProviderDTO, ProviderEntity
             }));
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllByOrg", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -72,7 +70,6 @@ public class ProviderDAOImpl extends AbstractCrudDAO<ProviderDTO, ProviderEntity
             prov.setActive(status);
             em.merge(prov);
         } catch(Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "changeProviderActiveStatus", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

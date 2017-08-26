@@ -15,7 +15,6 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * Responsible: Manage Organization Stratification data</br>
@@ -51,7 +50,6 @@ public class OrganizationStratificationDAOImpl extends AbstractCrudDAO<Organizat
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationStratification", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }
@@ -74,7 +72,6 @@ public class OrganizationStratificationDAOImpl extends AbstractCrudDAO<Organizat
 
             return retLst;
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "findAllOrganizationStratificationByOrgId", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

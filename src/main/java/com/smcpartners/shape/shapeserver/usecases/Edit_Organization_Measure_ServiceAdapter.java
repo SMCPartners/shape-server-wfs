@@ -19,8 +19,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible:<br/>
@@ -35,9 +33,6 @@ import java.util.logging.Logger;
 //TODO: Should a registered user be able ot edit or delete an organization measure
 @Path("/common")
 public class Edit_Organization_Measure_ServiceAdapter implements Edit_Organization_Measure_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationMeasureDAO organizationMeasureDAO;
@@ -95,7 +90,6 @@ public class Edit_Organization_Measure_ServiceAdapter implements Edit_Organizati
             // Return value
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "editOrganizationMeasure", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

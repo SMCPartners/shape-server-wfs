@@ -18,8 +18,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Activate a User</br>
@@ -35,9 +33,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Activate_User_ServiceAdapter implements Activate_User_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     UserDAO userDAO;
@@ -87,7 +82,6 @@ public class Activate_User_ServiceAdapter implements Activate_User_Service {
 
             return new BooleanValueDTO(true);
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "activateUser", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException)e;
             } else {

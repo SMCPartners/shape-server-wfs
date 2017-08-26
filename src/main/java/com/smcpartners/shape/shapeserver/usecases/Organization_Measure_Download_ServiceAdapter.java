@@ -21,8 +21,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsibility: </br>
@@ -33,9 +31,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Organization_Measure_Download_ServiceAdapter implements Organization_Measure_Download_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     OrganizationMeasureDAO organizationMeasureDAO;
@@ -85,7 +80,6 @@ public class Organization_Measure_Download_ServiceAdapter implements Organizatio
             return response;
 
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "downloadOrgMeasureFile", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {

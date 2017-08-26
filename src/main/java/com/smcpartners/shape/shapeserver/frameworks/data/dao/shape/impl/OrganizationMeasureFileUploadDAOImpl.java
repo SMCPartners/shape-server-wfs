@@ -52,7 +52,6 @@ public class OrganizationMeasureFileUploadDAOImpl
             OrganizationMeasureFileUploadRequestDTO ret = mapEntityToDTO(en);
             return ret;
         } catch(Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "getOrgMeasureFileUploadForOrgMeasureIdAndUploadDt", e.getMessage(), e);
             throw new DataAccessException(e);
         }
     }

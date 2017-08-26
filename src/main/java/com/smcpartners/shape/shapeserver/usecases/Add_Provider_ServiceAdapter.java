@@ -17,8 +17,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Responsible: Add a Provider<br/>
@@ -30,9 +28,6 @@ import java.util.logging.Logger;
  */
 @Path("/admin")
 public class Add_Provider_ServiceAdapter implements Add_Provider_Service {
-
-    @Inject
-    private Logger log;
 
     @EJB
     ProviderDAO providerDAO;
@@ -69,7 +64,6 @@ public class Add_Provider_ServiceAdapter implements Add_Provider_Service {
                 }
             }
         } catch (Exception e) {
-            log.logp(Level.SEVERE, this.getClass().getName(), "addProvider", e.getMessage(), e);
             if (e instanceof NotAuthorizedToPerformActionException) {
                 throw (NotAuthorizedToPerformActionException) e;
             } else {
